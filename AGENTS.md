@@ -1,0 +1,440 @@
+# AGENTS.md — Portfólio Rafael Dias
+
+Este arquivo é a **fonte única de verdade** do projeto para qualquer agente de IA (Claude Code, Codex, Cursor, Copilot, Gemini) e para qualquer pessoa que mexa no código. Ele explica o que o projeto é, por que cada decisão foi tomada, como o código é organizado e como trabalhar nele.
+
+**Regras de leitura:**
+
+- Leia este arquivo inteiro antes da primeira alteração de cada sessão.
+- Se um pedido conflitar com uma regra daqui, **pare e pergunte** antes de agir. Não "resolva" o conflito sozinho.
+- Se uma decisão nova for tomada (dependência, padrão, rota), **atualize este arquivo no mesmo PR**.
+- Itens marcados como _planejado_ ainda não existem no código: siga o plano descrito quando for implementá-los.
+
+---
+
+## 1. O projeto
+
+Portfólio pessoal de **Rafael Dias**, desenvolvedor front-end, feito em React.
+
+**A experiência:**
+
+1. O site abre numa **cena 3D no espaço**, com estrelas e um computador antigo flutuando.
+2. Ao clicar no monitor, a câmera se aproxima e abre uma **janela no estilo Windows XP**.
+3. A janela tem abas: apresentação, habilidades, **projetos (vindos da API do GitHub)**, contato e multimídia (galeria de fotos, player de música e dois jogos: **Fox 64**, de nave, e **B-Zero 64**, de corrida).
+4. O dono do site tem um **dashboard protegido por login** para ler as mensagens do contato e escolher os projetos em destaque.
+
+**Contexto da entrega:** atividade CP3 da faculdade ("Portfolio — Stack e Harness Engineering"). Entrega em **03/11/2026**:
+
+- repositório público no GitHub, com histórico de commits distribuído ao longo do prazo;
+- site publicado na Vercel;
+- vídeo de até 8 minutos, simulando uma entrevista técnica, explicando a stack, as justificativas e este harness de IA.
+
+O dono do projeto precisa conseguir **explicar cada linha** no vídeo. Por isso: código simples e legível vale mais que código esperto; toda decisão precisa ter uma justificativa registrada na seção 3.
+
+---
+
+## 2. Requisitos obrigatórios e onde cada um vive
+
+Todos são obrigatórios. Esta tabela é o checklist do projeto: nada é "pronto" sem cumprir a linha correspondente.
+
+| #   | Requisito                                                                                                                                             | Como atendemos                                                                                                                      | Onde no código                                                     | Status                           |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------- |
+| 1   | Rotas: link próprio por projeto, 404 amigável, página de erro de API, link compartilhado abre certo ao atualizar                                      | React Router; `vercel.json` reescreve tudo para `index.html`; 404 como "tela azul" do Windows; erro de API como caixa de erro do XP | `src/app/router.tsx`, `src/pages/`, `vercel.json`                  | _planejado (dia 4)_              |
+| 2   | Estados: carregando, erro e vazio em todo dado de API; indicador visual; botão de enviar travado durante o envio                                      | TanStack Query (`isPending`, `isError`, lista vazia); skeleton e barra de progresso no estilo XP; `disabled` + spinner no envio     | `src/components/ui/`, `src/hooks/`                                 | _planejado (dias 4–5)_           |
+| 3   | Projetos pela API do GitHub, sem cadastro manual; card com descrição, linguagem e data da última atualização                                          | `githubService` + `useGithubRepos`; cache para não estourar o limite de requisições                                                 | `src/services/githubService.ts`, `src/hooks/useGithubRepos.ts`     | _planejado (dia 4)_              |
+| 4   | Formulário de contato: validação por campo com mensagem específica; mensagem enviada por e-mail e salva; feedback                                     | React Hook Form + Zod; mensagem salva no Supabase e enviada por e-mail ao dono                                                      | `src/components/ContactForm.tsx`, `src/services/contactService.ts` | _planejado (dia 5)_              |
+| 5   | Dashboard: login com redirecionamento; mensagens com "marcar como respondida"; escolha dos destaques da home                                          | Supabase Auth; componente `ProtectedRoute`; tabelas `messages` e `featured_projects`                                                | `src/pages/dashboard/`, `src/contexts/AuthContext.tsx`             | _planejado (dia 6)_              |
+| 6   | Tema claro/escuro salvo entre visitas                                                                                                                 | `ThemeContext` + `localStorage`; na primeira visita segue `prefers-color-scheme`                                                    | `src/contexts/ThemeContext.tsx`                                    | _planejado (dia 3)_              |
+| 7   | Interface: responsiva (celular e desktop); componentes reaproveitados; identidade própria com 3D interativo                                           | CSS Modules + variáveis CSS; peças base em `components/ui/`; cena 3D que reage ao mouse                                             | `src/components/ui/`, `src/three/`                                 | _planejado (dias 2–3)_           |
+| 8   | Performance: Lighthouse mobile ≥ 80; imagens otimizadas e com lazy; 3D e dashboard sob demanda; sem layout shift; sem requisições repetidas ao GitHub | `React.lazy` + `Suspense`; WebP/AVIF com `width`/`height` e `loading="lazy"`; `staleTime` no TanStack Query                         | todo o projeto (ver seção 8)                                       | _contínuo; auditoria no dia 8_   |
+| 9   | Testes automatizados: validação do formulário e bloqueio do dashboard sem login (mínimo)                                                              | Vitest + Testing Library                                                                                                            | `src/**/*.test.tsx`                                                | _planejado (dia 8)_              |
+| 10  | Deploy: URL pública; publicação automática a cada push na `main`                                                                                      | Integração Git da Vercel                                                                                                            | Vercel + `vercel.json`                                             | _planejado (dia 2)_              |
+| 11  | Versionamento: padrão de mensagem; branch por funcionalidade; padrões no README e nas instruções da IA                                                | Conventional Commits + commitlint; GitHub Flow                                                                                      | `commitlint.config.js`, `.husky/`, seção 6                         | ✅ feito                         |
+| 12  | Arquitetura: pastas com responsabilidade clara; lógica separada da apresentação; nomes definidos; padrão verificado automaticamente                   | Estrutura por tipo de arquivo; services + hooks; Biome no pre-commit, no hook da IA e no CI                                         | `src/`, `biome.json`, seções 4 e 5                                 | ✅ feito                         |
+| —   | Repositório: público; `.env` fora do Git com `.env.example`; README com projeto, tecnologias e como rodar                                             | `.gitignore`, `.env.example`, `README.md`                                                                                           | raiz                                                               | ✅ feito (README final no dia 9) |
+
+---
+
+## 3. Stack e justificativas
+
+Cada linha registra **o que foi comparado, o critério e o que aceitamos perder**. É a base da parte "Justificativas da stack" do vídeo. Ao adicionar uma dependência nova, acrescente uma linha aqui no mesmo PR.
+
+| Área              | Escolha                                               | Comparamos com                     | Critério                                                                                                   | O que aceitamos perder                                                 |
+| ----------------- | ----------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Base              | **Vite + React** (SPA)                                | Next.js                            | Site sem necessidade de SSR; build e dev server rápidos; menos conceitos para explicar                     | SSR/SEO automático; precisamos configurar o rewrite de rotas na Vercel |
+| Linguagem         | **TypeScript** (`strict`)                             | JavaScript                         | Erros de formato de dados (GitHub, Supabase, formulário) aparecem no editor; a IA erra menos com tipos     | Um pouco mais de código no começo (tipos de props e de dados)          |
+| Lint e formatação | **Biome**                                             | ESLint + Prettier                  | Uma ferramenta só, uma config só, muito mais rápida                                                        | O ecossistema de plugins do ESLint                                     |
+| Padrão de commits | **Husky + lint-staged + commitlint**                  | Só convenção escrita               | O padrão é **verificado**, não só combinado: commit fora do padrão é recusado                              | Commits ficam alguns segundos mais lentos                              |
+| Fluxo de branches | **GitHub Flow**                                       | Git Flow, trunk-based              | Projeto de uma pessoa, com deploy contínuo: uma `main` e branches curtas bastam                            | As branches `develop`/`release` do Git Flow                            |
+| Estilo            | **CSS Modules + variáveis CSS**                       | Tailwind, shadcn/ui, MUI           | O visual XP é todo customizado; bibliotecas de UI ajudariam pouco e brigariam com o estilo                 | Utilitários e componentes prontos                                      |
+| 3D                | **Three.js imperativo** dentro de um componente React | React Three Fiber, Spline          | A cena e os jogos são código Three.js imperativo; envolvê-los num componente é mais simples que reescrever | O estilo declarativo do R3F                                            |
+| Rotas             | **React Router** _(planejado)_                        | TanStack Router, wouter            | Padrão de mercado, documentação ampla, rotas aninhadas para o dashboard                                    | A tipagem forte de rotas do TanStack Router                            |
+| Dados de API      | **TanStack Query** _(planejado)_                      | SWR, `useEffect` + `useState`      | Cache entre páginas (sem refazer chamadas ao GitHub), estados de carregamento/erro prontos                 | Mais uma dependência (~13 KB gzip)                                     |
+| Formulário        | **React Hook Form + Zod** _(planejado)_               | Formik + Yup, validação manual     | Menos re-renderizações; o schema Zod gera os tipos e as mensagens de erro                                  | Curva de aprendizado de duas bibliotecas                               |
+| Backend           | **Supabase** _(planejado)_                            | Firebase, PocketBase, Node próprio | Postgres + Auth + regras de acesso (RLS) num serviço grátis, sem manter servidor                           | Dependência de um serviço externo                                      |
+| Testes            | **Vitest + Testing Library** _(planejado)_            | Jest, Playwright                   | Roda com a mesma config do Vite; testa como o usuário usa a tela                                           | Testes ponta a ponta em navegador real                                 |
+| Deploy            | **Vercel**                                            | Netlify, GitHub Pages              | Pedido da atividade; deploy automático por push e preview por PR                                           | Controle fino de servidor                                              |
+
+---
+
+## 4. Arquitetura
+
+### 4.1 Visão geral
+
+```
+navegador
+   │
+main.tsx ──► App ──► providers (QueryClient, Theme, Auth)        [planejado]
+                       │
+                     Router ──► Layout "Desktop"
+                                  ├── Scene3D (lazy)        → src/three/   (Three.js)
+                                  └── XpWindow              → src/components/ui/
+                                        └── páginas (abas)  → src/pages/
+                                              │
+                                            hooks (useGithubRepos, useContactForm…)
+                                              │
+                                            services (githubService, contactService…)
+                                              │
+                              API do GitHub (REST)  ·  Supabase (Postgres + Auth)
+```
+
+### 4.2 Fluxo de dados
+
+1. A **página** monta componentes e chama um **hook**.
+2. O **hook** usa o TanStack Query (`useQuery`/`useMutation`) e chama uma função de **service**.
+3. O **service** faz a chamada (`fetch` ou cliente do Supabase), trata o HTTP e devolve **dados tipados** (tipos em `src/types/`).
+4. O componente recebe `{ data, isPending, isError }` e renderiza **carregando, erro, vazio ou conteúdo**.
+5. O cache do TanStack Query guarda o resultado: ao voltar para uma página, os dados aparecem sem nova chamada.
+
+### 4.3 Pastas e responsabilidades
+
+| Pasta                | Responsabilidade                                                    | Pode importar                     | Não pode                   |
+| -------------------- | ------------------------------------------------------------------- | --------------------------------- | -------------------------- |
+| `src/app/`           | `App`, rotas, providers globais                                     | tudo                              | —                          |
+| `src/pages/`         | uma página por rota; só compõe                                      | `components`, `hooks`, `types`    | chamar `services` direto   |
+| `src/components/`    | blocos de uma área (lista de projetos, formulário)                  | `components/ui`, `hooks`, `types` | chamar `fetch`/Supabase    |
+| `src/components/ui/` | peças base reaproveitadas (Button, Window, Card, Skeleton, Spinner) | só React, estilos e `types`       | hooks de dados, `services` |
+| `src/hooks/`         | estado, efeitos e acesso a dados via TanStack Query                 | `services`, `types`               | JSX de página              |
+| `src/services/`      | comunicação com APIs; funções puras assíncronas                     | `types`, `lib` de clientes        | React (nada de hooks)      |
+| `src/contexts/`      | estado global: tema e autenticação                                  | `services`, `types`               | —                          |
+| `src/types/`         | tipos compartilhados (`Repository`, `ContactMessage`)               | nada                              | —                          |
+| `src/styles/`        | `global.css` com reset e **tokens** (variáveis CSS)                 | —                                 | —                          |
+| `src/three/`         | cena 3D (computador, estrelas, câmera) em Three.js                  | `three`                           | React                      |
+| `src/games/`         | jogos em JavaScript (ver seção 10)                                  | `three`                           | —                          |
+| `src/assets/`        | imagens importadas pelo código                                      | —                                 | —                          |
+
+Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam em `public/`.
+
+### 4.4 Rotas _(planejado — dia 4)_
+
+| Rota              | Página                               | Observação                                          |
+| ----------------- | ------------------------------------ | --------------------------------------------------- |
+| `/`               | apresentação (aba inicial da janela) | cena 3D ao fundo                                    |
+| `/habilidades`    | tecnologias e níveis                 |                                                     |
+| `/projetos`       | lista de projetos do GitHub          | destaques escolhidos no dashboard aparecem primeiro |
+| `/projetos/:slug` | detalhe do projeto                   | `slug` = nome do repositório                        |
+| `/contato`        | formulário                           |                                                     |
+| `/multimidia`     | galeria, player e jogos              | jogos carregados sob demanda                        |
+| `/painel/login`   | login do dono                        |                                                     |
+| `/painel`         | dashboard protegido                  | sem login → redireciona para `/painel/login`        |
+| `*`               | 404 "tela azul"                      |                                                     |
+
+### 4.5 Dados no Supabase _(planejado — dias 5–6)_
+
+| Tabela              | Colunas                                                           | Acesso (RLS)                                                           |
+| ------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `messages`          | `id`, `name`, `email`, `message`, `answered` (bool), `created_at` | qualquer visitante **insere**; só o dono autenticado **lê e atualiza** |
+| `featured_projects` | `repo_name`, `position`, `updated_at`                             | qualquer visitante **lê**; só o dono **altera**                        |
+
+---
+
+## 5. Convenções de código
+
+### 5.1 Nomes
+
+| O quê                      | Padrão                        | Exemplo                    |
+| -------------------------- | ----------------------------- | -------------------------- |
+| Componente (e seu arquivo) | `PascalCase`, um por arquivo  | `ProjectCard.tsx`          |
+| Estilo do componente       | CSS Module com o mesmo nome   | `ProjectCard.module.css`   |
+| Hook                       | `use` + `camelCase`           | `useGithubRepos.ts`        |
+| Service                    | `camelCase` + `Service`       | `githubService.ts`         |
+| Tipo / interface           | `PascalCase`, sem prefixo `I` | `Repository`               |
+| Props                      | `<Componente>Props`           | `ProjectCardProps`         |
+| Constante global           | `UPPER_SNAKE_CASE`            | `GITHUB_USERNAME`          |
+| Variável CSS               | `--<categoria>-<nome>`        | `--color-bg`, `--space-md` |
+| Teste                      | arquivo testado + `.test`     | `ContactForm.test.tsx`     |
+
+**Idioma:** identificadores no código em **inglês**; textos da interface, comentários e commits em **português**.
+
+### 5.2 TypeScript
+
+- `strict` ligado. **`any` é erro** (Biome). Use `unknown` e estreite o tipo.
+- Props com `type <Nome>Props = { … }`.
+- Dados externos (GitHub, Supabase, formulário) sempre têm um tipo em `src/types/`. Valide com Zod o que vem de fora quando fizer sentido.
+- Evite `!` (non-null assertion). Trate o caso nulo.
+- Imports internos com `@/` (`@/components/ui/Button`), nunca `../../..`.
+- Exports **nomeados**. `export default` só onde a ferramenta exige (configs, `React.lazy`).
+
+### 5.3 React
+
+- Só componentes de função e hooks.
+- **Lógica fora da apresentação:** componente visual não chama `fetch` nem Supabase.
+- Componente com mais de ~150 linhas ou com duas responsabilidades → divida.
+- Antes de criar botão, card, janela ou campo, **procure em `components/ui/`**.
+- `key` estável em listas (id ou nome do repositório, nunca o índice).
+- `useMemo`/`memo` só quando houver um problema de desempenho medido.
+- Tudo que é pesado (cena 3D, jogos, dashboard) entra com `React.lazy` + `Suspense`.
+
+O padrão de referência para dados de API:
+
+```ts
+// src/services/githubService.ts — só comunicação, sem React
+export async function fetchRepositories(username: string): Promise<Repository[]> {
+  const response = await fetch(`https://api.github.com/users/${username}/repos?sort=pushed`)
+  if (!response.ok) throw new Error(`GitHub respondeu ${response.status}`)
+  return response.json()
+}
+```
+
+```ts
+// src/hooks/useGithubRepos.ts — estado e cache
+export function useGithubRepos() {
+  return useQuery({
+    queryKey: ['repos', GITHUB_USERNAME],
+    queryFn: () => fetchRepositories(GITHUB_USERNAME),
+    staleTime: 10 * 60 * 1000, // 10 min sem refazer a chamada
+  })
+}
+```
+
+```tsx
+// src/components/ProjectList.tsx — só apresentação, com os 3 estados
+export function ProjectList() {
+  const { data, isPending, isError, refetch } = useGithubRepos()
+
+  if (isPending) return <ProjectListSkeleton />
+  if (isError)
+    return <ErrorDialog message="Não foi possível carregar os projetos." onRetry={refetch} />
+  if (data.length === 0) return <EmptyState message="Nenhum projeto público ainda." />
+
+  return (
+    <ul>
+      {data.map((repo) => (
+        <ProjectCard key={repo.id} repo={repo} />
+      ))}
+    </ul>
+  )
+}
+```
+
+### 5.4 CSS
+
+- CSS Modules ao lado do componente. Estilos globais só em `src/styles/global.css`.
+- Cores, fontes, espaçamentos e sombras vêm de **variáveis CSS** (tokens). Nada de cor solta no meio do código.
+- O tema escuro troca os valores das variáveis (`[data-theme='dark']`), não reescreve componentes.
+- Mobile-first: estilo base para celular; `@media (min-width: …)` para telas maiores.
+- Unidades `rem` para texto e espaçamento; evite `!important`.
+- Teste em **375 px** e **1440 px** de largura.
+
+### 5.5 Acessibilidade
+
+- Imagens com `alt` (vazio só se for decorativa).
+- `<button>` para ações; `<a>`/`<Link>` para navegação.
+- Campos de formulário com `<label>`; erros ligados ao campo com `aria-describedby`.
+- Foco visível em tudo que é clicável; a janela XP precisa funcionar só com teclado.
+- Respeite `prefers-reduced-motion` nas animações e na câmera 3D.
+
+### 5.6 Comentários
+
+Comente o **porquê**, não o quê. Em português. Sem código comentado "para depois": apague, o Git guarda.
+
+---
+
+## 6. Git: branches, commits e pull requests
+
+### 6.1 Branches (GitHub Flow)
+
+- A `main` é **protegida** e sempre publicável. Todo merge nela gera um deploy na Vercel.
+- Toda mudança nasce numa branch a partir da `main` atualizada:
+
+| Prefixo     | Uso                                   | Exemplo             |
+| ----------- | ------------------------------------- | ------------------- |
+| `feature/`  | funcionalidade nova                   | `feature/dashboard` |
+| `fix/`      | correção                              | `fix/rota-projeto`  |
+| `chore/`    | configuração, dependências            | `chore/setup`       |
+| `docs/`     | documentação                          | `docs/readme`       |
+| `test/`     | testes                                | `test/formulario`   |
+| `perf/`     | desempenho                            | `perf/imagens`      |
+| `refactor/` | reorganização sem mudar comportamento | `refactor/services` |
+- Nomes em minúsculas, com hífen, curtos.
+
+### 6.2 Commits (Conventional Commits)
+
+```
+<tipo>(<escopo opcional>): <descrição em português, no presente, em minúsculas>
+
+<corpo opcional: o porquê, em até 3 linhas>
+```
+
+| Tipo                     | Quando                                   |
+| ------------------------ | ---------------------------------------- |
+| `feat`                   | funcionalidade nova para quem usa o site |
+| `fix`                    | correção de bug                          |
+| `refactor`               | muda o código sem mudar o comportamento  |
+| `style`                  | só formatação                            |
+| `perf`                   | desempenho                               |
+| `test`                   | testes                                   |
+| `docs`                   | documentação                             |
+| `build` / `ci` / `chore` | build, pipeline, configuração            |
+| `revert`                 | desfaz um commit anterior                |
+
+Bons: `feat: adiciona validação do formulário de contato` · `fix(rotas): corrige 404 ao atualizar /projetos/:slug` · `perf: carrega a cena 3d sob demanda`
+
+Ruins: `update`, `ajustes`, `wip`, `Added form`, `feat: Adiciona…` (maiúscula), títulos com mais de 72 caracteres.
+
+- **Um commit = uma mudança com sentido.** Vários commits pequenos são melhores que um grande.
+- O commitlint (mensagem) e o lint-staged (Biome nos arquivos) rodam em **todo** commit.
+
+### 6.3 Pull requests
+
+1. Antes de abrir: `npm run lint`, `npm run build` (e `npm test`, quando houver testes) passando, e o agente `revisor` rodado.
+2. Título no padrão Conventional Commits. Descrição com: o que muda, como testar, prints se mudou algo visual, e qual requisito da seção 2 atende.
+3. O CI (lint + tipos + build) precisa passar.
+4. Merge com **"Create a merge commit"** (não squash), para preservar os commits pequenos no histórico.
+5. Apague a branch depois do merge.
+
+### 6.4 Proibido
+
+- Commitar direto na `main`.
+- `--no-verify` para pular os hooks.
+- `git push --force` e reescrever histórico já enviado.
+- Commitar `.env`, chaves ou tokens.
+- Alterar a data de commits.
+
+---
+
+## 7. Definition of Done
+
+Uma tarefa só está pronta quando:
+
+- [ ] `npm run lint` e `npm run build` passam (e `npm test`, quando houver testes).
+- [ ] Todo dado de API mostra carregando, erro e vazio.
+- [ ] Funciona em 375 px e em 1440 px, nos temas claro e escuro.
+- [ ] Imagens novas em WebP/AVIF, com `width`/`height` e `loading="lazy"` (exceto a primeira dobra).
+- [ ] Nada pesado entrou no pacote inicial sem `React.lazy`.
+- [ ] Sem `console.log`, código comentado ou `TODO` sem dono.
+- [ ] Commits no padrão, na branch certa.
+- [ ] Este arquivo e o README atualizados, se a mudança alterou um padrão, rota, variável ou dependência.
+
+---
+
+## 8. Orçamento de performance
+
+| Métrica                         | Meta                                                                                     |
+| ------------------------------- | ---------------------------------------------------------------------------------------- |
+| Lighthouse mobile (performance) | **≥ 80** (obrigatório); objetivo 90                                                      |
+| JavaScript inicial (gzip)       | ≤ 150 KB, **sem Three.js**                                                               |
+| CLS (saltos de layout)          | < 0,1                                                                                    |
+| Imagem individual               | ≤ 200 KB, em WebP/AVIF                                                                   |
+| Chamadas ao GitHub              | uma por sessão: `staleTime` de 10 min, sem refazer ao trocar de página ou focar a janela |
+
+Como garantir:
+
+- Cena 3D, jogos e dashboard em chunks separados (`React.lazy`). No celular, a cena 3D começa como imagem estática e só carrega quando a página já está pronta.
+- Reservar espaço com `width`/`height` ou `aspect-ratio` em imagens, cards e skeletons.
+- Conferir o tamanho dos chunks no `npm run build` a cada PR que adiciona dependência.
+
+---
+
+## 9. Segurança e segredos
+
+- Segredos ficam no `.env`, fora do Git. O `.env.example` lista as variáveis **sem valores reais**.
+- **Toda variável `VITE_*` vai para o navegador e é pública.** Nunca coloque com esse prefixo a `service_role` do Supabase, tokens do GitHub ou chaves de e-mail; esses só existem em ambiente de servidor.
+- A proteção dos dados do Supabase vem das regras de acesso (RLS, seção 4.5), não de esconder a chave anônima.
+- Agentes não leem, não imprimem e não commitam o `.env`.
+
+Variáveis atuais:
+
+| Variável                 | Uso                                       |
+| ------------------------ | ----------------------------------------- |
+| `VITE_GITHUB_USERNAME`   | usuário do GitHub de onde vêm os projetos |
+| `VITE_SUPABASE_URL`      | URL do projeto Supabase                   |
+| `VITE_SUPABASE_ANON_KEY` | chave anônima (pública) do Supabase       |
+
+---
+
+## 10. Cena 3D e jogos (`src/three/` e `src/games/`)
+
+- São código **Three.js imperativo em JavaScript**. Ficam **fora do lint** do Biome e não seguem as regras de React.
+- **Não reescreva, renomeie ou "melhore"** esse código sem um pedido explícito. Mudanças de conteúdo (textos, nomes de personagens, imagens) são bem-vindas; mudanças de lógica, só quando pedidas.
+- A integração com o React acontece num **único componente de ponte** por módulo (ex.: `Scene3D.tsx`), que:
+  1. cria a cena dentro de um `useEffect`, num `<div>`/`<canvas>` referenciado por `useRef`;
+  2. **limpa tudo ao desmontar**: `cancelAnimationFrame`, remoção de listeners, `dispose()` de geometrias, materiais, texturas e do renderer;
+  3. é carregado com `React.lazy`, fora do pacote inicial.
+- Three.js vem do npm (`import * as THREE from 'three'`), nunca de CDN.
+- Textos e dados pessoais (nomes, falas, legendas, playlist) ficam em arquivos de dados separados, para trocar sem mexer na lógica.
+
+---
+
+## 11. Como um agente deve trabalhar
+
+1. **Entender:** leia este arquivo e o pedido. Descubra em que etapa do cronograma (seção 13) o pedido se encaixa.
+2. **Escopo do dia:** faça só a etapa pedida. Não adiante funcionalidades de outros dias.
+3. **Branch:** saia da `main` atualizada para uma branch com o prefixo certo (seção 6.1).
+4. **Planejar pequeno:** divida em passos que viram commits independentes.
+5. **Implementar** seguindo as seções 4 e 5. Reaproveite `components/ui/` antes de criar.
+6. **Validar:** lint, build, testes; abrir o site e conferir em 375 px e 1440 px.
+7. **Commitar** em commits pequenos, no padrão (seção 6.2).
+8. **Revisar:** rode o agente `revisor` e corrija o que ele apontar.
+9. **Abrir o PR** conforme a seção 6.3.
+
+**Pergunte antes de:**
+
+- adicionar uma dependência (traga as alternativas, o critério e o que se perde, para a seção 3);
+- mudar a arquitetura, as rotas ou o modelo de dados;
+- mexer em deploy, CI, hooks ou segredos;
+- escrever qualquer informação pessoal do Rafael (bio, cargo, empresas, fotos, links). **Nunca invente esses dados**: use um texto provisório marcado com `TODO(conteúdo)` e avise.
+
+**Quando algo falhar** (hook, lint, build, teste): leia o erro, corrija a causa e tente de novo. Nunca desligue a verificação.
+
+---
+
+## 12. O harness de IA
+
+O harness funciona em **camadas**: cada camada pega o que a anterior deixou passar.
+
+| Camada             | Arquivo                                                            | O que faz                                                                          | Por quê                                                              |
+| ------------------ | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| 1. Instrução       | `AGENTS.md` (este arquivo)                                         | contexto e regras para qualquer agente                                             | padrão aberto, lido por Codex, Cursor, Copilot, Gemini e Claude Code |
+| 1. Instrução       | `.claude/CLAUDE.md`                                                | importa este arquivo e acrescenta o que é específico do Claude Code                | o Claude Code lê o `CLAUDE.md` automaticamente em toda sessão        |
+| 2. Procedimentos   | `.claude/skills/commit/`                                           | passo a passo de commit no padrão                                                  | repetível: a IA segue o mesmo roteiro toda vez                       |
+| 2. Procedimentos   | `.claude/skills/novo-componente/`                                  | como criar componente no padrão                                                    | garante o mesmo formato em todos os componentes                      |
+| 2. Procedimentos   | `.claude/agents/revisor.md`                                        | agente que revisa a branch contra este arquivo antes do PR                         | uma segunda leitura, sem o viés de quem escreveu o código            |
+| 3. Automação na IA | `.claude/settings.json`                                            | permissões: libera comandos seguros, nega leitura do `.env` e comandos destrutivos | menos interrupções e nenhum acesso a segredos                        |
+| 3. Automação na IA | `.claude/hooks/guard-git.mjs`                                      | bloqueia commit na `main`, `--no-verify` e push forçado                            | a regra de branches deixa de depender da memória da IA               |
+| 3. Automação na IA | `.claude/hooks/format-file.mjs`                                    | roda o Biome em cada arquivo que a IA edita e devolve os erros para ela            | o código já sai no padrão, antes do commit                           |
+| 3. Automação na IA | `.claude/launch.json`                                              | como subir o servidor de desenvolvimento no preview do app                         | a IA consegue abrir e conferir o site                                |
+| 4. Git hooks       | `.husky/`, `commitlint.config.js`, `lint-staged` no `package.json` | Biome nos arquivos e validação da mensagem em todo commit                          | vale para pessoas e para qualquer ferramenta de IA                   |
+| 5. CI              | `.github/workflows/ci.yml`                                         | lint, tipos e build em todo PR                                                     | última barreira antes da `main`                                      |
+
+**Ferramenta e modelo:** Claude Code com Claude Opus. Escolhido por trabalhar direto no repositório (lê, edita, roda comandos e testa no navegador) e por suportar instruções, skills, agentes, hooks e MCPs versionados no projeto.
+
+**Conectores (MCP)** _(planejado)_: Supabase (dia 5), para criar tabelas e regras de acesso direto pela IA. O GitHub é acessado pela CLI `gh`.
+
+---
+
+## 13. Cronograma e status
+
+| Dia | Data  | Branch                            | Entrega                                                                     | Status |
+| --- | ----- | --------------------------------- | --------------------------------------------------------------------------- | ------ |
+| 1   | 25/10 | `chore/setup`                     | Projeto base, Biome, Husky + commitlint, pastas, harness de IA, CI, README  | ✅     |
+| 2   | 26/10 | `feature/cena-3d`                 | Cena 3D (computador e espaço) em React, sob demanda; deploy na Vercel       | ⏳     |
+| 3   | 27/10 | `feature/janela-xp`               | Janela XP com componentes reaproveitáveis, conteúdo, tema salvo, responsivo | ⏳     |
+| 4   | 28/10 | `feature/rotas`, `feature/github` | Rotas, `/projetos/:slug`, 404, projetos da API do GitHub com os 3 estados   | ⏳     |
+| 5   | 29/10 | `feature/contato`                 | Formulário validado, salvo no Supabase e enviado por e-mail                 | ⏳     |
+| 6   | 30/10 | `feature/dashboard`               | Login, rota protegida, mensagens e destaques                                | ⏳     |
+| 7   | 31/10 | `feature/jogos`                   | Fox 64, B-Zero 64, galeria e player com conteúdo do Rafael                  | ⏳     |
+| 8   | 01/11 | `test/…`, `perf/…`                | Testes automatizados e auditoria de performance                             | ⏳     |
+| 9   | 02/11 | `docs/readme`                     | README final, revisão geral, vídeo                                          | ⏳     |
+| —   | 03/11 | —                                 | Entrega                                                                     | ⏳     |
+
+Ao concluir uma etapa, marque o status aqui e na seção 2 no mesmo PR.
