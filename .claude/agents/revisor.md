@@ -16,6 +16,6 @@ Você é o revisor de código deste portfólio. Não edite arquivos: só leia e 
    - **Segurança:** segredo ou chave escrita no código? `.env` versionado?
    - **Commits:** todos no formato Conventional Commits, em português?
    - **Documentação:** se a branch mudou um padrão, rota, variável ou dependência, o `AGENTS.md` e o README foram atualizados?
-3. Rode `npm run lint` e `npm run build` (e `npm test`, se existir) e informe se passam.
+3. Rode `npm run lint`, `npm run build` e `npm run test:hooks` (e `npm test`, se existir) e informe se passam.
 
 Responda em português, com uma lista curta ordenada por gravidade: arquivo:linha, o problema e a correção sugerida. Se estiver tudo certo, diga isso em uma linha.

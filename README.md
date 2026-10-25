@@ -9,17 +9,15 @@ Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser 
 | Área              | Escolha                                                                                                                                         |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | Base              | [Vite](https://vite.dev) + [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org)                                         |
-| 3D e jogos        | [Three.js](https://threejs.org)                                                                                                                 |
 | Lint e formatação | [Biome](https://biomejs.dev)                                                                                                                    |
 | Padrão de commits | [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org) |
-| CI                | GitHub Actions (lint + tipos + build em todo PR)                                                                                                |
-| Deploy            | [Vercel](https://vercel.com)                                                                                                                    |
+| CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                    |
 
-Ainda vão entrar: React Router, TanStack Query, React Hook Form + Zod, Supabase e Vitest + Testing Library.
+Ainda vão entrar: [Three.js](https://threejs.org) (cena 3D e jogos), deploy na [Vercel](https://vercel.com), React Router, TanStack Query, React Hook Form + Zod, Supabase e Vitest + Testing Library.
 
 ## Como rodar
 
-Pré-requisito: Node.js 22 ou mais novo.
+Pré-requisito: Node.js 22.22.1 ou mais novo (recomendado: 24).
 
 ```bash
 git clone https://github.com/RafaelDias07/Portifolio.git
@@ -33,14 +31,15 @@ O site abre em `http://localhost:5173`.
 
 ### Scripts
 
-| Comando             | O que faz                                            |
-| ------------------- | ---------------------------------------------------- |
-| `npm run dev`       | servidor de desenvolvimento                          |
-| `npm run build`     | checa os tipos e gera o build de produção em `dist/` |
-| `npm run preview`   | serve o build localmente                             |
-| `npm run lint`      | lint e formatação com o Biome (só verifica)          |
-| `npm run format`    | corrige automaticamente o que o Biome conseguir      |
-| `npm run typecheck` | checa só os tipos                                    |
+| Comando              | O que faz                                            |
+| -------------------- | ---------------------------------------------------- |
+| `npm run dev`        | servidor de desenvolvimento                          |
+| `npm run build`      | checa os tipos e gera o build de produção em `dist/` |
+| `npm run preview`    | serve o build localmente                             |
+| `npm run lint`       | lint e formatação com o Biome (só verifica)          |
+| `npm run format`     | corrige automaticamente o que o Biome conseguir      |
+| `npm run typecheck`  | checa só os tipos                                    |
+| `npm run test:hooks` | testa os hooks do harness de IA                      |
 
 ## Variáveis de ambiente
 
@@ -81,9 +80,9 @@ src/
 
 ### Branches (GitHub Flow)
 
-- `main` protegida e sempre publicável; todo merge nela gera um deploy na Vercel
-- uma branch por funcionalidade: `feature/<nome>`, `fix/<nome>`, `chore/<nome>`, `docs/<nome>`, `test/<nome>`, `perf/<nome>`
-- toda branch volta para a `main` por pull request, com o CI passando
+- `main` protegida por um ruleset no GitHub: só recebe mudanças por pull request com o CI verde; push forçado e exclusão são bloqueados
+- uma branch por funcionalidade: `feature/<nome>`, `fix/<nome>`, `chore/<nome>`, `docs/<nome>`, `test/<nome>`, `perf/<nome>`, `refactor/<nome>`
+- toda branch volta para a `main` por pull request, com merge commit, para preservar o histórico
 
 ### Commits (Conventional Commits)
 
@@ -93,20 +92,21 @@ fix(rotas): corrige 404 ao atualizar a página de projeto
 chore: adiciona husky e commitlint
 ```
 
-O commitlint recusa mensagens fora do padrão, e o lint-staged roda o Biome nos arquivos de cada commit.
+O commitlint recusa mensagens fora do padrão (título com no máximo 72 caracteres), e o lint-staged roda o Biome nos arquivos de cada commit. No pull request, o CI confere de novo todas as mensagens.
 
 ## Harness de IA
 
 O projeto é desenvolvido com o [Claude Code](https://claude.com/claude-code). A configuração fica versionada no repositório. O ponto de partida é o [`AGENTS.md`](AGENTS.md), que explica o projeto inteiro (requisitos, stack e justificativas, arquitetura, padrões, fluxo de trabalho e o próprio harness) para qualquer agente de IA.
 
-| Arquivo                                                                     | Função                                                       |
-| --------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| [`AGENTS.md`](AGENTS.md)                                                    | fonte única de verdade do projeto para agentes e pessoas     |
-| [`.claude/CLAUDE.md`](.claude/CLAUDE.md)                                    | importa o `AGENTS.md` e explica o que é específico do Claude |
-| [`.claude/settings.json`](.claude/settings.json)                            | permissões e hooks                                           |
-| [`.claude/hooks/guard-git.mjs`](.claude/hooks/guard-git.mjs)                | bloqueia commit na `main`, `--no-verify` e push forçado      |
-| [`.claude/hooks/format-file.mjs`](.claude/hooks/format-file.mjs)            | roda o Biome em todo arquivo que a IA edita                  |
-| [`.claude/skills/commit`](.claude/skills/commit/SKILL.md)                   | passo a passo para commitar no padrão                        |
-| [`.claude/skills/novo-componente`](.claude/skills/novo-componente/SKILL.md) | como criar componentes no padrão                             |
-| [`.claude/agents/revisor.md`](.claude/agents/revisor.md)                    | agente que revisa a branch antes do PR                       |
-| [`.claude/launch.json`](.claude/launch.json)                                | como subir o servidor no preview do app                      |
+| Arquivo                                                                     | Função                                                                                                      |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [`AGENTS.md`](AGENTS.md)                                                    | fonte única de verdade do projeto para agentes e pessoas                                                    |
+| [`.claude/CLAUDE.md`](.claude/CLAUDE.md)                                    | importa o `AGENTS.md` e explica o que é específico do Claude                                                |
+| [`.claude/settings.json`](.claude/settings.json)                            | permissões e hooks                                                                                          |
+| [`.claude/hooks/guard-bash.mjs`](.claude/hooks/guard-bash.mjs)              | barra commit/push na `main`, pular hooks, push forçado, comandos que descartam trabalho e leitura do `.env` |
+| [`.claude/hooks/guard-bash.test.mjs`](.claude/hooks/guard-bash.test.mjs)    | 112 testes do hook (`npm run test:hooks`)                                                                   |
+| [`.claude/hooks/format-file.mjs`](.claude/hooks/format-file.mjs)            | roda o Biome em todo arquivo que a IA edita                                                                 |
+| [`.claude/skills/commit`](.claude/skills/commit/SKILL.md)                   | passo a passo para commitar no padrão                                                                       |
+| [`.claude/skills/novo-componente`](.claude/skills/novo-componente/SKILL.md) | como criar componentes no padrão                                                                            |
+| [`.claude/agents/revisor.md`](.claude/agents/revisor.md)                    | agente que revisa a branch antes do PR                                                                      |
+| [`.claude/launch.json`](.claude/launch.json)                                | como subir o servidor no preview do app                                                                     |

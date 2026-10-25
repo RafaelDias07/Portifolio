@@ -40,6 +40,6 @@ description: Cria um componente React no padrão do projeto (TypeScript, CSS Mod
    - Export nomeado (`export function`), sem `export default`.
    - Cores, fontes e espaçamentos vêm das variáveis CSS de `src/styles/global.css`.
    - Imports internos com `@/`.
-5. **Sem lógica de dados no componente.** Se precisar buscar dados, crie a função em `src/services/` e um hook em `src/hooks/` (`useAlgumaCoisa`) que devolve `{ data, isLoading, error }`. O componente só usa o hook e trata os três estados: carregando, erro e vazio.
+5. **Sem lógica de dados no componente.** Se precisar buscar dados, crie a função em `src/services/` e um hook em `src/hooks/` (`useAlgumaCoisa`) que devolve `{ data, isPending, isError }` (o retorno do `useQuery` do TanStack Query). O componente só usa o hook e trata os três estados: carregando, erro e vazio.
 6. **Acessibilidade:** imagens com `alt`, botões com texto ou `aria-label`, `<button>` para ações e `<a>`/`Link` para navegação.
 7. **Responsivo:** teste a 375 px e a 1440 px de largura.

@@ -5,10 +5,10 @@ description: Cria commits no padrão do projeto (Conventional Commits em portugu
 
 # Commit no padrão do projeto
 
-1. **Confira a branch.** Rode `git branch --show-current`. Se for `main`, pare e crie a branch da etapa (`git switch -c feature/<nome>`). O hook `guard-git` bloqueia commit na `main`.
+1. **Confira a branch.** Rode `git branch --show-current`. Se for `main`, pare e crie a branch da etapa (`git switch -c feature/<nome>`). O hook `guard-bash` bloqueia commit na `main`.
    As regras completas de branches e commits estão na seção 6 do `AGENTS.md`.
 2. **Veja o que mudou.** `git status` e `git diff`. Se houver mudanças de assuntos diferentes, separe em commits diferentes (`git add <arquivos>` só do assunto).
-3. **Valide antes.** `npm run lint` e `npm run build` precisam passar. Se tiver testes da área, `npm test`.
+3. **Valide antes.** `npm run lint` e `npm run build` precisam passar. Se mexeu nos hooks, `npm run test:hooks`; se tiver testes da área, `npm test`.
 4. **Escreva a mensagem** no formato Conventional Commits:
 
    ```
@@ -36,4 +36,4 @@ description: Cria commits no padrão do projeto (Conventional Commits em portugu
    Evite: `update`, `ajustes`, `wip`, descrições em inglês, ponto final, mais de 72 caracteres no título.
 
 5. **Commite** com `git commit -m "<título>" -m "<corpo>"`. Não adicione linhas `Co-Authored-By` nem assinatura de ferramenta de IA: os commits saem só com o autor do projeto.
-6. **Se o hook falhar**, leia o erro, corrija (lint ou mensagem) e commite de novo. Nunca use `--no-verify`.
+6. **Se o hook falhar**, leia o erro, corrija (lint ou mensagem) e commite de novo. Nunca use `--no-verify`, `-n`, `HUSKY=0` ou qualquer outro jeito de pular a verificação.
