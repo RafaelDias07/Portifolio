@@ -6,7 +6,8 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "includes": ["**", "!src/games"]
   },
   "formatter": {
     "enabled": true,
@@ -21,6 +22,9 @@
     },
     "rules": {
       "preset": "recommended",
+      "suspicious": {
+        "noExplicitAny": "error"
+      },
       "style": {
         "useNamingConvention": {
           "level": "error",
