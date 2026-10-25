@@ -1,32 +1,112 @@
-# React + TypeScript + Vite
+# Portfólio — Rafael Dias
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser clicado, abre uma janela no estilo Windows XP com meus projetos, contato, galeria, player de música e dois jogos.
 
-Currently, two official plugins are available:
+> 🚧 **Em construção.** O projeto é desenvolvido em etapas diárias até 03/11/2026.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tecnologias
 
-## React Compiler
+| Área              | Escolha                                                                                                                                         |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Base              | [Vite](https://vite.dev) + [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org)                                         |
+| Lint e formatação | [Biome](https://biomejs.dev)                                                                                                                    |
+| Padrão de commits | [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org) |
+| CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                    |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Ainda vão entrar: [Three.js](https://threejs.org) (cena 3D e jogos), deploy na [Vercel](https://vercel.com), React Router, TanStack Query, React Hook Form + Zod, Supabase e Vitest + Testing Library.
 
-## Expanding the Oxlint configuration
+## Como rodar
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+Pré-requisito: Node.js 22.22.1 ou mais novo (recomendado: 24).
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+git clone https://github.com/RafaelDias07/Portifolio.git
+cd Portifolio
+npm install
+cp .env.example .env   # preencha os valores
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+O site abre em `http://localhost:5173`.
+
+### Scripts
+
+| Comando              | O que faz                                            |
+| -------------------- | ---------------------------------------------------- |
+| `npm run dev`        | servidor de desenvolvimento                          |
+| `npm run build`      | checa os tipos e gera o build de produção em `dist/` |
+| `npm run preview`    | serve o build localmente                             |
+| `npm run lint`       | lint e formatação com o Biome (só verifica)          |
+| `npm run format`     | corrige automaticamente o que o Biome conseguir      |
+| `npm run typecheck`  | checa só os tipos                                    |
+| `npm run test:hooks` | testa os hooks do harness de IA                      |
+
+## Variáveis de ambiente
+
+Todas estão listadas no [`.env.example`](.env.example). O `.env` fica fora do Git.
+
+| Variável                 | Para quê                                  |
+| ------------------------ | ----------------------------------------- |
+| `VITE_GITHUB_USERNAME`   | usuário do GitHub de onde vêm os projetos |
+| `VITE_SUPABASE_URL`      | URL do projeto no Supabase                |
+| `VITE_SUPABASE_ANON_KEY` | chave pública (anon) do Supabase          |
+
+## Estrutura de pastas
+
+```
+src/
+├── app/          # App, rotas e providers globais
+├── components/   # componentes reaproveitáveis (ui/ = peças base)
+├── pages/        # uma página por rota
+├── services/     # acesso a dados (GitHub, Supabase, e-mail)
+├── hooks/        # hooks personalizados
+├── contexts/     # tema e autenticação
+├── types/        # tipos compartilhados
+├── styles/       # estilos globais e variáveis CSS
+├── three/        # cena 3D
+├── games/        # jogos (JavaScript)
+└── assets/       # imagens
+```
+
+## Padrões do projeto
+
+### Nomenclatura
+
+- Componentes em `PascalCase`, um por arquivo: `ProjectCard.tsx` + `ProjectCard.module.css`
+- Hooks começam com `use`: `useGithubRepos.ts`
+- Services terminam em `Service`: `githubService.ts`
+- Código em inglês; textos da interface, comentários e commits em português
+- Imports internos com o alias `@/`
+
+### Branches (GitHub Flow)
+
+- `main` protegida por um ruleset no GitHub: só recebe mudanças por pull request com o CI verde; push forçado e exclusão são bloqueados
+- uma branch por funcionalidade: `feature/<nome>`, `fix/<nome>`, `chore/<nome>`, `docs/<nome>`, `test/<nome>`, `perf/<nome>`, `refactor/<nome>`
+- toda branch volta para a `main` por pull request, com merge commit, para preservar o histórico
+
+### Commits (Conventional Commits)
+
+```
+feat: adiciona validação do formulário de contato
+fix(rotas): corrige 404 ao atualizar a página de projeto
+chore: adiciona husky e commitlint
+```
+
+O commitlint recusa mensagens fora do padrão (título com no máximo 72 caracteres), e o lint-staged roda o Biome nos arquivos de cada commit. No pull request, o CI confere de novo todas as mensagens.
+
+## Harness de IA
+
+O projeto é desenvolvido com o [Claude Code](https://claude.com/claude-code). A configuração fica versionada no repositório. O ponto de partida é o [`AGENTS.md`](AGENTS.md), que explica o projeto inteiro (requisitos, stack e justificativas, arquitetura, padrões, fluxo de trabalho e o próprio harness) para qualquer agente de IA.
+
+| Arquivo                                                                     | Função                                                                                                      |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [`AGENTS.md`](AGENTS.md)                                                    | fonte única de verdade do projeto para agentes e pessoas                                                    |
+| [`.claude/CLAUDE.md`](.claude/CLAUDE.md)                                    | importa o `AGENTS.md` e explica o que é específico do Claude                                                |
+| [`.claude/settings.json`](.claude/settings.json)                            | permissões e hooks                                                                                          |
+| [`.claude/hooks/guard-bash.mjs`](.claude/hooks/guard-bash.mjs)              | barra commit/push na `main`, pular hooks, push forçado, comandos que descartam trabalho e leitura do `.env` |
+| [`.claude/hooks/guard-bash.test.mjs`](.claude/hooks/guard-bash.test.mjs)    | 148 testes do hook (`npm run test:hooks`)                                                                   |
+| [`.claude/hooks/format-file.mjs`](.claude/hooks/format-file.mjs)            | roda o Biome em todo arquivo que a IA edita                                                                 |
+| [`.claude/skills/commit`](.claude/skills/commit/SKILL.md)                   | passo a passo para commitar no padrão                                                                       |
+| [`.claude/skills/novo-componente`](.claude/skills/novo-componente/SKILL.md) | como criar componentes no padrão                                                                            |
+| [`.claude/agents/revisor.md`](.claude/agents/revisor.md)                    | agente que revisa a branch antes do PR                                                                      |
+| [`.claude/launch.json`](.claude/launch.json)                                | como subir o servidor no preview do app                                                                     |

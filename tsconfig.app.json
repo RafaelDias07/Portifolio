@@ -16,11 +16,17 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Alias: @/ aponta para src/ */
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "strict": true
   },
   "include": ["src"]
 }
