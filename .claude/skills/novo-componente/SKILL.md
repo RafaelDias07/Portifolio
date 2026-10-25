@@ -1,5 +1,4 @@
 ---
-
 name: novo-componente
 description: Cria um componente React no padrão do projeto (TypeScript, CSS Modules, lógica fora da apresentação). Use ao criar qualquer componente ou página nova.
 ---

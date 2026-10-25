@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!src/games"]
+    "includes": ["**", "!src/games", "!.claude/skills", "!.claude/agents"]
   },
   "formatter": {
     "enabled": true,

@@ -1,5 +1,4 @@
 ---
-
 name: commit
 description: Cria commits no padrão do projeto (Conventional Commits em português, branch própria, hooks passando). Use sempre que for commitar mudanças.
 ---
