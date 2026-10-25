@@ -2,7 +2,7 @@
 // Rode com: npm run test:hooks
 import assert from 'node:assert/strict'
 import { execFileSync, spawnSync } from 'node:child_process'
-import { mkdtempSync, rmSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { after, before, describe, test } from 'node:test'
@@ -29,6 +29,8 @@ before(() => {
   execFileSync('git', ['init', '-q', '-b', 'main', repo])
   git('-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-q', '--allow-empty', '-m', 'init')
   git('branch', 'feature/x')
+  mkdirSync(join(repo, 'src', 'app'), { recursive: true })
+  writeFileSync(join(repo, 'src', 'app', 'App.tsx'), 'export {}\n')
 })
 
 after(() => rmSync(repo, { recursive: true, force: true }))
@@ -114,6 +116,34 @@ const BLOCKED = [
   'git diff --no-index .env .env.example',
   'git show HEAD:.env',
   'cat .env*',
+  // casos achados no teste de invasão
+  'git --config-env core.hooksPath=HP commit -m "feat: x"',
+  'GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/dev/null git commit -m x',
+  'export GIT_CONFIG_COUNT=1; git commit -m x',
+  `GIT_CONFIG_PARAMETERS="'core.hooksPath'='/dev/null'" git commit -m x`,
+  "git config alias.ci 'commit --no-verify'",
+  'git -c alias.ci="commit --no-verify" ci -m x',
+  "sed -i '' '/hooksPath/d' .git/config",
+  'git config --remove-section core',
+  "mkdir -p ~/.config/husky && echo 'export HUSKY=0' >> ~/.config/husky/init.sh",
+  'rm -rf .husky',
+  'env -u HUSKY git commit --no-verify -m x',
+  'unset HUSKY',
+  'git pull --no-verify --no-rebase origin main',
+  'git checkout src/app/App.tsx',
+  'git restore --staged --worktree src/app/App.tsx',
+  'for b in feature/y feature/z; do git branch -D "$b"; done',
+  'git switch -C feature/x main',
+  'git checkout -B feature/x main',
+  'timeout 60 git push --force origin feature/x',
+  'git reset --har HEAD~1',
+  'git push --del origin feature/y',
+  'git push --branches origin',
+  'git clean --forc -d',
+  'git -c clean.requireForce=false clean -d',
+  'git switch --discard main',
+  'git branch -d --forc feature/y',
+  'git -c alias.undo="reset --hard" undo',
 ]
 
 const ALLOWED = [
@@ -155,6 +185,16 @@ const ALLOWED = [
   'git check-ignore .env',
   'npx biome check --write src/app/App.tsx',
   'gh pr create --title "chore: x" --body "nada de --force aqui"',
+  // falsos positivos achados no teste de invasão
+  'git config --get core.hooksPath',
+  'grep -rn "HUSKY=0" .claude/hooks',
+  'grep -rn ".env" src',
+  'rg ".env" src',
+  'cat .gitignore | grep .env',
+  'git add .husky/pre-commit',
+  'ls .husky',
+  'timeout 60 npm run build',
+  'for f in src/*.ts; do npx biome check "$f"; done',
 ]
 
 describe('guard-bash bloqueia', () => {

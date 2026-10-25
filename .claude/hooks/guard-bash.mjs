@@ -4,7 +4,7 @@
 // O comando é separado em partes de verdade (aspas, &&, ;, |, quebras de linha, $(...), bash -c,
 // heredoc), então truques como `git -C . commit`, `HUSKY=0 git commit` ou `-nm` não passam.
 import { execFileSync } from 'node:child_process'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { basename, resolve } from 'node:path'
 
 const PROTECTED_BRANCH = 'main'
@@ -18,7 +18,23 @@ const PREFIX_COMMANDS = new Set([
   'time',
   'sudo',
   'xargs',
+  'timeout',
+  // palavras do shell que antecedem um comando (for ...; do git ...; done)
+  'do',
+  'then',
+  'else',
+  'if',
+  'elif',
+  'while',
+  'until',
+  '!',
 ])
+// Opções desses prefixos que recebem valor (env -u HUSKY, timeout -s KILL, sudo -u root)
+const PREFIX_VALUE_OPTIONS = new Set(['-u', '-C', '-S', '-s', '-k', '-g', '-n', '-P', '-L', '-I'])
+// Comandos cujo primeiro argumento é um padrão de busca, não um arquivo (grep ".env" src)
+const SEARCH_COMMANDS = new Set(['grep', 'egrep', 'fgrep', 'rg', 'ag'])
+// Arquivos que controlam os hooks: escrever neles desliga a verificação
+const HOOK_FILES = /(^|\/)(\.git\/(config|hooks)|\.husky(\/|$)|husky\/init\.sh)/
 // Comandos que só citam o nome do arquivo, sem ler o conteúdo
 const ENV_SAFE_COMMANDS = new Set(['echo', 'printf', 'ls', 'test', '[', 'stat'])
 const GIT_ENV_READERS = new Set([
@@ -144,6 +160,12 @@ function isNoVerify(word) {
   return word.length >= '--no-ver'.length && '--no-verify'.startsWith(word)
 }
 
+// O git aceita abreviações de opções longas (--har = --hard, --del = --delete)
+function isLongOption(arg, ...names) {
+  const name = arg.split('=')[0]
+  return name.length >= 5 && names.some((full) => full.startsWith(name))
+}
+
 // Flags curtas agrupadas (-am, -nm, -uf). Para na primeira letra que recebe valor (ex.: m em -m).
 // valueLetters: o valor pode vir colado ou no próximo argumento. attachedOnly: só colado (ex.: -S<chave>).
 function shortFlags(args, valueLetters, attachedOnly = []) {
@@ -224,7 +246,7 @@ function parseGit(words, state) {
       configs.push(word.slice(2))
       i++
     } else if (GLOBAL_WITH_VALUE.some((option) => word.startsWith(option))) {
-      configs.push(word)
+      configs.push(word.includes('=') ? word : `${word}=${words[i + 1] ?? ''}`)
       i += word.includes('=') ? 1 : 2
     } else if (GLOBAL_FLAGS.has(word)) {
       i++
@@ -243,7 +265,21 @@ function branchOf(git, state) {
 function checkPush(git, branch) {
   const { args } = git
   for (const arg of args) {
-    if (/^--(force|mirror|delete|prune|all)/.test(arg)) block(`git push ${arg} está bloqueado.`)
+    if (
+      isLongOption(
+        arg,
+        '--force',
+        '--force-with-lease',
+        '--force-if-includes',
+        '--mirror',
+        '--delete',
+        '--prune',
+        '--all',
+        '--branches',
+      )
+    ) {
+      block(`git push ${arg} está bloqueado.`)
+    }
     if (isNoVerify(arg)) block('Não pule os hooks com --no-verify.')
   }
   const letters = shortFlags(args, ['o'])
@@ -279,6 +315,9 @@ function checkGit(words, state) {
   if (git.configs.some((config) => /core\.hookspath/i.test(config))) {
     block('Trocar o core.hooksPath desliga os hooks do Husky.')
   }
+  if (git.configs.some((config) => /^alias\.|clean\.requireforce/i.test(config))) {
+    block('Alias e configs passados com -c escondem o comando real do git e estão bloqueados.')
+  }
   if (!sub) return
 
   const branch = ['commit', 'merge', 'revert', 'cherry-pick', 'am', 'rebase', 'push'].includes(sub)
@@ -286,7 +325,7 @@ function checkGit(words, state) {
     : null
   const onMain = branch === PROTECTED_BRANCH
 
-  if (['commit', 'merge', 'push', 'am', 'rebase', 'cherry-pick', 'revert'].includes(sub)) {
+  if (['commit', 'merge', 'push', 'pull', 'am', 'rebase', 'cherry-pick', 'revert'].includes(sub)) {
     if (args.some(isNoVerify))
       block('Não pule os hooks com --no-verify. Corrija o lint ou a mensagem.')
   }
@@ -318,39 +357,55 @@ function checkGit(words, state) {
       checkPush(git, branch)
       break
     case 'reset':
-      if (args.some((arg) => ['--hard', '--merge', '--keep'].includes(arg))) {
+      if (args.some((arg) => isLongOption(arg, '--hard', '--merge', '--keep'))) {
         block('git reset --hard/--merge/--keep descarta trabalho e está bloqueado.')
       }
       break
     case 'clean':
-      if (args.includes('--force') || shortFlags(args, ['e']).has('f')) {
+      if (args.some((arg) => isLongOption(arg, '--force')) || shortFlags(args, ['e']).has('f')) {
         block('git clean -f apaga arquivos e está bloqueado.')
       }
       break
     case 'checkout':
-      if (args.includes('--force') || shortFlags(args, ['b', 'B']).has('f')) {
+      if (
+        args.some((arg) => isLongOption(arg, '--force')) ||
+        shortFlags(args, ['b', 'B']).has('f')
+      ) {
         block('git checkout -f descarta alterações e está bloqueado.')
       }
-      if (args.includes('--') || args.includes('.')) {
+      if (shortFlags(args, ['b']).has('B')) {
+        block(
+          'git checkout -B sobrescreve uma branch existente. Use git switch -c com um nome novo.',
+        )
+      }
+      if (
+        args.includes('--') ||
+        args.includes('.') ||
+        positionalArgs(args, ['-b']).some((arg) => existsSync(resolve(git.dir, arg)))
+      ) {
         block('git checkout em arquivos descarta alterações locais e está bloqueado.')
       }
       break
     case 'restore':
-      if (!args.some((arg) => arg === '--staged' || /^-[A-Za-z]*S/.test(arg))) {
+      if (
+        !args.some((arg) => arg === '--staged' || /^-[A-Za-z]*S/.test(arg)) ||
+        args.some((arg) => isLongOption(arg, '--worktree') || /^-[A-Za-z]*W/.test(arg))
+      ) {
         block('git restore sem --staged descarta alterações locais e está bloqueado.')
       }
       break
     case 'switch':
       if (
-        args.some((arg) => ['--force', '--discard-changes'].includes(arg)) ||
-        shortFlags(args, ['c', 'C']).has('f')
+        args.some((arg) => isLongOption(arg, '--force', '--discard-changes', '--force-create')) ||
+        shortFlags(args, ['c', 'C']).has('f') ||
+        shortFlags(args, ['c']).has('C')
       ) {
-        block('git switch -f/--discard-changes descarta alterações e está bloqueado.')
+        block('git switch -f/-C/--discard-changes descarta alterações e está bloqueado.')
       }
       break
     case 'branch':
       if (
-        args.includes('--force') ||
+        args.some((arg) => isLongOption(arg, '--force')) ||
         shortFlags(args, []).has('D') ||
         shortFlags(args, []).has('f')
       ) {
@@ -358,13 +413,21 @@ function checkGit(words, state) {
       }
       break
     case 'add':
-      if (args.includes('--force') || shortFlags(args, []).has('f')) {
+      if (args.some((arg) => isLongOption(arg, '--force')) || shortFlags(args, []).has('f')) {
         block('git add -f adiciona arquivos ignorados (como o .env) e está bloqueado.')
       }
       break
     case 'config':
-      if (args.some((arg) => /core\.hookspath/i.test(arg))) {
-        block('Mudar o core.hooksPath desliga os hooks do Husky.')
+      {
+        const reading = args.some((arg) =>
+          ['--get', '--get-all', '--get-regexp', '--list', '-l', 'get', 'list'].includes(arg),
+        )
+        if (
+          !reading &&
+          args.some((arg) => /core\.hookspath|^alias\.|remove-section|rename-section/i.test(arg))
+        ) {
+          block('Mudar o core.hooksPath, criar alias ou apagar seções do config está bloqueado.')
+        }
       }
       break
     case 'filter-branch':
@@ -397,11 +460,32 @@ function analyze(command, state, depth = 0) {
   if (depth > 5) block('Comando aninhado demais para analisar com segurança.')
   for (const segment of tokenize(expandHeredocs(command))) {
     let words = segment
-    if (words.some((word) => /^HUSKY=0$/.test(word))) block('HUSKY=0 desliga os hooks do Husky.')
+    // Atribuições de variável no início do segmento ou depois de export/env/declare
+    const declares = ['export', 'declare', 'typeset', 'set', 'env', 'unset'].includes(words[0])
+    for (const word of words) {
+      if (!ASSIGNMENT.test(word) && !(declares && /^HUSKY$/.test(word))) {
+        if (!declares) break
+        continue
+      }
+      if (/^HUSKY(=|$)/.test(word)) block('Mexer na variável HUSKY desliga os hooks do Husky.')
+      if (/^GIT_CONFIG/.test(word)) block('Variáveis GIT_CONFIG_* injetam config escondido no git.')
+    }
+    if (
+      words.some((word) => HOOK_FILES.test(word)) &&
+      !['cat', 'ls', 'less', 'head', 'tail', 'grep', 'rg', 'wc', 'git'].includes(words[0])
+    ) {
+      block(
+        'Os arquivos de hooks (.husky, .git/hooks, .git/config) não podem ser alterados pelo terminal.',
+      )
+    }
 
     while (words.length && (ASSIGNMENT.test(words[0]) || PREFIX_COMMANDS.has(words[0]))) {
       words = words.slice(1)
-      while (words.length && /^-/.test(words[0])) words = words.slice(1)
+      while (words.length && /^-/.test(words[0])) {
+        words = words.slice(PREFIX_VALUE_OPTIONS.has(words[0]) ? 2 : 1)
+      }
+      // timeout 60 git ... : a duração vem antes do comando
+      if (words.length && /^\d+[smhd]?$/.test(words[0])) words = words.slice(1)
     }
     if (!words.length) continue
 
@@ -428,7 +512,15 @@ function analyze(command, state, depth = 0) {
       checkGit(words, state)
       continue
     }
-    if (!ENV_SAFE_COMMANDS.has(program) && words.slice(1).some(isEnvFile)) {
+    let fileArgs = words.slice(1)
+    if (
+      SEARCH_COMMANDS.has(program) &&
+      !fileArgs.some((arg) => /^-(e|f)$|^--(regexp|file)/.test(arg))
+    ) {
+      const patternIndex = fileArgs.findIndex((arg) => !arg.startsWith('-'))
+      fileArgs = fileArgs.filter((_arg, index) => index !== patternIndex)
+    }
+    if (!ENV_SAFE_COMMANDS.has(program) && fileArgs.some(isEnvFile)) {
       block('O .env tem segredos e não pode ser lido nem copiado pela IA. Use o .env.example.')
     }
   }
