@@ -97,14 +97,16 @@ O commitlint recusa mensagens fora do padrão, e o lint-staged roda o Biome nos 
 
 ## Harness de IA
 
-O projeto é desenvolvido com o [Claude Code](https://claude.com/claude-code). A configuração fica versionada no repositório:
+O projeto é desenvolvido com o [Claude Code](https://claude.com/claude-code). A configuração fica versionada no repositório. O ponto de partida é o [`AGENTS.md`](AGENTS.md), que explica o projeto inteiro (requisitos, stack e justificativas, arquitetura, padrões, fluxo de trabalho e o próprio harness) para qualquer agente de IA.
 
-| Arquivo                                                                     | Função                                                        |
-| --------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| [`CLAUDE.md`](CLAUDE.md)                                                    | instruções do projeto: arquitetura, nomes, branches e commits |
-| [`.claude/settings.json`](.claude/settings.json)                            | permissões e hooks                                            |
-| [`.claude/hooks/guard-git.mjs`](.claude/hooks/guard-git.mjs)                | bloqueia commit na `main`, `--no-verify` e push forçado       |
-| [`.claude/hooks/format-file.mjs`](.claude/hooks/format-file.mjs)            | roda o Biome em todo arquivo que a IA edita                   |
-| [`.claude/skills/commit`](.claude/skills/commit/SKILL.md)                   | passo a passo para commitar no padrão                         |
-| [`.claude/skills/novo-componente`](.claude/skills/novo-componente/SKILL.md) | como criar componentes no padrão                              |
-| [`.claude/agents/revisor.md`](.claude/agents/revisor.md)                    | agente que revisa a branch antes do PR                        |
+| Arquivo                                                                     | Função                                                       |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| [`AGENTS.md`](AGENTS.md)                                                    | fonte única de verdade do projeto para agentes e pessoas     |
+| [`.claude/CLAUDE.md`](.claude/CLAUDE.md)                                    | importa o `AGENTS.md` e explica o que é específico do Claude |
+| [`.claude/settings.json`](.claude/settings.json)                            | permissões e hooks                                           |
+| [`.claude/hooks/guard-git.mjs`](.claude/hooks/guard-git.mjs)                | bloqueia commit na `main`, `--no-verify` e push forçado      |
+| [`.claude/hooks/format-file.mjs`](.claude/hooks/format-file.mjs)            | roda o Biome em todo arquivo que a IA edita                  |
+| [`.claude/skills/commit`](.claude/skills/commit/SKILL.md)                   | passo a passo para commitar no padrão                        |
+| [`.claude/skills/novo-componente`](.claude/skills/novo-componente/SKILL.md) | como criar componentes no padrão                             |
+| [`.claude/agents/revisor.md`](.claude/agents/revisor.md)                    | agente que revisa a branch antes do PR                       |
+| [`.claude/launch.json`](.claude/launch.json)                                | como subir o servidor no preview do app                      |

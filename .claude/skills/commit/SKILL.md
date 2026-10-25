@@ -6,6 +6,7 @@ description: Cria commits no padrão do projeto (Conventional Commits em portugu
 # Commit no padrão do projeto
 
 1. **Confira a branch.** Rode `git branch --show-current`. Se for `main`, pare e crie a branch da etapa (`git switch -c feature/<nome>`). O hook `guard-git` bloqueia commit na `main`.
+   As regras completas de branches e commits estão na seção 6 do `AGENTS.md`.
 2. **Veja o que mudou.** `git status` e `git diff`. Se houver mudanças de assuntos diferentes, separe em commits diferentes (`git add <arquivos>` só do assunto).
 3. **Valide antes.** `npm run lint` e `npm run build` precisam passar. Se tiver testes da área, `npm test`.
 4. **Escreva a mensagem** no formato Conventional Commits:
@@ -24,7 +25,7 @@ description: Cria commits no padrão do projeto (Conventional Commits em portugu
    | `style`                  | só formatação, sem lógica                      |
    | `perf`                   | melhora de desempenho                          |
    | `test`                   | adiciona ou ajusta testes                      |
-   | `docs`                   | README, CLAUDE.md, comentários de documentação |
+   | `docs`                   | README, AGENTS.md, CLAUDE.md, documentação     |
    | `chore` / `build` / `ci` | configuração, dependências, pipeline           |
 
    Bons exemplos:
