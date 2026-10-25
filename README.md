@@ -104,7 +104,7 @@ O projeto é desenvolvido com o [Claude Code](https://claude.com/claude-code). A
 | [`.claude/CLAUDE.md`](.claude/CLAUDE.md)                                    | importa o `AGENTS.md` e explica o que é específico do Claude                                                |
 | [`.claude/settings.json`](.claude/settings.json)                            | permissões e hooks                                                                                          |
 | [`.claude/hooks/guard-bash.mjs`](.claude/hooks/guard-bash.mjs)              | barra commit/push na `main`, pular hooks, push forçado, comandos que descartam trabalho e leitura do `.env` |
-| [`.claude/hooks/guard-bash.test.mjs`](.claude/hooks/guard-bash.test.mjs)    | 112 testes do hook (`npm run test:hooks`)                                                                   |
+| [`.claude/hooks/guard-bash.test.mjs`](.claude/hooks/guard-bash.test.mjs)    | 148 testes do hook (`npm run test:hooks`)                                                                   |
 | [`.claude/hooks/format-file.mjs`](.claude/hooks/format-file.mjs)            | roda o Biome em todo arquivo que a IA edita                                                                 |
 | [`.claude/skills/commit`](.claude/skills/commit/SKILL.md)                   | passo a passo para commitar no padrão                                                                       |
 | [`.claude/skills/novo-componente`](.claude/skills/novo-componente/SKILL.md) | como criar componentes no padrão                                                                            |
