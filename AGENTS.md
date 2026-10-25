@@ -30,6 +30,18 @@ Portfólio pessoal de **Rafael Dias**, desenvolvedor front-end, feito em React.
 
 O dono do projeto precisa conseguir **explicar cada linha** no vídeo. Por isso: código simples e legível vale mais que código esperto; toda decisão precisa ter uma justificativa registrada na seção 3.
 
+**Comandos** (Node 22.22.1 ou mais novo):
+
+```bash
+npm ci                # instala exatamente o que está no package-lock.json
+npm run dev           # servidor local em http://localhost:5173
+npm run build         # checa os tipos e gera o build em dist/
+npm run lint          # Biome: lint + formatação (só verifica)
+npm run format        # Biome: corrige o que der automaticamente
+npm run typecheck     # só os tipos
+npm run test:hooks    # testes dos hooks do harness de IA
+```
+
 ---
 
 ## 2. Requisitos obrigatórios e onde cada um vive
@@ -48,7 +60,7 @@ Todos são obrigatórios. Esta tabela é o checklist do projeto: nada é "pronto
 | 8   | Performance: Lighthouse mobile ≥ 80; imagens otimizadas e com lazy; 3D e dashboard sob demanda; sem layout shift; sem requisições repetidas ao GitHub | `React.lazy` + `Suspense`; WebP/AVIF com `width`/`height` e `loading="lazy"`; `staleTime` no TanStack Query                         | todo o projeto (ver seção 8)                                       | _contínuo; auditoria no dia 8_   |
 | 9   | Testes automatizados: validação do formulário e bloqueio do dashboard sem login (mínimo)                                                              | Vitest + Testing Library                                                                                                            | `src/**/*.test.tsx`                                                | _planejado (dia 8)_              |
 | 10  | Deploy: URL pública; publicação automática a cada push na `main`                                                                                      | Integração Git da Vercel                                                                                                            | Vercel + `vercel.json`                                             | _planejado (dia 2)_              |
-| 11  | Versionamento: padrão de mensagem; branch por funcionalidade; padrões no README e nas instruções da IA                                                | Conventional Commits + commitlint; GitHub Flow                                                                                      | `commitlint.config.js`, `.husky/`, seção 6                         | ✅ feito                         |
+| 11  | Versionamento: padrão de mensagem; branch por funcionalidade; padrões no README e nas instruções da IA                                                | Conventional Commits + commitlint (no commit e no CI); GitHub Flow com a `main` protegida                                           | `commitlint.config.js`, `.husky/`, seção 6                         | ✅ feito                         |
 | 12  | Arquitetura: pastas com responsabilidade clara; lógica separada da apresentação; nomes definidos; padrão verificado automaticamente                   | Estrutura por tipo de arquivo; services + hooks; Biome no pre-commit, no hook da IA e no CI                                         | `src/`, `biome.json`, seções 4 e 5                                 | ✅ feito                         |
 | —   | Repositório: público; `.env` fora do Git com `.env.example`; README com projeto, tecnologias e como rodar                                             | `.gitignore`, `.env.example`, `README.md`                                                                                           | raiz                                                               | ✅ feito (README final no dia 9) |
 
@@ -58,21 +70,22 @@ Todos são obrigatórios. Esta tabela é o checklist do projeto: nada é "pronto
 
 Cada linha registra **o que foi comparado, o critério e o que aceitamos perder**. É a base da parte "Justificativas da stack" do vídeo. Ao adicionar uma dependência nova, acrescente uma linha aqui no mesmo PR.
 
-| Área              | Escolha                                               | Comparamos com                     | Critério                                                                                                   | O que aceitamos perder                                                 |
-| ----------------- | ----------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Base              | **Vite + React** (SPA)                                | Next.js                            | Site sem necessidade de SSR; build e dev server rápidos; menos conceitos para explicar                     | SSR/SEO automático; precisamos configurar o rewrite de rotas na Vercel |
-| Linguagem         | **TypeScript** (`strict`)                             | JavaScript                         | Erros de formato de dados (GitHub, Supabase, formulário) aparecem no editor; a IA erra menos com tipos     | Um pouco mais de código no começo (tipos de props e de dados)          |
-| Lint e formatação | **Biome**                                             | ESLint + Prettier                  | Uma ferramenta só, uma config só, muito mais rápida                                                        | O ecossistema de plugins do ESLint                                     |
-| Padrão de commits | **Husky + lint-staged + commitlint**                  | Só convenção escrita               | O padrão é **verificado**, não só combinado: commit fora do padrão é recusado                              | Commits ficam alguns segundos mais lentos                              |
-| Fluxo de branches | **GitHub Flow**                                       | Git Flow, trunk-based              | Projeto de uma pessoa, com deploy contínuo: uma `main` e branches curtas bastam                            | As branches `develop`/`release` do Git Flow                            |
-| Estilo            | **CSS Modules + variáveis CSS**                       | Tailwind, shadcn/ui, MUI           | O visual XP é todo customizado; bibliotecas de UI ajudariam pouco e brigariam com o estilo                 | Utilitários e componentes prontos                                      |
-| 3D                | **Three.js imperativo** dentro de um componente React | React Three Fiber, Spline          | A cena e os jogos são código Three.js imperativo; envolvê-los num componente é mais simples que reescrever | O estilo declarativo do R3F                                            |
-| Rotas             | **React Router** _(planejado)_                        | TanStack Router, wouter            | Padrão de mercado, documentação ampla, rotas aninhadas para o dashboard                                    | A tipagem forte de rotas do TanStack Router                            |
-| Dados de API      | **TanStack Query** _(planejado)_                      | SWR, `useEffect` + `useState`      | Cache entre páginas (sem refazer chamadas ao GitHub), estados de carregamento/erro prontos                 | Mais uma dependência (~13 KB gzip)                                     |
-| Formulário        | **React Hook Form + Zod** _(planejado)_               | Formik + Yup, validação manual     | Menos re-renderizações; o schema Zod gera os tipos e as mensagens de erro                                  | Curva de aprendizado de duas bibliotecas                               |
-| Backend           | **Supabase** _(planejado)_                            | Firebase, PocketBase, Node próprio | Postgres + Auth + regras de acesso (RLS) num serviço grátis, sem manter servidor                           | Dependência de um serviço externo                                      |
-| Testes            | **Vitest + Testing Library** _(planejado)_            | Jest, Playwright                   | Roda com a mesma config do Vite; testa como o usuário usa a tela                                           | Testes ponta a ponta em navegador real                                 |
-| Deploy            | **Vercel**                                            | Netlify, GitHub Pages              | Pedido da atividade; deploy automático por push e preview por PR                                           | Controle fino de servidor                                              |
+| Área              | Escolha                                                                     | Comparamos com                     | Critério                                                                                                   | O que aceitamos perder                                                 |
+| ----------------- | --------------------------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Base              | **Vite + React** (SPA)                                                      | Next.js                            | Site sem necessidade de SSR; build e dev server rápidos; menos conceitos para explicar                     | SSR/SEO automático; precisamos configurar o rewrite de rotas na Vercel |
+| Linguagem         | **TypeScript** (`strict`)                                                   | JavaScript                         | Erros de formato de dados (GitHub, Supabase, formulário) aparecem no editor; a IA erra menos com tipos     | Um pouco mais de código no começo (tipos de props e de dados)          |
+| Lint e formatação | **Biome**                                                                   | ESLint + Prettier                  | Uma ferramenta só, uma config só, muito mais rápida                                                        | O ecossistema de plugins do ESLint                                     |
+| Padrão de commits | **Husky + lint-staged + commitlint**                                        | Só convenção escrita               | O padrão é **verificado**, não só combinado: commit fora do padrão é recusado                              | Commits ficam alguns segundos mais lentos                              |
+| Fluxo de branches | **GitHub Flow**                                                             | Git Flow, trunk-based              | Projeto de uma pessoa, com deploy contínuo: uma `main` e branches curtas bastam                            | As branches `develop`/`release` do Git Flow                            |
+| Estilo            | **CSS Modules + variáveis CSS**                                             | Tailwind, shadcn/ui, MUI           | O visual XP é todo customizado; bibliotecas de UI ajudariam pouco e brigariam com o estilo                 | Utilitários e componentes prontos                                      |
+| 3D                | **Three.js imperativo** dentro de um componente React _(planejado — dia 2)_ | React Three Fiber, Spline          | A cena e os jogos são código Three.js imperativo; envolvê-los num componente é mais simples que reescrever | O estilo declarativo do R3F                                            |
+| Rotas             | **React Router** _(planejado)_                                              | TanStack Router, wouter            | Padrão de mercado, documentação ampla, rotas aninhadas para o dashboard                                    | A tipagem forte de rotas do TanStack Router                            |
+| Dados de API      | **TanStack Query** _(planejado)_                                            | SWR, `useEffect` + `useState`      | Cache entre páginas (sem refazer chamadas ao GitHub), estados de carregamento/erro prontos                 | Mais uma dependência (~13 KB gzip)                                     |
+| Formulário        | **React Hook Form + Zod** _(planejado)_                                     | Formik + Yup, validação manual     | Menos re-renderizações; o schema Zod gera os tipos e as mensagens de erro                                  | Curva de aprendizado de duas bibliotecas                               |
+| Backend           | **Supabase** _(planejado)_                                                  | Firebase, PocketBase, Node próprio | Postgres + Auth + regras de acesso (RLS) num serviço grátis, sem manter servidor                           | Dependência de um serviço externo                                      |
+| Testes            | **Vitest + Testing Library** _(planejado)_                                  | Jest, Playwright                   | Roda com a mesma config do Vite; testa como o usuário usa a tela                                           | Testes ponta a ponta em navegador real                                 |
+| Deploy            | **Vercel** _(planejado — dia 2)_                                            | Netlify, GitHub Pages              | Pedido da atividade; deploy automático por push e preview por PR                                           | Controle fino de servidor                                              |
+| Testes do harness | **`node:test`** (test runner nativo do Node)                                | Vitest, Jest                       | Os hooks são scripts `.mjs` soltos; o runner nativo testa sem dependência nem configuração                 | Relatórios e modo watch mais completos                                 |
 
 ---
 
@@ -86,7 +99,7 @@ navegador
 main.tsx ──► App ──► providers (QueryClient, Theme, Auth)        [planejado]
                        │
                      Router ──► Layout "Desktop"
-                                  ├── Scene3D (lazy)        → src/three/   (Three.js)
+                                  ├── Scene3D (lazy)        → src/components/Scene3D.tsx → src/three/
                                   └── XpWindow              → src/components/ui/
                                         └── páginas (abas)  → src/pages/
                                               │
@@ -118,7 +131,7 @@ main.tsx ──► App ──► providers (QueryClient, Theme, Auth)        [pl
 | `src/contexts/`      | estado global: tema e autenticação                                  | `services`, `types`               | —                          |
 | `src/types/`         | tipos compartilhados (`Repository`, `ContactMessage`)               | nada                              | —                          |
 | `src/styles/`        | `global.css` com reset e **tokens** (variáveis CSS)                 | —                                 | —                          |
-| `src/three/`         | cena 3D (computador, estrelas, câmera) em Three.js                  | `three`                           | React                      |
+| `src/three/`         | cena 3D (computador, estrelas, câmera) em Three.js (seção 10)       | `three`                           | React                      |
 | `src/games/`         | jogos em JavaScript (ver seção 10)                                  | `three`                           | —                          |
 | `src/assets/`        | imagens importadas pelo código                                      | —                                 | —                          |
 
@@ -164,6 +177,8 @@ Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam e
 | Teste                      | arquivo testado + `.test`     | `ContactForm.test.tsx`     |
 
 **Idioma:** identificadores no código em **inglês**; textos da interface, comentários e commits em **português**.
+
+**Propriedades de objetos e tipos** em `camelCase`. `snake_case` só quando o nome vem de fora (ex.: `pushed_at` da API do GitHub, colunas do Supabase); o Biome aceita os dois e recusa o resto.
 
 ### 5.2 TypeScript
 
@@ -253,7 +268,7 @@ Comente o **porquê**, não o quê. Em português. Sem código comentado "para d
 
 ### 6.1 Branches (GitHub Flow)
 
-- A `main` é **protegida** e sempre publicável. Todo merge nela gera um deploy na Vercel.
+- A `main` é **protegida** por um ruleset no GitHub: só recebe mudanças por pull request, com o check **"Lint, tipos e build"** verde e merge do tipo merge commit; push forçado e exclusão são bloqueados. Ela é sempre publicável, e todo merge nela gera um deploy na Vercel.
 - Toda mudança nasce numa branch a partir da `main` atualizada:
 
 | Prefixo     | Uso                                   | Exemplo             |
@@ -292,13 +307,13 @@ Bons: `feat: adiciona validação do formulário de contato` · `fix(rotas): cor
 Ruins: `update`, `ajustes`, `wip`, `Added form`, `feat: Adiciona…` (maiúscula), títulos com mais de 72 caracteres.
 
 - **Um commit = uma mudança com sentido.** Vários commits pequenos são melhores que um grande.
-- O commitlint (mensagem) e o lint-staged (Biome nos arquivos) rodam em **todo** commit.
+- O commitlint (mensagem) e o lint-staged (Biome nos arquivos) rodam em **todo** commit. No PR, o CI roda o commitlint de novo em todos os commits da branch.
 
 ### 6.3 Pull requests
 
-1. Antes de abrir: `npm run lint`, `npm run build` (e `npm test`, quando houver testes) passando, e o agente `revisor` rodado.
+1. Antes de abrir: `npm run lint`, `npm run build`, `npm run test:hooks` (e `npm test`, quando houver testes) passando, e o agente `revisor` rodado.
 2. Título no padrão Conventional Commits. Descrição com: o que muda, como testar, prints se mudou algo visual, e qual requisito da seção 2 atende.
-3. O CI (lint + tipos + build) precisa passar.
+3. O CI (commitlint, lint, testes dos hooks, tipos e build) precisa passar: o ruleset da `main` não deixa fazer merge sem ele.
 4. Merge com **"Create a merge commit"** (não squash), para preservar os commits pequenos no histórico.
 5. Apague a branch depois do merge.
 
@@ -317,7 +332,7 @@ Ruins: `update`, `ajustes`, `wip`, `Added form`, `feat: Adiciona…` (maiúscula
 
 Uma tarefa só está pronta quando:
 
-- [ ] `npm run lint` e `npm run build` passam (e `npm test`, quando houver testes).
+- [ ] `npm run lint`, `npm run build` e `npm run test:hooks` passam (e `npm test`, quando houver testes).
 - [ ] Todo dado de API mostra carregando, erro e vazio.
 - [ ] Funciona em 375 px e em 1440 px, nos temas claro e escuro.
 - [ ] Imagens novas em WebP/AVIF, com `width`/`height` e `loading="lazy"` (exceto a primeira dobra).
@@ -351,7 +366,7 @@ Como garantir:
 - Segredos ficam no `.env`, fora do Git. O `.env.example` lista as variáveis **sem valores reais**.
 - **Toda variável `VITE_*` vai para o navegador e é pública.** Nunca coloque com esse prefixo a `service_role` do Supabase, tokens do GitHub ou chaves de e-mail; esses só existem em ambiente de servidor.
 - A proteção dos dados do Supabase vem das regras de acesso (RLS, seção 4.5), não de esconder a chave anônima.
-- Agentes não leem, não imprimem e não commitam o `.env`.
+- Agentes não leem, não imprimem, não copiam e não commitam o `.env`. Isso é garantido em três pontos: o `deny` do `.claude/settings.json` (ferramentas de leitura e edição), o hook `guard-bash` (comandos de terminal como `cat .env` e `git add -f .env`) e o `.gitignore`.
 
 Variáveis atuais:
 
@@ -365,9 +380,9 @@ Variáveis atuais:
 
 ## 10. Cena 3D e jogos (`src/three/` e `src/games/`)
 
-- São código **Three.js imperativo em JavaScript**. Ficam **fora do lint** do Biome e não seguem as regras de React.
+- São código **Three.js imperativo em JavaScript**. Ficam **fora do lint** do Biome (`files.includes` do `biome.json`) e não seguem as regras de React.
 - **Não reescreva, renomeie ou "melhore"** esse código sem um pedido explícito. Mudanças de conteúdo (textos, nomes de personagens, imagens) são bem-vindas; mudanças de lógica, só quando pedidas.
-- A integração com o React acontece num **único componente de ponte** por módulo (ex.: `Scene3D.tsx`), que:
+- A integração com o React acontece num **único componente de ponte** por módulo, que fica em `src/components/` e importa de `@/three` ou `@/games` (ex.: `src/components/Scene3D.tsx`). Esse componente:
   1. cria a cena dentro de um `useEffect`, num `<div>`/`<canvas>` referenciado por `useRef`;
   2. **limpa tudo ao desmontar**: `cancelAnimationFrame`, remoção de listeners, `dispose()` de geometrias, materiais, texturas e do renderer;
   3. é carregado com `React.lazy`, fora do pacote inicial.
@@ -403,19 +418,21 @@ Variáveis atuais:
 
 O harness funciona em **camadas**: cada camada pega o que a anterior deixou passar.
 
-| Camada             | Arquivo                                                            | O que faz                                                                          | Por quê                                                              |
-| ------------------ | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| 1. Instrução       | `AGENTS.md` (este arquivo)                                         | contexto e regras para qualquer agente                                             | padrão aberto, lido por Codex, Cursor, Copilot, Gemini e Claude Code |
-| 1. Instrução       | `.claude/CLAUDE.md`                                                | importa este arquivo e acrescenta o que é específico do Claude Code                | o Claude Code lê o `CLAUDE.md` automaticamente em toda sessão        |
-| 2. Procedimentos   | `.claude/skills/commit/`                                           | passo a passo de commit no padrão                                                  | repetível: a IA segue o mesmo roteiro toda vez                       |
-| 2. Procedimentos   | `.claude/skills/novo-componente/`                                  | como criar componente no padrão                                                    | garante o mesmo formato em todos os componentes                      |
-| 2. Procedimentos   | `.claude/agents/revisor.md`                                        | agente que revisa a branch contra este arquivo antes do PR                         | uma segunda leitura, sem o viés de quem escreveu o código            |
-| 3. Automação na IA | `.claude/settings.json`                                            | permissões: libera comandos seguros, nega leitura do `.env` e comandos destrutivos | menos interrupções e nenhum acesso a segredos                        |
-| 3. Automação na IA | `.claude/hooks/guard-git.mjs`                                      | bloqueia commit na `main`, `--no-verify` e push forçado                            | a regra de branches deixa de depender da memória da IA               |
-| 3. Automação na IA | `.claude/hooks/format-file.mjs`                                    | roda o Biome em cada arquivo que a IA edita e devolve os erros para ela            | o código já sai no padrão, antes do commit                           |
-| 3. Automação na IA | `.claude/launch.json`                                              | como subir o servidor de desenvolvimento no preview do app                         | a IA consegue abrir e conferir o site                                |
-| 4. Git hooks       | `.husky/`, `commitlint.config.js`, `lint-staged` no `package.json` | Biome nos arquivos e validação da mensagem em todo commit                          | vale para pessoas e para qualquer ferramenta de IA                   |
-| 5. CI              | `.github/workflows/ci.yml`                                         | lint, tipos e build em todo PR                                                     | última barreira antes da `main`                                      |
+| Camada             | Arquivo                                                            | O que faz                                                                                                                                                                                                          | Por quê                                                                 |
+| ------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| 1. Instrução       | `AGENTS.md` (este arquivo)                                         | contexto e regras para qualquer agente                                                                                                                                                                             | padrão aberto, lido por Codex, Cursor, Copilot, Gemini e Claude Code    |
+| 1. Instrução       | `.claude/CLAUDE.md`                                                | importa este arquivo e acrescenta o que é específico do Claude Code                                                                                                                                                | o Claude Code lê o `CLAUDE.md` automaticamente em toda sessão           |
+| 2. Procedimentos   | `.claude/skills/commit/`                                           | passo a passo de commit no padrão                                                                                                                                                                                  | repetível: a IA segue o mesmo roteiro toda vez                          |
+| 2. Procedimentos   | `.claude/skills/novo-componente/`                                  | como criar componente no padrão                                                                                                                                                                                    | garante o mesmo formato em todos os componentes                         |
+| 2. Procedimentos   | `.claude/agents/revisor.md`                                        | agente que revisa a branch contra este arquivo antes do PR                                                                                                                                                         | uma segunda leitura, sem o viés de quem escreveu o código               |
+| 3. Automação na IA | `.claude/settings.json`                                            | permissões: libera comandos de rotina, nega ler e editar o `.env` e suas variações                                                                                                                                 | menos interrupções e nenhum acesso a segredos                           |
+| 3. Automação na IA | `.claude/hooks/guard-bash.mjs`                                     | analisa cada comando de terminal e bloqueia: commit, merge e push na `main`; pular hooks (`--no-verify`, `-n`, `HUSKY=0`, `core.hooksPath`); push forçado; comandos que descartam trabalho; ler ou copiar o `.env` | a regra de branches deixa de depender da memória da IA                  |
+| 3. Automação na IA | `.claude/hooks/guard-bash.test.mjs`                                | 112 casos de teste do hook (o que bloqueia e o que deixa passar)                                                                                                                                                   | o próprio harness é testado e roda no CI                                |
+| 3. Automação na IA | `.claude/hooks/format-file.mjs`                                    | roda o Biome em cada arquivo que a IA edita e devolve os erros para ela                                                                                                                                            | o código já sai no padrão, antes do commit                              |
+| 3. Automação na IA | `.claude/launch.json`                                              | como subir o servidor de desenvolvimento no preview do app                                                                                                                                                         | a IA consegue abrir e conferir o site                                   |
+| 4. Git hooks       | `.husky/`, `commitlint.config.js`, `lint-staged` no `package.json` | Biome nos arquivos e validação da mensagem em todo commit                                                                                                                                                          | vale para pessoas e para qualquer ferramenta de IA                      |
+| 5. CI              | `.github/workflows/ci.yml`                                         | commitlint em todos os commits do PR, lint, testes dos hooks, tipos e build                                                                                                                                        | pega o que escapou localmente                                           |
+| 6. GitHub          | ruleset da `main`                                                  | merge só por PR com o CI verde; sem push forçado nem exclusão                                                                                                                                                      | última barreira: nem pessoa nem IA publica na `main` sem passar pelo CI |
 
 **Ferramenta e modelo:** Claude Code com Claude Opus. Escolhido por trabalhar direto no repositório (lê, edita, roda comandos e testa no navegador) e por suportar instruções, skills, agentes, hooks e MCPs versionados no projeto.
 
