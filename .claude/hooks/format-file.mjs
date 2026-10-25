@@ -6,7 +6,7 @@ import { existsSync, readFileSync } from 'node:fs'
 const input = JSON.parse(readFileSync(0, 'utf8'))
 const filePath = input.tool_input?.file_path
 
-const CHECKED = /\.(ts|tsx|js|jsx|mjs|json|css)$/
+const CHECKED = /\.(ts|tsx|js|jsx|mjs|json|css|md)$/
 const SKIPPED = /node_modules|[\\/]dist[\\/]|[\\/]src[\\/]games[\\/]/
 
 if (!filePath || !CHECKED.test(filePath) || SKIPPED.test(filePath) || !existsSync(filePath)) {
