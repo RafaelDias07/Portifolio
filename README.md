@@ -22,8 +22,8 @@ Ainda vão entrar: React Router, TanStack Query, React Hook Form + Zod, Supabase
 Pré-requisito: Node.js 22 ou mais novo.
 
 ```bash
-git clone <url-do-repositório>
-cd <pasta-do-projeto>
+git clone https://github.com/RafaelDias07/Portifolio.git
+cd Portifolio
 npm install
 cp .env.example .env   # preencha os valores
 npm run dev
