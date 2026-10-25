@@ -11,7 +11,7 @@
     "format": "biome check --write .",
     "typecheck": "tsc -b",
     "prepare": "husky",
-    "test:hooks": "node --test .claude/hooks/"
+    "test:hooks": "node --test .claude/hooks/guard-bash.test.mjs"
   },
   "dependencies": {
     "react": "^19.3.1",
