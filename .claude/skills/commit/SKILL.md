@@ -1,4 +1,5 @@
 ---
+
 name: commit
 description: Cria commits no padrão do projeto (Conventional Commits em português, branch própria, hooks passando). Use sempre que for commitar mudanças.
 ---
@@ -16,16 +17,16 @@ description: Cria commits no padrão do projeto (Conventional Commits em portugu
    <corpo opcional: por que mudou, em até 3 linhas>
    ```
 
-   | Tipo | Quando |
-   |---|---|
-   | `feat` | funcionalidade nova para quem usa o site |
-   | `fix` | correção de bug |
-   | `refactor` | muda o código sem mudar o comportamento |
-   | `style` | só formatação, sem lógica |
-   | `perf` | melhora de desempenho |
-   | `test` | adiciona ou ajusta testes |
-   | `docs` | README, CLAUDE.md, comentários de documentação |
-   | `chore` / `build` / `ci` | configuração, dependências, pipeline |
+   | Tipo                     | Quando                                         |
+   | ------------------------ | ---------------------------------------------- |
+   | `feat`                   | funcionalidade nova para quem usa o site       |
+   | `fix`                    | correção de bug                                |
+   | `refactor`               | muda o código sem mudar o comportamento        |
+   | `style`                  | só formatação, sem lógica                      |
+   | `perf`                   | melhora de desempenho                          |
+   | `test`                   | adiciona ou ajusta testes                      |
+   | `docs`                   | README, CLAUDE.md, comentários de documentação |
+   | `chore` / `build` / `ci` | configuração, dependências, pipeline           |
 
    Bons exemplos:
    - `feat: adiciona validação do formulário de contato`

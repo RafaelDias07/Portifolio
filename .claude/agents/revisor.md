@@ -1,4 +1,5 @@
 ---
+
 name: revisor
 description: Revisa as mudanças da branch atual contra os padrões do projeto (arquitetura, nomes, estados de carregamento, performance, commits). Use antes de abrir um pull request.
 tools: Read, Grep, Glob, Bash

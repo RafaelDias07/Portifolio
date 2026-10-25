@@ -30,7 +30,7 @@
     "vite": "^8.3.4"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,mjs,json,css}": "biome check --write --no-errors-on-unmatched"
+    "*.{ts,tsx,js,jsx,mjs,json,css,md}": "biome check --write --no-errors-on-unmatched"
   },
   "engines": {
     "node": ">=22"

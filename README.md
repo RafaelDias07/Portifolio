@@ -6,14 +6,14 @@ Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser 
 
 ## Tecnologias
 
-| Área | Escolha |
-|---|---|
-| Base | [Vite](https://vite.dev) + [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org) |
-| 3D e jogos | [Three.js](https://threejs.org) |
-| Lint e formatação | [Biome](https://biomejs.dev) |
+| Área              | Escolha                                                                                                                                         |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Base              | [Vite](https://vite.dev) + [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org)                                         |
+| 3D e jogos        | [Three.js](https://threejs.org)                                                                                                                 |
+| Lint e formatação | [Biome](https://biomejs.dev)                                                                                                                    |
 | Padrão de commits | [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org) |
-| CI | GitHub Actions (lint + tipos + build em todo PR) |
-| Deploy | [Vercel](https://vercel.com) |
+| CI                | GitHub Actions (lint + tipos + build em todo PR)                                                                                                |
+| Deploy            | [Vercel](https://vercel.com)                                                                                                                    |
 
 Ainda vão entrar: React Router, TanStack Query, React Hook Form + Zod, Supabase e Vitest + Testing Library.
 
@@ -33,24 +33,24 @@ O site abre em `http://localhost:5173`.
 
 ### Scripts
 
-| Comando | O que faz |
-|---|---|
-| `npm run dev` | servidor de desenvolvimento |
-| `npm run build` | checa os tipos e gera o build de produção em `dist/` |
-| `npm run preview` | serve o build localmente |
-| `npm run lint` | lint e formatação com o Biome (só verifica) |
-| `npm run format` | corrige automaticamente o que o Biome conseguir |
-| `npm run typecheck` | checa só os tipos |
+| Comando             | O que faz                                            |
+| ------------------- | ---------------------------------------------------- |
+| `npm run dev`       | servidor de desenvolvimento                          |
+| `npm run build`     | checa os tipos e gera o build de produção em `dist/` |
+| `npm run preview`   | serve o build localmente                             |
+| `npm run lint`      | lint e formatação com o Biome (só verifica)          |
+| `npm run format`    | corrige automaticamente o que o Biome conseguir      |
+| `npm run typecheck` | checa só os tipos                                    |
 
 ## Variáveis de ambiente
 
 Todas estão listadas no [`.env.example`](.env.example). O `.env` fica fora do Git.
 
-| Variável | Para quê |
-|---|---|
-| `VITE_GITHUB_USERNAME` | usuário do GitHub de onde vêm os projetos |
-| `VITE_SUPABASE_URL` | URL do projeto no Supabase |
-| `VITE_SUPABASE_ANON_KEY` | chave pública (anon) do Supabase |
+| Variável                 | Para quê                                  |
+| ------------------------ | ----------------------------------------- |
+| `VITE_GITHUB_USERNAME`   | usuário do GitHub de onde vêm os projetos |
+| `VITE_SUPABASE_URL`      | URL do projeto no Supabase                |
+| `VITE_SUPABASE_ANON_KEY` | chave pública (anon) do Supabase          |
 
 ## Estrutura de pastas
 
@@ -99,12 +99,12 @@ O commitlint recusa mensagens fora do padrão, e o lint-staged roda o Biome nos 
 
 O projeto é desenvolvido com o [Claude Code](https://claude.com/claude-code). A configuração fica versionada no repositório:
 
-| Arquivo | Função |
-|---|---|
-| [`CLAUDE.md`](CLAUDE.md) | instruções do projeto: arquitetura, nomes, branches e commits |
-| [`.claude/settings.json`](.claude/settings.json) | permissões e hooks |
-| [`.claude/hooks/guard-git.mjs`](.claude/hooks/guard-git.mjs) | bloqueia commit na `main`, `--no-verify` e push forçado |
-| [`.claude/hooks/format-file.mjs`](.claude/hooks/format-file.mjs) | roda o Biome em todo arquivo que a IA edita |
-| [`.claude/skills/commit`](.claude/skills/commit/SKILL.md) | passo a passo para commitar no padrão |
-| [`.claude/skills/novo-componente`](.claude/skills/novo-componente/SKILL.md) | como criar componentes no padrão |
-| [`.claude/agents/revisor.md`](.claude/agents/revisor.md) | agente que revisa a branch antes do PR |
+| Arquivo                                                                     | Função                                                        |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [`CLAUDE.md`](CLAUDE.md)                                                    | instruções do projeto: arquitetura, nomes, branches e commits |
+| [`.claude/settings.json`](.claude/settings.json)                            | permissões e hooks                                            |
+| [`.claude/hooks/guard-git.mjs`](.claude/hooks/guard-git.mjs)                | bloqueia commit na `main`, `--no-verify` e push forçado       |
+| [`.claude/hooks/format-file.mjs`](.claude/hooks/format-file.mjs)            | roda o Biome em todo arquivo que a IA edita                   |
+| [`.claude/skills/commit`](.claude/skills/commit/SKILL.md)                   | passo a passo para commitar no padrão                         |
+| [`.claude/skills/novo-componente`](.claude/skills/novo-componente/SKILL.md) | como criar componentes no padrão                              |
+| [`.claude/agents/revisor.md`](.claude/agents/revisor.md)                    | agente que revisa a branch antes do PR                        |
