@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "format": "biome check --write .",
     "typecheck": "tsc -b",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:hooks": "node --test .claude/hooks/"
   },
   "dependencies": {
     "react": "^19.3.1",
