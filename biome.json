@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!src/games", "!.claude/skills", "!.claude/agents"]
+    "includes": ["**", "!src/games", "!src/three", "!.claude/skills", "!.claude/agents"]
   },
   "formatter": {
     "enabled": true,
@@ -38,6 +38,14 @@
               {
                 "selector": { "kind": "typeLike" },
                 "formats": ["PascalCase"]
+              },
+              {
+                "selector": { "kind": "objectLiteralProperty" },
+                "formats": ["camelCase", "snake_case"]
+              },
+              {
+                "selector": { "kind": "typeProperty" },
+                "formats": ["camelCase", "snake_case"]
               }
             ]
           }
