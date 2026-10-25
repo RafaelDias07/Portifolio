@@ -35,5 +35,5 @@ description: Cria commits no padrão do projeto (Conventional Commits em portugu
 
    Evite: `update`, `ajustes`, `wip`, descrições em inglês, ponto final, mais de 72 caracteres no título.
 
-5. **Commite** com `git commit -m "<título>" -m "<corpo>"`. Termine a mensagem com a linha `Co-Authored-By` da IA.
+5. **Commite** com `git commit -m "<título>" -m "<corpo>"`. Não adicione linhas `Co-Authored-By` nem assinatura de ferramenta de IA: os commits saem só com o autor do projeto.
 6. **Se o hook falhar**, leia o erro, corrija (lint ou mensagem) e commite de novo. Nunca use `--no-verify`.

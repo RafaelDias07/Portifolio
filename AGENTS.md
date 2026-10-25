@@ -309,6 +309,7 @@ Ruins: `update`, `ajustes`, `wip`, `Added form`, `feat: Adiciona…` (maiúscula
 - `git push --force` e reescrever histórico já enviado.
 - Commitar `.env`, chaves ou tokens.
 - Alterar a data de commits.
+- Adicionar `Co-Authored-By` ou assinatura de ferramenta de IA nas mensagens de commit ou de PR.
 
 ---
 
