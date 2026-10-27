@@ -1,0 +1,106 @@
+/* Estilos compartilhados pelas páginas das abas da janela */
+.profile {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 3.5em;
+  height: 3.5em;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--color-control-text);
+  background: var(--color-control);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.name {
+  margin: 0;
+  font-size: 1.25em;
+}
+
+.role {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.heading {
+  margin: 0 0 var(--space-md);
+  padding-bottom: 0.3em;
+  font-size: 1.05em;
+  color: var(--color-accent);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row + .row {
+  margin-top: 0.3em;
+}
+
+.label {
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+.note {
+  margin-top: var(--space-md);
+  padding: 0.5em 0.7em;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-note);
+  border: 1px solid var(--color-note-border);
+  border-radius: var(--radius-sm);
+}
+
+.link {
+  color: var(--color-accent);
+}
+
+.linkRow {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: 0.35em 0.5em;
+}
+
+/* Uma coluna no celular, várias no desktop */
+.mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mediaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  align-items: center;
+  padding: var(--space-md);
+  text-align: center;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.mediaIcon {
+  font-size: 2.2em;
+}
+
+.mediaStatus {
+  font-size: 0.85em;
+  color: var(--color-text-muted);
+}

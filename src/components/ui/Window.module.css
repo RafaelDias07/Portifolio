@@ -1,0 +1,71 @@
+.window {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-window);
+  color: var(--color-text);
+  border: 2px solid var(--color-window-border);
+  border-radius: var(--radius-window);
+  box-shadow: var(--shadow-window);
+}
+
+.titleBar {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: 0.3em 0.4em 0.35em 0.65em;
+  background: var(--color-titlebar);
+  color: var(--color-titlebar-text);
+  user-select: none;
+}
+
+.icon {
+  font-size: 1.15em;
+  line-height: 1;
+}
+
+.title {
+  flex: 1;
+  margin: 0;
+  overflow: hidden;
+  font-size: 1em;
+  font-weight: bold;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-shadow: 1px 1px 2px rgb(0 0 0 / 0.5);
+}
+
+.titleActions {
+  display: flex;
+  gap: 2px;
+}
+
+.toolbar {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  padding: 0.25em 0.4em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.statusBar {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-xs);
+  justify-content: space-between;
+  padding: 0.2em 0.5em;
+  font-size: 0.85em;
+  background: var(--color-group-title);
+  border-top: 1px solid var(--color-border);
+}

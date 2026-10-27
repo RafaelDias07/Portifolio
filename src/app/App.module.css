@@ -1,27 +1,83 @@
-/* Provisório: a janela XP substitui este painel na próxima etapa */
-.screen {
+/* Celular e tablet: a janela ocupa a tela inteira */
+.dock {
   position: fixed;
   inset: 0;
   z-index: 1;
-  display: grid;
-  place-content: center;
-  gap: 0.25rem;
-  padding: 1rem;
-  font-size: clamp(0.9rem, 2.5vw, 1.25rem);
+  font-size: 0.875rem;
   transition: opacity 0.35s;
 }
 
-.screen p {
-  margin: 0;
-}
-
-.screen[data-visible="false"] {
+.dock[data-visible="false"] {
   opacity: 0;
   pointer-events: none;
 }
 
-/* No desktop a cena 3D define left/top/width/height para cobrir a tela do monitor */
-.screen[data-docked="true"] {
+@media (min-width: 40rem) {
+  .dock {
+    inset: var(--space-lg);
+  }
+}
+
+/* Desktop: a cena 3D escreve left/top/width/height para cobrir a tela do monitor,
+   e o texto acompanha a altura da janela */
+.dock[data-docked="true"] {
   inset: auto;
-  background: #010801;
+  container-type: size;
+}
+
+.dock[data-docked="true"] > * {
+  font-size: clamp(0.6875rem, 2.4cqh, 1rem);
+}
+
+.hint,
+.freeHint {
+  margin: 0;
+  padding: 0.4rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--color-terminal);
+  background: rgb(0 0 0 / 0.6);
+  border: 1px solid rgb(124 255 124 / 0.25);
+}
+
+.hint {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+}
+
+.freeBar {
+  position: fixed;
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+  width: max-content;
+  max-width: calc(100% - 2rem);
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.backButton {
+  min-height: 2.75rem;
+  padding: 0.6rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-terminal);
+  cursor: pointer;
+  background: rgb(10 10 20 / 0.85);
+  border: 1px solid rgb(124 255 124 / 0.5);
+  box-shadow: 0 0 18px rgb(124 255 124 / 0.15);
+}
+
+.backButton:hover {
+  background: rgb(20 40 20 / 0.95);
 }

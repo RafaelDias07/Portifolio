@@ -66,6 +66,7 @@ src/
 ├── hooks/        # hooks personalizados
 ├── contexts/     # tema e autenticação
 ├── types/        # tipos compartilhados
+├── content/      # textos e links pessoais
 ├── styles/       # estilos globais e variáveis CSS
 ├── three/        # cena 3D
 ├── games/        # jogos (JavaScript)
