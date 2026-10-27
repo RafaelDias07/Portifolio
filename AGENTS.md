@@ -51,7 +51,7 @@ Todos são obrigatórios. Esta tabela é o checklist do projeto: nada é "pronto
 
 | #   | Requisito                                                                                                                                             | Como atendemos                                                                                                                      | Onde no código                                                     | Status                                        |
 | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------- |
-| 1   | Rotas: link próprio por projeto, 404 amigável, página de erro de API, link compartilhado abre certo ao atualizar                                      | React Router; `vercel.json` reescreve tudo para `index.html`; 404 como "tela azul" do Windows; erro de API como caixa de erro do XP | `src/app/router.tsx`, `src/pages/`, `vercel.json`                  | _planejado (dia 4)_                           |
+| 1   | Rotas: link próprio por projeto, 404 amigável, página de erro de API, link compartilhado abre certo ao atualizar                                      | React Router; `vercel.json` reescreve tudo para `index.html`; 404 como "tela azul" do Windows; erro de API como caixa de erro do XP | `src/app/router.tsx`, `src/pages/`, `vercel.json`                  | ✅ feito                                      |
 | 2   | Estados: carregando, erro e vazio em todo dado de API; indicador visual; botão de enviar travado durante o envio                                      | TanStack Query (`isPending`, `isError`, lista vazia); skeleton e barra de progresso no estilo XP; `disabled` + spinner no envio     | `src/components/ui/`, `src/hooks/`                                 | _planejado (dias 4–5)_                        |
 | 3   | Projetos pela API do GitHub, sem cadastro manual; card com descrição, linguagem e data da última atualização                                          | `githubService` + `useGithubRepos`; cache para não estourar o limite de requisições                                                 | `src/services/githubService.ts`, `src/hooks/useGithubRepos.ts`     | _planejado (dia 4)_                           |
 | 4   | Formulário de contato: validação por campo com mensagem específica; mensagem enviada por e-mail e salva; feedback                                     | React Hook Form + Zod; mensagem salva no Supabase e enviada por e-mail ao dono                                                      | `src/components/ContactForm.tsx`, `src/services/contactService.ts` | _planejado (dia 5)_                           |
@@ -80,7 +80,7 @@ Cada linha registra **o que foi comparado, o critério e o que aceitamos perder*
 | Fluxo de branches | **GitHub Flow**                                       | Git Flow, trunk-based              | Projeto de uma pessoa, com deploy contínuo: uma `main` e branches curtas bastam                            | As branches `develop`/`release` do Git Flow                            |
 | Estilo            | **CSS Modules + variáveis CSS**                       | Tailwind, shadcn/ui, MUI           | O visual XP é todo customizado; bibliotecas de UI ajudariam pouco e brigariam com o estilo                 | Utilitários e componentes prontos                                      |
 | 3D                | **Three.js imperativo** dentro de um componente React | React Three Fiber, Spline          | A cena e os jogos são código Three.js imperativo; envolvê-los num componente é mais simples que reescrever | O estilo declarativo do R3F                                            |
-| Rotas             | **React Router** _(planejado)_                        | TanStack Router, wouter            | Padrão de mercado, documentação ampla, rotas aninhadas para o dashboard                                    | A tipagem forte de rotas do TanStack Router                            |
+| Rotas             | **React Router**                                      | TanStack Router, wouter            | Padrão de mercado, documentação ampla, rotas aninhadas para o dashboard                                    | A tipagem forte de rotas do TanStack Router                            |
 | Dados de API      | **TanStack Query** _(planejado)_                      | SWR, `useEffect` + `useState`      | Cache entre páginas (sem refazer chamadas ao GitHub), estados de carregamento/erro prontos                 | Mais uma dependência (~13 KB gzip)                                     |
 | Formulário        | **React Hook Form + Zod** _(planejado)_               | Formik + Yup, validação manual     | Menos re-renderizações; o schema Zod gera os tipos e as mensagens de erro                                  | Curva de aprendizado de duas bibliotecas                               |
 | Backend           | **Supabase** _(planejado)_                            | Firebase, PocketBase, Node próprio | Postgres + Auth + regras de acesso (RLS) num serviço grátis, sem manter servidor                           | Dependência de um serviço externo                                      |
@@ -139,7 +139,7 @@ main.tsx ──► ThemeProvider ──► App          (QueryClient e Auth: pla
 
 Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam em `public/`.
 
-### 4.4 Rotas _(planejado — dia 4)_
+### 4.4 Rotas (`src/app/router.tsx`)
 
 | Rota              | Página                               | Observação                                          |
 | ----------------- | ------------------------------------ | --------------------------------------------------- |
@@ -149,9 +149,13 @@ Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam e
 | `/projetos/:slug` | detalhe do projeto                   | `slug` = nome do repositório                        |
 | `/contato`        | formulário                           |                                                     |
 | `/multimidia`     | galeria, player e jogos              | jogos carregados sob demanda                        |
-| `/painel/login`   | login do dono                        |                                                     |
-| `/painel`         | dashboard protegido                  | sem login → redireciona para `/painel/login`        |
-| `*`               | 404 "tela azul"                      |                                                     |
+| `/painel/login`   | login do dono                        | _planejado (dia 6)_                                 |
+| `/painel`         | dashboard protegido                  | _planejado (dia 6)_; sem login → `/painel/login`    |
+| `*`               | 404 "tela azul"                      | tela cheia, fora do layout 3D                       |
+- As rotas do portfólio são filhas do `DesktopLayout` (`src/app/DesktopLayout.tsx`): a cena 3D e a janela ficam montadas e só o `<Outlet />` troca. As abas são `NavLink` (`src/components/WindowNav.tsx`), com `aria-current="page"` na atual.
+- Cada página define o próprio `<title>` (React 19 leva a tag para o `<head>`).
+- Erros: uma página que quebra cai no `errorElement` (`ErrorPage`, caixa de erro do XP); erro de API aparece dentro da página com o `ErrorDialog` e o botão "Tentar de novo".
+- `vercel.json` reescreve toda URL (menos `/api/`) para o `index.html`, então atualizar ou abrir um link direto funciona.
 
 ### 4.5 Dados no Supabase _(planejado — dias 5–6)_
 
