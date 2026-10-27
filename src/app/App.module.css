@@ -1,0 +1,27 @@
+/* Provisório: a janela XP substitui este painel na próxima etapa */
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  gap: 0.25rem;
+  padding: 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.25rem);
+  transition: opacity 0.35s;
+}
+
+.screen p {
+  margin: 0;
+}
+
+.screen[data-visible="false"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* No desktop a cena 3D define left/top/width/height para cobrir a tela do monitor */
+.screen[data-docked="true"] {
+  inset: auto;
+  background: #010801;
+}

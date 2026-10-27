@@ -9,4 +9,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  build: {
+    // O chunk da cena 3D (Three.js, ~140 KB gzip) passa de 500 KB sem compressão,
+    // mas é carregado sob demanda e não entra no pacote inicial
+    chunkSizeWarningLimit: 600,
+  },
 })
