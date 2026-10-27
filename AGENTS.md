@@ -49,21 +49,21 @@ npm run test:hooks    # testes dos hooks do harness de IA
 
 Todos são obrigatórios. Esta tabela é o checklist do projeto: nada é "pronto" sem cumprir a linha correspondente.
 
-| #   | Requisito                                                                                                                                             | Como atendemos                                                                                                                      | Onde no código                                                     | Status                                        |
-| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------- |
-| 1   | Rotas: link próprio por projeto, 404 amigável, página de erro de API, link compartilhado abre certo ao atualizar                                      | React Router; `vercel.json` reescreve tudo para `index.html`; 404 como "tela azul" do Windows; erro de API como caixa de erro do XP | `src/app/router.tsx`, `src/pages/`, `vercel.json`                  | ✅ feito                                      |
-| 2   | Estados: carregando, erro e vazio em todo dado de API; indicador visual; botão de enviar travado durante o envio                                      | TanStack Query (`isPending`, `isError`, lista vazia); skeleton e barra de progresso no estilo XP; `disabled` + spinner no envio     | `src/components/ui/`, `src/hooks/`                                 | ✅ projetos (dia 4); envio no dia 5           |
-| 3   | Projetos pela API do GitHub, sem cadastro manual; card com descrição, linguagem e data da última atualização                                          | `githubService` + `useGithubRepos`; cache para não estourar o limite de requisições                                                 | `src/services/githubService.ts`, `src/hooks/useGithubRepos.ts`     | ✅ feito                                      |
-| 4   | Formulário de contato: validação por campo com mensagem específica; mensagem enviada por e-mail e salva; feedback                                     | React Hook Form + Zod; mensagem salva no Supabase e enviada por e-mail ao dono                                                      | `src/components/ContactForm.tsx`, `src/services/contactService.ts` | _planejado (dia 5)_                           |
-| 5   | Dashboard: login com redirecionamento; mensagens com "marcar como respondida"; escolha dos destaques da home                                          | Supabase Auth; componente `ProtectedRoute`; tabelas `messages` e `featured_projects`                                                | `src/pages/dashboard/`, `src/contexts/AuthContext.tsx`             | _planejado (dia 6)_                           |
-| 6   | Tema claro/escuro salvo entre visitas                                                                                                                 | `ThemeContext` + `localStorage`; na primeira visita segue `prefers-color-scheme`                                                    | `src/contexts/ThemeContext.tsx`                                    | ✅ feito                                      |
-| 7   | Interface: responsiva (celular e desktop); componentes reaproveitados; identidade própria com 3D interativo                                           | CSS Modules + variáveis CSS; peças base em `components/ui/`; cena 3D que reage ao mouse                                             | `src/components/ui/`, `src/three/`                                 | ✅ feito (conteúdo pessoal pendente)          |
-| 8   | Performance: Lighthouse mobile ≥ 80; imagens otimizadas e com lazy; 3D e dashboard sob demanda; sem layout shift; sem requisições repetidas ao GitHub | `React.lazy` + `Suspense`; WebP/AVIF com `width`/`height` e `loading="lazy"`; `staleTime` no TanStack Query                         | todo o projeto (ver seção 8)                                       | _contínuo; auditoria no dia 8_                |
-| 9   | Testes automatizados: validação do formulário e bloqueio do dashboard sem login (mínimo)                                                              | Vitest + Testing Library                                                                                                            | `src/**/*.test.tsx`                                                | _planejado (dia 8)_                           |
-| 10  | Deploy: URL pública; publicação automática a cada push na `main`                                                                                      | Integração Git da Vercel                                                                                                            | Vercel + `vercel.json`                                             | ✅ deploy automático (`vercel.json` no dia 4) |
-| 11  | Versionamento: padrão de mensagem; branch por funcionalidade; padrões no README e nas instruções da IA                                                | Conventional Commits + commitlint (no commit e no CI); GitHub Flow com a `main` protegida                                           | `commitlint.config.js`, `.husky/`, seção 6                         | ✅ feito                                      |
-| 12  | Arquitetura: pastas com responsabilidade clara; lógica separada da apresentação; nomes definidos; padrão verificado automaticamente                   | Estrutura por tipo de arquivo; services + hooks; Biome no pre-commit, no hook da IA e no CI                                         | `src/`, `biome.json`, seções 4 e 5                                 | ✅ feito                                      |
-| —   | Repositório: público; `.env` fora do Git com `.env.example`; README com projeto, tecnologias e como rodar                                             | `.gitignore`, `.env.example`, `README.md`                                                                                           | raiz                                                               | ✅ feito (README final no dia 9)              |
+| #   | Requisito                                                                                                                                             | Como atendemos                                                                                                                      | Onde no código                                                 | Status                                          |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------- |
+| 1   | Rotas: link próprio por projeto, 404 amigável, página de erro de API, link compartilhado abre certo ao atualizar                                      | React Router; `vercel.json` reescreve tudo para `index.html`; 404 como "tela azul" do Windows; erro de API como caixa de erro do XP | `src/app/router.tsx`, `src/pages/`, `vercel.json`              | ✅ feito                                        |
+| 2   | Estados: carregando, erro e vazio em todo dado de API; indicador visual; botão de enviar travado durante o envio                                      | TanStack Query (`isPending`, `isError`, lista vazia); skeleton e barra de progresso no estilo XP; `disabled` + spinner no envio     | `src/components/ui/`, `src/hooks/`                             | ✅ feito                                        |
+| 3   | Projetos pela API do GitHub, sem cadastro manual; card com descrição, linguagem e data da última atualização                                          | `githubService` + `useGithubRepos`; cache para não estourar o limite de requisições                                                 | `src/services/githubService.ts`, `src/hooks/useGithubRepos.ts` | ✅ feito                                        |
+| 4   | Formulário de contato: validação por campo com mensagem específica; mensagem enviada por e-mail e salva; feedback                                     | React Hook Form + Zod; mensagem salva no Supabase e enviada por e-mail ao dono                                                      | `src/components/ContactForm.tsx`, `api/contact.ts`             | ✅ código pronto; falta ligar Supabase e Resend |
+| 5   | Dashboard: login com redirecionamento; mensagens com "marcar como respondida"; escolha dos destaques da home                                          | Supabase Auth; componente `ProtectedRoute`; tabelas `messages` e `featured_projects`                                                | `src/pages/dashboard/`, `src/contexts/AuthContext.tsx`         | _planejado (dia 6)_                             |
+| 6   | Tema claro/escuro salvo entre visitas                                                                                                                 | `ThemeContext` + `localStorage`; na primeira visita segue `prefers-color-scheme`                                                    | `src/contexts/ThemeContext.tsx`                                | ✅ feito                                        |
+| 7   | Interface: responsiva (celular e desktop); componentes reaproveitados; identidade própria com 3D interativo                                           | CSS Modules + variáveis CSS; peças base em `components/ui/`; cena 3D que reage ao mouse                                             | `src/components/ui/`, `src/three/`                             | ✅ feito (conteúdo pessoal pendente)            |
+| 8   | Performance: Lighthouse mobile ≥ 80; imagens otimizadas e com lazy; 3D e dashboard sob demanda; sem layout shift; sem requisições repetidas ao GitHub | `React.lazy` + `Suspense`; WebP/AVIF com `width`/`height` e `loading="lazy"`; `staleTime` no TanStack Query                         | todo o projeto (ver seção 8)                                   | _contínuo; auditoria no dia 8_                  |
+| 9   | Testes automatizados: validação do formulário e bloqueio do dashboard sem login (mínimo)                                                              | Vitest + Testing Library                                                                                                            | `src/**/*.test.tsx`                                            | _planejado (dia 8)_                             |
+| 10  | Deploy: URL pública; publicação automática a cada push na `main`                                                                                      | Integração Git da Vercel                                                                                                            | Vercel + `vercel.json`                                         | ✅ deploy automático (`vercel.json` no dia 4)   |
+| 11  | Versionamento: padrão de mensagem; branch por funcionalidade; padrões no README e nas instruções da IA                                                | Conventional Commits + commitlint (no commit e no CI); GitHub Flow com a `main` protegida                                           | `commitlint.config.js`, `.husky/`, seção 6                     | ✅ feito                                        |
+| 12  | Arquitetura: pastas com responsabilidade clara; lógica separada da apresentação; nomes definidos; padrão verificado automaticamente                   | Estrutura por tipo de arquivo; services + hooks; Biome no pre-commit, no hook da IA e no CI                                         | `src/`, `biome.json`, seções 4 e 5                             | ✅ feito                                        |
+| —   | Repositório: público; `.env` fora do Git com `.env.example`; README com projeto, tecnologias e como rodar                                             | `.gitignore`, `.env.example`, `README.md`                                                                                           | raiz                                                           | ✅ feito (README final no dia 9)                |
 
 ---
 
@@ -71,23 +71,24 @@ Todos são obrigatórios. Esta tabela é o checklist do projeto: nada é "pronto
 
 Cada linha registra **o que foi comparado, o critério e o que aceitamos perder**. É a base da parte "Justificativas da stack" do vídeo. Ao adicionar uma dependência nova, acrescente uma linha aqui no mesmo PR.
 
-| Área              | Escolha                                               | Comparamos com                     | Critério                                                                                                   | O que aceitamos perder                                                      |
-| ----------------- | ----------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Base              | **Vite + React** (SPA)                                | Next.js                            | Site sem necessidade de SSR; build e dev server rápidos; menos conceitos para explicar                     | SSR/SEO automático; precisamos configurar o rewrite de rotas na Vercel      |
-| Linguagem         | **TypeScript** (`strict`)                             | JavaScript                         | Erros de formato de dados (GitHub, Supabase, formulário) aparecem no editor; a IA erra menos com tipos     | Um pouco mais de código no começo (tipos de props e de dados)               |
-| Lint e formatação | **Biome**                                             | ESLint + Prettier                  | Uma ferramenta só, uma config só, muito mais rápida                                                        | O ecossistema de plugins do ESLint                                          |
-| Padrão de commits | **Husky + lint-staged + commitlint**                  | Só convenção escrita               | O padrão é **verificado**, não só combinado: commit fora do padrão é recusado                              | Commits ficam alguns segundos mais lentos                                   |
-| Fluxo de branches | **GitHub Flow**                                       | Git Flow, trunk-based              | Projeto de uma pessoa, com deploy contínuo: uma `main` e branches curtas bastam                            | As branches `develop`/`release` do Git Flow                                 |
-| Estilo            | **CSS Modules + variáveis CSS**                       | Tailwind, shadcn/ui, MUI           | O visual XP é todo customizado; bibliotecas de UI ajudariam pouco e brigariam com o estilo                 | Utilitários e componentes prontos                                           |
-| 3D                | **Three.js imperativo** dentro de um componente React | React Three Fiber, Spline          | A cena e os jogos são código Three.js imperativo; envolvê-los num componente é mais simples que reescrever | O estilo declarativo do R3F                                                 |
-| Rotas             | **React Router**                                      | TanStack Router, wouter            | Padrão de mercado, documentação ampla, rotas aninhadas para o dashboard                                    | A tipagem forte de rotas do TanStack Router                                 |
-| Dados de API      | **TanStack Query**                                    | SWR, `useEffect` + `useState`      | Cache entre páginas (sem refazer chamadas ao GitHub), estados de carregamento/erro prontos                 | Mais uma dependência (~13 KB gzip)                                          |
-| Formulário        | **React Hook Form + Zod** _(Zod já valida o GitHub)_  | Formik + Yup, validação manual     | Menos re-renderizações; o schema Zod gera os tipos e as mensagens de erro                                  | Curva de aprendizado de duas bibliotecas                                    |
-| Validação         | **`zod/mini`** (a versão enxuta do Zod 4)             | `zod` completo, Valibot            | Mesmo Zod, mas só entra no pacote o que é usado: o JS inicial caiu de 139 KB para 121 KB gzip              | A sintaxe encadeada (`z.string().nullable()` vira `z.nullable(z.string())`) |
-| Backend           | **Supabase** _(planejado)_                            | Firebase, PocketBase, Node próprio | Postgres + Auth + regras de acesso (RLS) num serviço grátis, sem manter servidor                           | Dependência de um serviço externo                                           |
-| Testes            | **Vitest + Testing Library** _(planejado)_            | Jest, Playwright                   | Roda com a mesma config do Vite; testa como o usuário usa a tela                                           | Testes ponta a ponta em navegador real                                      |
-| Deploy            | **Vercel**                                            | Netlify, GitHub Pages              | Pedido da atividade; deploy automático por push e preview por PR                                           | Controle fino de servidor                                                   |
-| Testes do harness | **`node:test`** (test runner nativo do Node)          | Vitest, Jest                       | Os hooks são scripts `.mjs` soltos; o runner nativo testa sem dependência nem configuração                 | Relatórios e modo watch mais completos                                      |
+| Área              | Escolha                                                         | Comparamos com                     | Critério                                                                                                   | O que aceitamos perder                                                                 |
+| ----------------- | --------------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Base              | **Vite + React** (SPA)                                          | Next.js                            | Site sem necessidade de SSR; build e dev server rápidos; menos conceitos para explicar                     | SSR/SEO automático; precisamos configurar o rewrite de rotas na Vercel                 |
+| Linguagem         | **TypeScript** (`strict`)                                       | JavaScript                         | Erros de formato de dados (GitHub, Supabase, formulário) aparecem no editor; a IA erra menos com tipos     | Um pouco mais de código no começo (tipos de props e de dados)                          |
+| Lint e formatação | **Biome**                                                       | ESLint + Prettier                  | Uma ferramenta só, uma config só, muito mais rápida                                                        | O ecossistema de plugins do ESLint                                                     |
+| Padrão de commits | **Husky + lint-staged + commitlint**                            | Só convenção escrita               | O padrão é **verificado**, não só combinado: commit fora do padrão é recusado                              | Commits ficam alguns segundos mais lentos                                              |
+| Fluxo de branches | **GitHub Flow**                                                 | Git Flow, trunk-based              | Projeto de uma pessoa, com deploy contínuo: uma `main` e branches curtas bastam                            | As branches `develop`/`release` do Git Flow                                            |
+| Estilo            | **CSS Modules + variáveis CSS**                                 | Tailwind, shadcn/ui, MUI           | O visual XP é todo customizado; bibliotecas de UI ajudariam pouco e brigariam com o estilo                 | Utilitários e componentes prontos                                                      |
+| 3D                | **Three.js imperativo** dentro de um componente React           | React Three Fiber, Spline          | A cena e os jogos são código Three.js imperativo; envolvê-los num componente é mais simples que reescrever | O estilo declarativo do R3F                                                            |
+| Rotas             | **React Router**                                                | TanStack Router, wouter            | Padrão de mercado, documentação ampla, rotas aninhadas para o dashboard                                    | A tipagem forte de rotas do TanStack Router                                            |
+| Dados de API      | **TanStack Query**                                              | SWR, `useEffect` + `useState`      | Cache entre páginas (sem refazer chamadas ao GitHub), estados de carregamento/erro prontos                 | Mais uma dependência (~13 KB gzip)                                                     |
+| Formulário        | **React Hook Form + Zod**                                       | Formik + Yup, validação manual     | Menos re-renderizações; o schema Zod gera os tipos e as mensagens de erro                                  | Curva de aprendizado de duas bibliotecas                                               |
+| Validação         | **`zod/mini`** (a versão enxuta do Zod 4)                       | `zod` completo, Valibot            | Mesmo Zod, mas só entra no pacote o que é usado: o JS inicial caiu de 139 KB para 121 KB gzip              | A sintaxe encadeada (`z.string().nullable()` vira `z.nullable(z.string())`)            |
+| Backend           | **Supabase** (mensagens; login no dia 6)                        | Firebase, PocketBase, Node próprio | Postgres + Auth + regras de acesso (RLS) num serviço grátis, sem manter servidor                           | Dependência de um serviço externo                                                      |
+| Testes            | **Vitest + Testing Library** _(planejado)_                      | Jest, Playwright                   | Roda com a mesma config do Vite; testa como o usuário usa a tela                                           | Testes ponta a ponta em navegador real                                                 |
+| E-mail            | **Resend**, chamado por uma função da Vercel (`api/contact.ts`) | EmailJS, Edge Function do Supabase | A chave fica só no servidor; a mesma função valida, salva e manda o e-mail; plano grátis basta             | O remetente de teste (`onboarding@resend.dev`) só envia para o e-mail do dono da conta |
+| Deploy            | **Vercel**                                                      | Netlify, GitHub Pages              | Pedido da atividade; deploy automático por push e preview por PR                                           | Controle fino de servidor                                                              |
+| Testes do harness | **`node:test`** (test runner nativo do Node)                    | Vitest, Jest                       | Os hooks são scripts `.mjs` soltos; o runner nativo testa sem dependência nem configuração                 | Relatórios e modo watch mais completos                                                 |
 
 ---
 
@@ -120,6 +121,15 @@ main.tsx ──► ThemeProvider ──► App          (QueryClient e Auth: pla
 4. O componente recebe `{ data, isPending, isError }` e renderiza **carregando, erro, vazio ou conteúdo**.
 5. O cache do TanStack Query guarda o resultado: ao voltar para uma página, os dados aparecem sem nova chamada.
 
+### 4.2.1 Fluxo do contato
+
+1. `ContactForm` (apresentação) usa o hook `useContactForm`: React Hook Form + `zodResolver(contactSchema)` validam cada campo; o envio é um `useMutation`.
+2. `contactService.sendContactMessage` faz `POST /api/contact`.
+3. A função `api/contact.ts` (Vercel, servidor) **valida de novo** com o mesmo `contactSchema`, salva em `messages` pela API REST do Supabase e manda o e-mail pelo Resend. Se o e-mail falhar, a mensagem já está salva e aparece no dashboard.
+4. Campo escondido `website` é uma armadilha para robôs: se vier preenchido, a função responde sucesso e não salva nada.
+5. No `npm run dev`, o plugin `vercelApiInDev` do `vite.config.ts` atende `/api/contact` com a mesma função.
+6. A tabela e as regras de acesso estão em `supabase/migrations/001_messages.sql`.
+
 ### 4.3 Pastas e responsabilidades
 
 | Pasta                | Responsabilidade                                                             | Pode importar                                 | Não pode                                  |
@@ -137,6 +147,8 @@ main.tsx ──► ThemeProvider ──► App          (QueryClient e Auth: pla
 | `src/three/`         | cena 3D (computador, estrelas, câmera) em Three.js (seção 10)                | `three`                                       | React                                     |
 | `src/games/`         | jogos em JavaScript (ver seção 10)                                           | `three`                                       | —                                         |
 | `src/assets/`        | imagens importadas pelo código                                               | —                                             | —                                         |
+| `api/`               | funções serverless da Vercel (rodam no servidor, com segredos)               | `src/types` (com caminho relativo e `.js`)    | React; o alias `@/`                       |
+| `supabase/`          | SQL das tabelas e regras de acesso (RLS), rodado no painel do Supabase       | —                                             | —                                         |
 
 Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam em `public/`.
 
@@ -364,7 +376,7 @@ Uma tarefa só está pronta quando:
 | Imagem individual               | ≤ 200 KB, em WebP/AVIF                                                                   |
 | Chamadas ao GitHub              | uma por sessão: `staleTime` de 10 min, sem refazer ao trocar de página ou focar a janela |
 
-Medido no dia 4: JS inicial com 121 KB gzip (React, React Router, TanStack Query e `zod/mini`); a cena 3D, à parte, 140 KB.
+Medido no dia 5: JS inicial com 122 KB gzip (React, React Router, TanStack Query e `zod/mini`). Fora dele: a cena 3D (140 KB) e a rota `/contato` com o React Hook Form (15 KB, `lazy` no `router.tsx`).
 
 Como garantir:
 
@@ -383,11 +395,15 @@ Como garantir:
 
 Variáveis atuais:
 
-| Variável                 | Uso                                       |
-| ------------------------ | ----------------------------------------- |
-| `VITE_GITHUB_USERNAME`   | usuário do GitHub de onde vêm os projetos |
-| `VITE_SUPABASE_URL`      | URL do projeto Supabase                   |
-| `VITE_SUPABASE_ANON_KEY` | chave anônima (pública) do Supabase       |
+| Variável                 | Uso                                        |
+| ------------------------ | ------------------------------------------ |
+| `VITE_GITHUB_USERNAME`   | usuário do GitHub de onde vêm os projetos  |
+| `VITE_SUPABASE_URL`      | URL do projeto Supabase                    |
+| `VITE_SUPABASE_ANON_KEY` | chave anônima (pública) do Supabase        |
+| `RESEND_API_KEY`         | **só servidor**: chave do Resend (e-mail)  |
+| `CONTACT_TO_EMAIL`       | **só servidor**: e-mail que recebe o aviso |
+
+Na Vercel, as quatro primeiras ficam em Settings > Environment Variables. A função `api/contact.ts` lê `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` pelo `process.env`.
 
 ---
 
@@ -458,17 +474,17 @@ O harness funciona em **camadas**: cada camada pega o que a anterior deixou pass
 
 ## 13. Cronograma e status
 
-| Dia | Data  | Branch                            | Entrega                                                                     | Status |
-| --- | ----- | --------------------------------- | --------------------------------------------------------------------------- | ------ |
-| 1   | 25/10 | `chore/setup`                     | Projeto base, Biome, Husky + commitlint, pastas, harness de IA, CI, README  | ✅     |
-| 2   | 27/10 | `feature/cena-3d`                 | Cena 3D (computador e espaço) em React, sob demanda; deploy na Vercel       | ✅     |
-| 3   | 27/10 | `feature/janela-xp`               | Janela XP com componentes reaproveitáveis, conteúdo, tema salvo, responsivo | ✅     |
-| 4   | 27/10 | `feature/rotas`, `feature/github` | Rotas, `/projetos/:slug`, 404, projetos da API do GitHub com os 3 estados   | ✅     |
-| 5   | 29/10 | `feature/contato`                 | Formulário validado, salvo no Supabase e enviado por e-mail                 | ⏳     |
-| 6   | 30/10 | `feature/dashboard`               | Login, rota protegida, mensagens e destaques                                | ⏳     |
-| 7   | 31/10 | `feature/jogos`                   | Fox 64, B-Zero 64, galeria e player com conteúdo do Rafael                  | ⏳     |
-| 8   | 01/11 | `test/…`, `perf/…`                | Testes automatizados e auditoria de performance                             | ⏳     |
-| 9   | 02/11 | `docs/readme`                     | README final, revisão geral, vídeo                                          | ⏳     |
-| —   | 03/11 | —                                 | Entrega                                                                     | ⏳     |
+| Dia | Data  | Branch                            | Entrega                                                                     | Status                     |
+| --- | ----- | --------------------------------- | --------------------------------------------------------------------------- | -------------------------- |
+| 1   | 25/10 | `chore/setup`                     | Projeto base, Biome, Husky + commitlint, pastas, harness de IA, CI, README  | ✅                         |
+| 2   | 27/10 | `feature/cena-3d`                 | Cena 3D (computador e espaço) em React, sob demanda; deploy na Vercel       | ✅                         |
+| 3   | 27/10 | `feature/janela-xp`               | Janela XP com componentes reaproveitáveis, conteúdo, tema salvo, responsivo | ✅                         |
+| 4   | 27/10 | `feature/rotas`, `feature/github` | Rotas, `/projetos/:slug`, 404, projetos da API do GitHub com os 3 estados   | ✅                         |
+| 5   | 27/10 | `feature/contato`                 | Formulário validado, salvo no Supabase e enviado por e-mail                 | ✅ (falta ligar as contas) |
+| 6   | 30/10 | `feature/dashboard`               | Login, rota protegida, mensagens e destaques                                | ⏳                         |
+| 7   | 31/10 | `feature/jogos`                   | Fox 64, B-Zero 64, galeria e player com conteúdo do Rafael                  | ⏳                         |
+| 8   | 01/11 | `test/…`, `perf/…`                | Testes automatizados e auditoria de performance                             | ⏳                         |
+| 9   | 02/11 | `docs/readme`                     | README final, revisão geral, vídeo                                          | ⏳                         |
+| —   | 03/11 | —                                 | Entrega                                                                     | ⏳                         |
 
 Ao concluir uma etapa, marque o status aqui e na seção 2 no mesmo PR.

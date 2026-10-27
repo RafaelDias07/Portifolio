@@ -8,18 +8,19 @@ Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser 
 
 ## Tecnologias
 
-| Área              | Escolha                                                                                                                                         |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Base              | [Vite](https://vite.dev) + [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org)                                         |
-| Lint e formatação | [Biome](https://biomejs.dev)                                                                                                                    |
-| Padrão de commits | [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org) |
-| Rotas             | [React Router](https://reactrouter.com): uma URL por aba, 404 "tela azul" e página de erro                                                      |
-| Dados             | [TanStack Query](https://tanstack.com/query) (cache de 10 min dos projetos do GitHub) + [Zod](https://zod.dev) para validar as respostas        |
-| 3D                | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial)                                                                 |
-| CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                    |
-| Deploy            | [Vercel](https://vercel.com), publicação automática a cada push na `main`                                                                       |
+| Área              | Escolha                                                                                                                                                                    |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Base              | [Vite](https://vite.dev) + [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org)                                                                    |
+| Lint e formatação | [Biome](https://biomejs.dev)                                                                                                                                               |
+| Padrão de commits | [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org)                            |
+| Rotas             | [React Router](https://reactrouter.com): uma URL por aba, 404 "tela azul" e página de erro                                                                                 |
+| Dados             | [TanStack Query](https://tanstack.com/query) (cache de 10 min dos projetos do GitHub) + [Zod](https://zod.dev) para validar as respostas                                   |
+| Contato           | [React Hook Form](https://react-hook-form.com) + Zod; função da Vercel que salva no [Supabase](https://supabase.com) e avisa por e-mail com o [Resend](https://resend.com) |
+| 3D                | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial)                                                                                            |
+| CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                                               |
+| Deploy            | [Vercel](https://vercel.com), publicação automática a cada push na `main`                                                                                                  |
 
-Ainda vão entrar: React Hook Form, Supabase e Vitest + Testing Library.
+Ainda vão entrar: Supabase e Vitest + Testing Library.
 
 ## Como rodar
 
@@ -56,6 +57,15 @@ Todas estão listadas no [`.env.example`](.env.example). O `.env` fica fora do G
 | `VITE_GITHUB_USERNAME`   | usuário do GitHub de onde vêm os projetos |
 | `VITE_SUPABASE_URL`      | URL do projeto no Supabase                |
 | `VITE_SUPABASE_ANON_KEY` | chave pública (anon) do Supabase          |
+| `RESEND_API_KEY`         | só no servidor: chave do Resend           |
+| `CONTACT_TO_EMAIL`       | só no servidor: quem recebe as mensagens  |
+
+### Ligar o formulário de contato
+
+1. Crie um projeto no [Supabase](https://supabase.com). Em **SQL Editor**, rode `supabase/migrations/001_messages.sql`.
+2. Copie a URL e a chave `anon` (Project Settings > API) para `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
+3. Crie uma conta no [Resend](https://resend.com), gere uma API key e coloque em `RESEND_API_KEY`. Em `CONTACT_TO_EMAIL`, use o mesmo e-mail da conta do Resend.
+4. Coloque as mesmas variáveis na Vercel (Settings > Environment Variables) e faça um novo deploy.
 
 ## Estrutura de pastas
 
