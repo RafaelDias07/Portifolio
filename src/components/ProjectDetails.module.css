@@ -55,10 +55,3 @@
 .links a {
   color: var(--color-accent);
 }
-
-.note {
-  padding: 0.4em 0.6em;
-  background: var(--color-note);
-  border: 1px solid var(--color-note-border);
-  border-radius: var(--radius-sm);
-}

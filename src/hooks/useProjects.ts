@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { FEATURED_SLUGS, MANUAL_PROJECTS, PROJECT_TEXTS } from '@/content/projects'
-import { fetchRepositories, GITHUB_USERNAME } from '@/services/githubService'
+import { EXTRA_REPOSITORIES, FEATURED_SLUGS, PROJECT_TEXTS } from '@/content/projects'
+import { fetchRepositories, fetchRepository, GITHUB_USERNAME } from '@/services/githubService'
 import type { Repository } from '@/types/github'
 import type { Project } from '@/types/project'
 
@@ -17,8 +17,18 @@ function toProject(repository: Repository): Project {
     codeUrl: repository.html_url,
     // A API devolve "" quando o repositório não tem site
     siteUrl: repository.homepage || null,
-    note: null,
   }
+}
+
+// Meus repositórios + os de fora (EXTRA_REPOSITORIES), em paralelo. Se um extra falhar
+// (apagado, virou privado), ele só some da lista; a lista principal continua aparecendo
+async function fetchAllRepositories(): Promise<Repository[]> {
+  const [own, extras] = await Promise.all([
+    fetchRepositories(GITHUB_USERNAME),
+    Promise.allSettled(EXTRA_REPOSITORIES.map(fetchRepository)),
+  ])
+  const found = extras.flatMap((result) => (result.status === 'fulfilled' ? [result.value] : []))
+  return [...found, ...own]
 }
 
 // Destaques primeiro, na ordem de FEATURED_SLUGS; o resto mantém a ordem da API (mais recente)
@@ -30,18 +40,18 @@ function featuredRank(project: Project) {
 }
 
 export function buildProjects(repositories: Repository[]): Project[] {
-  const projects = [...MANUAL_PROJECTS, ...repositories.map(toProject)]
-  return projects
+  return repositories
+    .map(toProject)
     .map((project, order) => ({ project, order }))
     .sort((a, b) => featuredRank(a.project) - featuredRank(b.project) || a.order - b.order)
     .map(({ project }) => project)
 }
 
-// Uma chamada ao GitHub por sessão: o queryClient guarda o resultado por 10 minutos
+// Uma busca por sessão (1 chamada + 1 por repositório extra): o cache vale 10 minutos
 export function useProjects() {
   return useQuery({
     queryKey: ['repos', GITHUB_USERNAME],
-    queryFn: () => fetchRepositories(GITHUB_USERNAME),
+    queryFn: fetchAllRepositories,
     select: buildProjects,
   })
 }
@@ -50,7 +60,7 @@ export function useProjects() {
 export function useProject(slug: string) {
   return useQuery({
     queryKey: ['repos', GITHUB_USERNAME],
-    queryFn: () => fetchRepositories(GITHUB_USERNAME),
+    queryFn: fetchAllRepositories,
     select: (repositories) =>
       buildProjects(repositories).find(
         (project) => project.slug.toLowerCase() === slug.toLowerCase(),

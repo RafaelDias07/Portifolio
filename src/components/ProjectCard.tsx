@@ -19,13 +19,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <p className={styles.description}>{project.description ?? 'Sem descrição.'}</p>
       <p className={styles.meta}>
         {project.language && <span className={styles.tag}>{project.language}</span>}
-        {project.updatedAt ? (
-          <span>
-            Atualizado em <time dateTime={project.updatedAt}>{formatDate(project.updatedAt)}</time>
-          </span>
-        ) : (
-          project.note && <span>🔒 Privado</span>
-        )}
+        <span>
+          Atualizado em <time dateTime={project.updatedAt}>{formatDate(project.updatedAt)}</time>
+        </span>
       </p>
     </article>
   )

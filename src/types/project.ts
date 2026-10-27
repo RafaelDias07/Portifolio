@@ -6,13 +6,10 @@ export type Project = {
   name: string
   description: string | null
   language: string | null
-  /** Data do último push; null em projeto cadastrado à mão */
-  updatedAt: string | null
-  stars: number | null
+  /** Data do último push */
+  updatedAt: string
+  stars: number
   topics: string[]
-  /** null quando o repositório é privado */
-  codeUrl: string | null
+  codeUrl: string
   siteUrl: string | null
-  /** Aviso extra no card e no detalhe (ex.: repositório privado) */
-  note: string | null
 }

@@ -41,25 +41,16 @@ export function ProjectDetails({ slug }: ProjectDetailsProps) {
     <article>
       <h2 className={styles.title}>📁 {project.name}</h2>
       <p>{project.description ?? 'Sem descrição.'}</p>
-      {project.note && <p className={styles.note}>🔒 {project.note}</p>}
 
       <dl className={styles.facts}>
         <dt>Linguagem</dt>
         <dd>{project.language ?? 'não informada'}</dd>
-        {project.stars !== null && (
-          <>
-            <dt>Estrelas</dt>
-            <dd>{project.stars}</dd>
-          </>
-        )}
-        {project.updatedAt && (
-          <>
-            <dt>Última atualização</dt>
-            <dd>
-              <time dateTime={project.updatedAt}>{formatDate(project.updatedAt)}</time>
-            </dd>
-          </>
-        )}
+        <dt>Estrelas</dt>
+        <dd>{project.stars}</dd>
+        <dt>Última atualização</dt>
+        <dd>
+          <time dateTime={project.updatedAt}>{formatDate(project.updatedAt)}</time>
+        </dd>
       </dl>
 
       {project.topics.length > 0 && (
@@ -70,20 +61,16 @@ export function ProjectDetails({ slug }: ProjectDetailsProps) {
         </ul>
       )}
 
-      {(project.codeUrl || project.siteUrl) && (
-        <p className={styles.links}>
-          {project.codeUrl && (
-            <a href={project.codeUrl} target="_blank" rel="noreferrer">
-              Ver código no GitHub ↗
-            </a>
-          )}
-          {project.siteUrl && (
-            <a href={project.siteUrl} target="_blank" rel="noreferrer">
-              Abrir o site ↗
-            </a>
-          )}
-        </p>
-      )}
+      <p className={styles.links}>
+        <a href={project.codeUrl} target="_blank" rel="noreferrer">
+          Ver código no GitHub ↗
+        </a>
+        {project.siteUrl && (
+          <a href={project.siteUrl} target="_blank" rel="noreferrer">
+            Abrir o site ↗
+          </a>
+        )}
+      </p>
     </article>
   )
 }

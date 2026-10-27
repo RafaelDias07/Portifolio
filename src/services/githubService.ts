@@ -19,3 +19,12 @@ export async function fetchRepositories(username: string): Promise<Repository[]>
   const repositories = z.array(repositorySchema).parse(await response.json())
   return repositories.filter((repository) => !repository.fork)
 }
+
+// Busca um repositório específico (ex.: de uma organização) pelo nome completo "dono/repo"
+export async function fetchRepository(fullName: string): Promise<Repository> {
+  const response = await fetch(`https://api.github.com/repos/${fullName}`, {
+    headers: { accept: 'application/vnd.github+json' },
+  })
+  if (!response.ok) throw new Error(`O GitHub respondeu com erro ${response.status}.`)
+  return repositorySchema.parse(await response.json())
+}
