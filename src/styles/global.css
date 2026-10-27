@@ -1,12 +1,70 @@
+/* Tokens do projeto. O tema escuro troca só os valores (AGENTS.md seção 5.4) */
 :root {
-  --color-bg: #000010;
-  --color-terminal: #7cff7c;
+  --font-ui: Tahoma, Verdana, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, Consolas, "Courier New", monospace;
 
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.75rem;
+  --space-lg: 1rem;
+  --space-xl: 1.5rem;
+
+  --radius-sm: 3px;
+  --radius-window: 8px 8px 3px 3px;
+
+  /* Espaço: igual nos dois temas */
+  --color-space: #000010;
+  --color-terminal: #7cff7c;
+
+  /* Tema claro: Windows XP "Luna" */
+  --color-window: #ece9d8;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fafaf5;
+  --color-text: #111111;
+  --color-text-muted: #555555;
+  --color-border: #aca899;
+  --color-accent: #316ac5;
+  --color-accent-text: #ffffff;
+  --color-hover: #eef4ff;
+  --color-titlebar: linear-gradient(to bottom, #2461ea, #1941c0 30%, #1636a8 70%, #0f2a8a);
+  --color-titlebar-text: #ffffff;
+  --color-window-border: #0a246a;
+  --color-control: linear-gradient(to bottom, #4a7ee8, #1a4ac0);
+  --color-control-close: linear-gradient(to bottom, #e86a4a, #c0391a);
+  --color-control-text: #ffffff;
+  --color-control-border: rgb(255 255 255 / 0.6);
+  --color-button: linear-gradient(to bottom, #fdfdfb, #e3e0d3);
+  --color-group-title: linear-gradient(to bottom, #ebe8d7, #d7d4c8);
+  --color-note: #fffbe6;
+  --color-note-border: #e0d890;
+  --shadow-window: 0 6px 32px rgb(0 0 0 / 0.7);
+
+  color-scheme: light;
+}
+
+/* Tema escuro: o mesmo XP, em grafite */
+:root[data-theme="dark"] {
+  --color-window: #2b2d31;
+  --color-surface: #1c1d20;
+  --color-surface-alt: #232428;
+  --color-text: #e6e6e6;
+  --color-text-muted: #a8a8a8;
+  --color-border: #4a4c52;
+  --color-accent: #5b8def;
+  --color-accent-text: #0b0c0e;
+  --color-hover: #2f3a52;
+  --color-titlebar: linear-gradient(to bottom, #3c3f46, #24262b 40%, #18191c);
+  --color-titlebar-text: #f1f1f1;
+  --color-window-border: #0b0c0e;
+  --color-control: linear-gradient(to bottom, #4a4d55, #33353b);
+  --color-control-close: linear-gradient(to bottom, #b8503a, #8a2f1d);
+  --color-control-border: rgb(255 255 255 / 0.25);
+  --color-button: linear-gradient(to bottom, #3a3c42, #2c2e33);
+  --color-group-title: linear-gradient(to bottom, #34363c, #2a2c31);
+  --color-note: #2f2b1c;
+  --color-note-border: #6b5f2a;
+
   color-scheme: dark;
-  background: var(--color-bg);
-  color: var(--color-terminal);
-  font-family: var(--font-mono);
 }
 
 *,
@@ -15,7 +73,36 @@
   box-sizing: border-box;
 }
 
+html {
+  background: var(--color-space);
+}
+
 body {
   margin: 0;
   min-height: 100dvh;
+  overflow: hidden;
+  font-family: var(--font-ui);
+  color: var(--color-text);
+  /* Céu estrelado em CSS (um SVG pequeno repetido): fundo do celular e enquanto a cena 3D carrega */
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' fill='white'%3E%3Ccircle cx='331' cy='154' r='0.8' fill-opacity='0.5'/%3E%3Ccircle cx='74' cy='548' r='0.6' fill-opacity='0.9'/%3E%3Ccircle cx='596' cy='59' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='38' cy='88' r='0.8' fill-opacity='1'/%3E%3Ccircle cx='71' cy='246' r='0.6' fill-opacity='1'/%3E%3Ccircle cx='60' cy='579' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='596' cy='63' r='1' fill-opacity='1'/%3E%3Ccircle cx='50' cy='226' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='296' cy='429' r='0.6' fill-opacity='0.5'/%3E%3Ccircle cx='584' cy='315' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='105' cy='595' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='381' cy='99' r='1' fill-opacity='0.5'/%3E%3Ccircle cx='577' cy='61' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='508' cy='544' r='0.8' fill-opacity='0.9'/%3E%3Ccircle cx='476' cy='599' r='0.8' fill-opacity='0.9'/%3E%3Ccircle cx='306' cy='254' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='83' cy='588' r='0.8' fill-opacity='1'/%3E%3Ccircle cx='351' cy='459' r='0.8' fill-opacity='0.5'/%3E%3Ccircle cx='120' cy='524' r='0.8' fill-opacity='0.7'/%3E%3Ccircle cx='350' cy='155' r='0.8' fill-opacity='1'/%3E%3Ccircle cx='40' cy='79' r='1' fill-opacity='0.9'/%3E%3Ccircle cx='348' cy='358' r='1' fill-opacity='1'/%3E%3Ccircle cx='593' cy='467' r='0.6' fill-opacity='0.5'/%3E%3Ccircle cx='276' cy='485' r='1.3' fill-opacity='0.5'/%3E%3Ccircle cx='62' cy='317' r='1.3' fill-opacity='1'/%3E%3Ccircle cx='291' cy='395' r='1.3' fill-opacity='0.9'/%3E%3Ccircle cx='23' cy='472' r='0.8' fill-opacity='0.7'/%3E%3Ccircle cx='119' cy='505' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='294' cy='132' r='1.3' fill-opacity='0.7'/%3E%3Ccircle cx='407' cy='400' r='0.8' fill-opacity='0.5'/%3E%3Ccircle cx='170' cy='459' r='0.8' fill-opacity='0.9'/%3E%3Ccircle cx='140' cy='440' r='1' fill-opacity='0.9'/%3E%3Ccircle cx='425' cy='367' r='1.3' fill-opacity='1'/%3E%3Ccircle cx='236' cy='154' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='154' cy='237' r='1.3' fill-opacity='0.7'/%3E%3Ccircle cx='12' cy='496' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='269' cy='288' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='429' cy='547' r='0.8' fill-opacity='0.9'/%3E%3Ccircle cx='128' cy='527' r='1' fill-opacity='0.5'/%3E%3Ccircle cx='467' cy='572' r='0.8' fill-opacity='1'/%3E%3Ccircle cx='408' cy='403' r='0.6' fill-opacity='1'/%3E%3Ccircle cx='410' cy='63' r='0.6' fill-opacity='0.5'/%3E%3Ccircle cx='213' cy='451' r='0.6' fill-opacity='0.5'/%3E%3Ccircle cx='348' cy='53' r='0.6' fill-opacity='0.5'/%3E%3Ccircle cx='580' cy='154' r='1' fill-opacity='0.5'/%3E%3Ccircle cx='372' cy='26' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='385' cy='152' r='1.3' fill-opacity='0.9'/%3E%3Ccircle cx='355' cy='372' r='0.8' fill-opacity='0.5'/%3E%3Ccircle cx='118' cy='499' r='0.8' fill-opacity='1'/%3E%3Ccircle cx='495' cy='319' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='104' cy='350' r='1.3' fill-opacity='0.9'/%3E%3Ccircle cx='490' cy='165' r='1' fill-opacity='0.5'/%3E%3Ccircle cx='210' cy='540' r='0.8' fill-opacity='0.7'/%3E%3Ccircle cx='556' cy='27' r='1' fill-opacity='0.9'/%3E%3Ccircle cx='93' cy='267' r='1' fill-opacity='0.9'/%3E%3Ccircle cx='171' cy='364' r='0.6' fill-opacity='0.9'/%3E%3Ccircle cx='228' cy='199' r='0.6' fill-opacity='1'/%3E%3Ccircle cx='232' cy='204' r='1' fill-opacity='1'/%3E%3Ccircle cx='364' cy='29' r='0.6' fill-opacity='0.9'/%3E%3Ccircle cx='483' cy='265' r='0.6' fill-opacity='0.9'/%3E%3Ccircle cx='457' cy='357' r='0.8' fill-opacity='0.5'/%3E%3Ccircle cx='225' cy='104' r='0.6' fill-opacity='1'/%3E%3Ccircle cx='201' cy='345' r='0.6' fill-opacity='1'/%3E%3Ccircle cx='1' cy='490' r='1.3' fill-opacity='0.9'/%3E%3Ccircle cx='86' cy='122' r='0.8' fill-opacity='0.7'/%3E%3Ccircle cx='489' cy='182' r='0.8' fill-opacity='0.9'/%3E%3Ccircle cx='88' cy='405' r='0.8' fill-opacity='1'/%3E%3Ccircle cx='86' cy='162' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='28' cy='154' r='1' fill-opacity='1'/%3E%3Ccircle cx='149' cy='485' r='1.3' fill-opacity='0.9'/%3E%3Ccircle cx='159' cy='561' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='21' cy='14' r='1.3' fill-opacity='0.5'/%3E%3Ccircle cx='539' cy='142' r='0.8' fill-opacity='0.7'/%3E%3Ccircle cx='216' cy='28' r='0.8' fill-opacity='0.7'/%3E%3Ccircle cx='299' cy='513' r='0.6' fill-opacity='0.9'/%3E%3Ccircle cx='265' cy='557' r='0.8' fill-opacity='0.7'/%3E%3Ccircle cx='62' cy='362' r='0.8' fill-opacity='1'/%3E%3Ccircle cx='513' cy='133' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='536' cy='522' r='0.6' fill-opacity='1'/%3E%3Ccircle cx='187' cy='4' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='144' cy='484' r='1' fill-opacity='0.5'/%3E%3Ccircle cx='569' cy='63' r='0.8' fill-opacity='1'/%3E%3Ccircle cx='108' cy='573' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='195' cy='283' r='0.6' fill-opacity='0.5'/%3E%3Ccircle cx='519' cy='463' r='1' fill-opacity='0.5'/%3E%3Ccircle cx='64' cy='453' r='0.8' fill-opacity='0.7'/%3E%3Ccircle cx='283' cy='463' r='1' fill-opacity='1'/%3E%3Ccircle cx='519' cy='253' r='1.3' fill-opacity='0.9'/%3E%3Ccircle cx='572' cy='207' r='0.8' fill-opacity='0.7'/%3E%3Ccircle cx='426' cy='124' r='0.8' fill-opacity='1'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 40%, #0b1030, var(--color-space) 70%);
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px dotted var(--color-accent);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
