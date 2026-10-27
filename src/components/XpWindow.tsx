@@ -5,28 +5,17 @@ import { Button } from '@/components/ui/Button'
 import { type TabItem, Tabs } from '@/components/ui/Tabs'
 import { TitleBarButton } from '@/components/ui/TitleBarButton'
 import { Window } from '@/components/ui/Window'
-import { ContactPage } from '@/pages/ContactPage'
-import { HomePage } from '@/pages/HomePage'
-import { MediaPage } from '@/pages/MediaPage'
-import { ProjectsPage } from '@/pages/ProjectsPage'
-import { SkillsPage } from '@/pages/SkillsPage'
 import styles from './XpWindow.module.css'
 
-const TABS: TabItem[] = [
-  { id: 'home', icon: '🧭', label: 'Início', content: <HomePage /> },
-  { id: 'skills', icon: '⚙️', label: 'Habilidades', content: <SkillsPage /> },
-  { id: 'projects', icon: '🚀', label: 'Projetos', content: <ProjectsPage /> },
-  { id: 'contact', icon: '📬', label: 'Contato', content: <ContactPage /> },
-  { id: 'media', icon: '💿', label: 'Multimídia', content: <MediaPage /> },
-]
-
 type XpWindowProps = {
+  /** As abas (páginas) vêm de fora: a janela só cuida da moldura e da navegação */
+  tabs: TabItem[]
   /** Sem ele (cena 3D indisponível), os botões de câmera livre não aparecem */
   onFreeCamera?: () => void
 }
 
-export function XpWindow({ onFreeCamera }: XpWindowProps) {
-  const [activeTab, setActiveTab] = useState(TABS[0].id)
+export function XpWindow({ tabs, onFreeCamera }: XpWindowProps) {
+  const [activeTab, setActiveTab] = useState(tabs[0].id)
 
   return (
     <Window
@@ -59,7 +48,7 @@ export function XpWindow({ onFreeCamera }: XpWindowProps) {
         </>
       }
     >
-      <Tabs label="Seções do portfólio" items={TABS} activeId={activeTab} onChange={setActiveTab} />
+      <Tabs label="Seções do portfólio" items={tabs} activeId={activeTab} onChange={setActiveTab} />
     </Window>
   )
 }
