@@ -98,10 +98,14 @@ export function createScene({
 
   let focused = false
   let frame = 0
-  function animate() {
+  let lastTime = performance.now()
+  function animate(now = performance.now()) {
     frame = requestAnimationFrame(animate)
+    // Limita o salto quando a aba volta do segundo plano
+    const delta = Math.min((now - lastTime) / 1000, 0.1)
+    lastTime = now
 
-    director.update()
+    director.update(delta)
     stars.rotation.y += 0.0001
     squadron.update()
 
