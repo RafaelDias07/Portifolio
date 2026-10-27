@@ -13,7 +13,7 @@ export function ProjectDetailPage() {
           ← Voltar para projetos
         </Link>
       </p>
-      <ProjectDetails name={slug} />
+      <ProjectDetails slug={slug} />
     </>
   )
 }

@@ -3,14 +3,14 @@ import { EmptyState } from '@/components/ui/EmptyState'
 import { ErrorDialog } from '@/components/ui/ErrorDialog'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import { Skeleton } from '@/components/ui/Skeleton'
-import { useGithubRepos } from '@/hooks/useGithubRepos'
+import { useProjects } from '@/hooks/useProjects'
 import styles from './ProjectList.module.css'
 
 const SKELETON_KEYS = ['a', 'b', 'c', 'd']
 
 // Lista de projetos com os três estados obrigatórios: carregando, erro e vazio
 export function ProjectList() {
-  const { data, isPending, isError, error, refetch, isRefetching } = useGithubRepos()
+  const { data, isPending, isError, error, refetch, isRefetching } = useProjects()
 
   if (isPending) {
     return (
@@ -41,9 +41,9 @@ export function ProjectList() {
 
   return (
     <ul className={styles.grid}>
-      {data.map((repo) => (
-        <li key={repo.id}>
-          <ProjectCard repo={repo} />
+      {data.map((project) => (
+        <li key={project.slug}>
+          <ProjectCard project={project} />
         </li>
       ))}
     </ul>
