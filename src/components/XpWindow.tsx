@@ -1,21 +1,28 @@
-import { useState } from 'react'
+import { type ReactNode, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router'
 import { Clock } from '@/components/Clock'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/Button'
-import { type TabItem, Tabs } from '@/components/ui/Tabs'
 import { TitleBarButton } from '@/components/ui/TitleBarButton'
 import { Window } from '@/components/ui/Window'
+import { WindowNav } from '@/components/WindowNav'
 import styles from './XpWindow.module.css'
 
 type XpWindowProps = {
-  /** As abas (páginas) vêm de fora: a janela só cuida da moldura e da navegação */
-  tabs: TabItem[]
+  /** A página da rota atual; a janela só cuida da moldura e da navegação */
+  children: ReactNode
   /** Sem ele (cena 3D indisponível), os botões de câmera livre não aparecem */
   onFreeCamera?: () => void
 }
 
-export function XpWindow({ tabs, onFreeCamera }: XpWindowProps) {
-  const [activeTab, setActiveTab] = useState(tabs[0].id)
+export function XpWindow({ children, onFreeCamera }: XpWindowProps) {
+  const panelRef = useRef<HTMLDivElement>(null)
+  const { pathname } = useLocation()
+
+  // Página nova começa do topo, como numa navegação normal
+  useEffect(() => {
+    if (pathname) panelRef.current?.scrollTo(0, 0)
+  }, [pathname])
 
   return (
     <Window
@@ -48,7 +55,11 @@ export function XpWindow({ tabs, onFreeCamera }: XpWindowProps) {
         </>
       }
     >
-      <Tabs label="Seções do portfólio" items={tabs} activeId={activeTab} onChange={setActiveTab} />
+      <WindowNav />
+      {/* biome-ignore lint/a11y/noNoninteractiveTabindex: o painel rola, então precisa receber foco para rolar pelo teclado */}
+      <div ref={panelRef} className={styles.content} tabIndex={0}>
+        {children}
+      </div>
     </Window>
   )
 }
