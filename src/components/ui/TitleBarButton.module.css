@@ -1,0 +1,30 @@
+.button {
+  display: grid;
+  place-items: center;
+  width: 1.75em;
+  height: 1.65em;
+  padding: 0;
+  font-weight: bold;
+  line-height: 1;
+  color: var(--color-control-text);
+  cursor: pointer;
+  background: var(--color-control);
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radius-sm);
+}
+
+.button:hover {
+  filter: brightness(1.15);
+}
+
+.button[data-variant="close"] {
+  background: var(--color-control-close);
+}
+
+/* Área de toque mínima no celular */
+@media (pointer: coarse) {
+  .button {
+    width: 2.5rem;
+    height: 2.25rem;
+  }
+}
