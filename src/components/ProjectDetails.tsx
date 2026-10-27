@@ -3,15 +3,15 @@ import { EmptyState } from '@/components/ui/EmptyState'
 import { ErrorDialog } from '@/components/ui/ErrorDialog'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import { Skeleton } from '@/components/ui/Skeleton'
-import { useGithubRepo } from '@/hooks/useGithubRepos'
+import { useProject } from '@/hooks/useProjects'
 import styles from './ProjectDetails.module.css'
 
 type ProjectDetailsProps = {
-  name: string
+  slug: string
 }
 
-export function ProjectDetails({ name }: ProjectDetailsProps) {
-  const { data: repo, isPending, isError, error, refetch } = useGithubRepo(name)
+export function ProjectDetails({ slug }: ProjectDetailsProps) {
+  const { data: project, isPending, isError, error, refetch } = useProject(slug)
 
   if (isPending) {
     return (
@@ -33,40 +33,40 @@ export function ProjectDetails({ name }: ProjectDetailsProps) {
     )
   }
 
-  if (!repo) {
-    return <EmptyState icon="🔍" message={`O projeto "${name}" não existe ou não é público.`} />
+  if (!project) {
+    return <EmptyState icon="🔍" message={`O projeto "${slug}" não existe ou não é público.`} />
   }
 
   return (
     <article>
-      <h2 className={styles.title}>📁 {repo.name}</h2>
-      <p>{repo.description ?? 'Sem descrição.'}</p>
+      <h2 className={styles.title}>📁 {project.name}</h2>
+      <p>{project.description ?? 'Sem descrição.'}</p>
 
       <dl className={styles.facts}>
         <dt>Linguagem</dt>
-        <dd>{repo.language ?? 'não informada'}</dd>
+        <dd>{project.language ?? 'não informada'}</dd>
         <dt>Estrelas</dt>
-        <dd>{repo.stargazers_count}</dd>
+        <dd>{project.stars}</dd>
         <dt>Última atualização</dt>
         <dd>
-          <time dateTime={repo.pushed_at}>{formatDate(repo.pushed_at)}</time>
+          <time dateTime={project.updatedAt}>{formatDate(project.updatedAt)}</time>
         </dd>
       </dl>
 
-      {repo.topics.length > 0 && (
+      {project.topics.length > 0 && (
         <ul className={styles.topics} aria-label="Tópicos">
-          {repo.topics.map((topic) => (
+          {project.topics.map((topic) => (
             <li key={topic}>{topic}</li>
           ))}
         </ul>
       )}
 
       <p className={styles.links}>
-        <a href={repo.html_url} target="_blank" rel="noreferrer">
+        <a href={project.codeUrl} target="_blank" rel="noreferrer">
           Ver código no GitHub ↗
         </a>
-        {repo.homepage && (
-          <a href={repo.homepage} target="_blank" rel="noreferrer">
+        {project.siteUrl && (
+          <a href={project.siteUrl} target="_blank" rel="noreferrer">
             Abrir o site ↗
           </a>
         )}

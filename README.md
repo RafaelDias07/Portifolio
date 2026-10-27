@@ -90,7 +90,7 @@ src/
 ### Nomenclatura
 
 - Componentes em `PascalCase`, um por arquivo: `ProjectCard.tsx` + `ProjectCard.module.css`
-- Hooks começam com `use`: `useGithubRepos.ts`
+- Hooks começam com `use`: `useProjects.ts`
 - Services terminam em `Service`: `githubService.ts`
 - Código em inglês; textos da interface, comentários e commits em português
 - Imports internos com o alias `@/`
