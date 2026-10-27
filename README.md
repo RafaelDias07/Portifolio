@@ -2,6 +2,8 @@
 
 Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser clicado, abre uma janela no estilo Windows XP com meus projetos, contato, galeria, player de música e dois jogos.
 
+**Site:** https://portifolio-rafaeldias.vercel.app
+
 > 🚧 **Em construção.** O projeto é desenvolvido em etapas diárias até 03/11/2026.
 
 ## Tecnologias
@@ -11,9 +13,11 @@ Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser 
 | Base              | [Vite](https://vite.dev) + [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org)                                         |
 | Lint e formatação | [Biome](https://biomejs.dev)                                                                                                                    |
 | Padrão de commits | [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org) |
+| 3D                | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial)                                                                 |
 | CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                    |
+| Deploy            | [Vercel](https://vercel.com), publicação automática a cada push na `main`                                                                       |
 
-Ainda vão entrar: [Three.js](https://threejs.org) (cena 3D e jogos), deploy na [Vercel](https://vercel.com), React Router, TanStack Query, React Hook Form + Zod, Supabase e Vitest + Testing Library.
+Ainda vão entrar: React Router, TanStack Query, React Hook Form + Zod, Supabase e Vitest + Testing Library.
 
 ## Como rodar
 
