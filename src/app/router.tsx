@@ -1,0 +1,28 @@
+import { createBrowserRouter } from 'react-router'
+import { DesktopLayout } from '@/app/DesktopLayout'
+import { ContactPage } from '@/pages/ContactPage'
+import { ErrorPage } from '@/pages/ErrorPage'
+import { HomePage } from '@/pages/HomePage'
+import { MediaPage } from '@/pages/MediaPage'
+import { NotFoundPage } from '@/pages/NotFoundPage'
+import { ProjectDetailPage } from '@/pages/ProjectDetailPage'
+import { ProjectsPage } from '@/pages/ProjectsPage'
+import { SkillsPage } from '@/pages/SkillsPage'
+
+// Cada aba da janela é uma rota. O vercel.json manda toda URL para o index.html,
+// então um link compartilhado (ex.: /projetos/Portifolio) abre certo ao atualizar
+export const router = createBrowserRouter([
+  {
+    element: <DesktopLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: 'habilidades', element: <SkillsPage /> },
+      { path: 'projetos', element: <ProjectsPage /> },
+      { path: 'projetos/:slug', element: <ProjectDetailPage /> },
+      { path: 'contato', element: <ContactPage /> },
+      { path: 'multimidia', element: <MediaPage /> },
+    ],
+  },
+  { path: '*', element: <NotFoundPage /> },
+])
