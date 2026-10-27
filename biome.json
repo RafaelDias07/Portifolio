@@ -32,19 +32,27 @@
             "strictCase": false,
             "conventions": [
               {
-                "selector": { "kind": "function" },
+                "selector": {
+                  "kind": "function"
+                },
                 "formats": ["camelCase", "PascalCase"]
               },
               {
-                "selector": { "kind": "typeLike" },
+                "selector": {
+                  "kind": "typeLike"
+                },
                 "formats": ["PascalCase"]
               },
               {
-                "selector": { "kind": "objectLiteralProperty" },
+                "selector": {
+                  "kind": "objectLiteralProperty"
+                },
                 "formats": ["camelCase", "snake_case"]
               },
               {
-                "selector": { "kind": "typeProperty" },
+                "selector": {
+                  "kind": "typeProperty"
+                },
                 "formats": ["camelCase", "snake_case"]
               }
             ]
@@ -73,5 +81,17 @@
         "organizeImports": "on"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["src/vite-env.d.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": "off"
+          }
+        }
+      }
+    }
+  ]
 }
