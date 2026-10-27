@@ -1,0 +1,39 @@
+.screen {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: var(--space-xl) var(--space-lg);
+  font-family: var(--font-mono);
+  line-height: 1.6;
+  color: var(--color-bsod-text);
+  background: var(--color-bsod);
+}
+
+.content {
+  max-width: 40rem;
+}
+
+.badge {
+  display: table;
+  margin: 0 auto var(--space-xl);
+  padding: 0 0.5em;
+  font-size: 1rem;
+  color: var(--color-bsod);
+  background: var(--color-bsod-highlight);
+}
+
+.path {
+  word-break: break-all;
+}
+
+.list {
+  padding-left: 1.25rem;
+}
+
+.link {
+  color: var(--color-bsod-text);
+}
+
+.link:focus-visible {
+  outline-color: var(--color-bsod-text);
+}

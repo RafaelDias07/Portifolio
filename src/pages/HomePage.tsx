@@ -5,6 +5,7 @@ import styles from './pages.module.css'
 export function HomePage() {
   return (
     <>
+      <title>Rafael Dias | Portfólio</title>
       <div className={styles.profile}>
         <span className={styles.avatar} aria-hidden="true">
           {PROFILE.initials}

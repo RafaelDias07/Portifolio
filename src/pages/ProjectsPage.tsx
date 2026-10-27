@@ -7,6 +7,7 @@ export function ProjectsPage() {
 
   return (
     <>
+      <title>Projetos | Rafael Dias</title>
       <h2 className={styles.heading}>🚀 Projetos</h2>
       <p>Os projetos chegam direto da API do GitHub, sem cadastro manual.</p>
       <p className={styles.note}>

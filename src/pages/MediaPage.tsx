@@ -11,6 +11,7 @@ const MEDIA_ITEMS = [
 export function MediaPage() {
   return (
     <>
+      <title>Multimídia | Rafael Dias</title>
       <h2 className={styles.heading}>💿 Multimídia</h2>
       <ul className={styles.mediaGrid}>
         {MEDIA_ITEMS.map((item) => (
