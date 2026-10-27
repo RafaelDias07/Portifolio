@@ -14,17 +14,19 @@ type Scene3DProps = {
   overlayRef: RefObject<HTMLElement | null>
   mode: CameraMode
   onFocusChange: (focused: boolean) => void
+  /** Chamado quando o navegador não consegue criar a cena (sem WebGL) */
+  onUnavailable: () => void
 }
 
 // Ponte entre o React e a cena Three.js imperativa de src/three (AGENTS.md seção 10)
-export function Scene3D({ overlayRef, mode, onFocusChange }: Scene3DProps) {
+export function Scene3D({ overlayRef, mode, onFocusChange, onUnavailable }: Scene3DProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const sceneRef = useRef<SceneHandle | null>(null)
   const lastModeRef = useRef(mode)
-  const onFocusChangeRef = useRef(onFocusChange)
+  const callbacksRef = useRef({ onFocusChange, onUnavailable })
 
   useEffect(() => {
-    onFocusChangeRef.current = onFocusChange
+    callbacksRef.current = { onFocusChange, onUnavailable }
   })
 
   // A cena é criada uma vez; o modo inicial vem do primeiro render
@@ -33,14 +35,20 @@ export function Scene3D({ overlayRef, mode, onFocusChange }: Scene3DProps) {
     if (!container) return
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const scene = createScene({
-      container,
-      overlay: overlayRef.current,
-      bootLines: BOOT_LINES,
-      initialMode: lastModeRef.current,
-      skipIntro: reducedMotion,
-      onFocusChange: (focused) => onFocusChangeRef.current(focused),
-    })
+    let scene: SceneHandle
+    try {
+      scene = createScene({
+        container,
+        overlay: overlayRef.current,
+        bootLines: BOOT_LINES,
+        initialMode: lastModeRef.current,
+        skipIntro: reducedMotion,
+        onFocusChange: (focused) => callbacksRef.current.onFocusChange(focused),
+      })
+    } catch {
+      callbacksRef.current.onUnavailable()
+      return
+    }
     sceneRef.current = scene
 
     return () => {
