@@ -39,6 +39,13 @@
   --color-note-border: #e0d890;
   --shadow-window: 0 6px 32px rgb(0 0 0 / 0.7);
 
+  /* Tela azul da página 404: igual nos dois temas */
+  --color-bsod: #0000aa;
+  --color-bsod-text: #ffffff;
+  --color-bsod-highlight: #aaaaaa;
+  --color-danger: #c0391a;
+  --color-progress: #37b03c;
+
   color-scheme: light;
 }
 
