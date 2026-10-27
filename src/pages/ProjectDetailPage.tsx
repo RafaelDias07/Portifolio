@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router'
+import { ProjectDetails } from '@/components/ProjectDetails'
 import styles from './pages.module.css'
 
-// Provisório nesta branch: os dados do repositório entram com a integração do GitHub
 export function ProjectDetailPage() {
   const { slug = '' } = useParams()
 
@@ -13,7 +13,7 @@ export function ProjectDetailPage() {
           ← Voltar para projetos
         </Link>
       </p>
-      <h2 className={styles.heading}>📁 {slug}</h2>
+      <ProjectDetails name={slug} />
     </>
   )
 }
