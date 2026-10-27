@@ -70,6 +70,7 @@
   --color-group-title: linear-gradient(to bottom, #34363c, #2a2c31);
   --color-note: #2f2b1c;
   --color-note-border: #6b5f2a;
+  --color-danger: #ff8a73;
 
   color-scheme: dark;
 }
