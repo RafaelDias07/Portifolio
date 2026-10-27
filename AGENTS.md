@@ -56,8 +56,8 @@ Todos são obrigatórios. Esta tabela é o checklist do projeto: nada é "pronto
 | 3   | Projetos pela API do GitHub, sem cadastro manual; card com descrição, linguagem e data da última atualização                                          | `githubService` + `useGithubRepos`; cache para não estourar o limite de requisições                                                 | `src/services/githubService.ts`, `src/hooks/useGithubRepos.ts`     | _planejado (dia 4)_                           |
 | 4   | Formulário de contato: validação por campo com mensagem específica; mensagem enviada por e-mail e salva; feedback                                     | React Hook Form + Zod; mensagem salva no Supabase e enviada por e-mail ao dono                                                      | `src/components/ContactForm.tsx`, `src/services/contactService.ts` | _planejado (dia 5)_                           |
 | 5   | Dashboard: login com redirecionamento; mensagens com "marcar como respondida"; escolha dos destaques da home                                          | Supabase Auth; componente `ProtectedRoute`; tabelas `messages` e `featured_projects`                                                | `src/pages/dashboard/`, `src/contexts/AuthContext.tsx`             | _planejado (dia 6)_                           |
-| 6   | Tema claro/escuro salvo entre visitas                                                                                                                 | `ThemeContext` + `localStorage`; na primeira visita segue `prefers-color-scheme`                                                    | `src/contexts/ThemeContext.tsx`                                    | _planejado (dia 3)_                           |
-| 7   | Interface: responsiva (celular e desktop); componentes reaproveitados; identidade própria com 3D interativo                                           | CSS Modules + variáveis CSS; peças base em `components/ui/`; cena 3D que reage ao mouse                                             | `src/components/ui/`, `src/three/`                                 | _planejado (dias 2–3)_                        |
+| 6   | Tema claro/escuro salvo entre visitas                                                                                                                 | `ThemeContext` + `localStorage`; na primeira visita segue `prefers-color-scheme`                                                    | `src/contexts/ThemeContext.tsx`                                    | ✅ feito                                      |
+| 7   | Interface: responsiva (celular e desktop); componentes reaproveitados; identidade própria com 3D interativo                                           | CSS Modules + variáveis CSS; peças base em `components/ui/`; cena 3D que reage ao mouse                                             | `src/components/ui/`, `src/three/`                                 | ✅ feito (conteúdo pessoal pendente)          |
 | 8   | Performance: Lighthouse mobile ≥ 80; imagens otimizadas e com lazy; 3D e dashboard sob demanda; sem layout shift; sem requisições repetidas ao GitHub | `React.lazy` + `Suspense`; WebP/AVIF com `width`/`height` e `loading="lazy"`; `staleTime` no TanStack Query                         | todo o projeto (ver seção 8)                                       | _contínuo; auditoria no dia 8_                |
 | 9   | Testes automatizados: validação do formulário e bloqueio do dashboard sem login (mínimo)                                                              | Vitest + Testing Library                                                                                                            | `src/**/*.test.tsx`                                                | _planejado (dia 8)_                           |
 | 10  | Deploy: URL pública; publicação automática a cada push na `main`                                                                                      | Integração Git da Vercel                                                                                                            | Vercel + `vercel.json`                                             | ✅ deploy automático (`vercel.json` no dia 4) |
@@ -97,11 +97,11 @@ Cada linha registra **o que foi comparado, o critério e o que aceitamos perder*
 ```
 navegador
    │
-main.tsx ──► App ──► providers (QueryClient, Theme, Auth)        [planejado]
+main.tsx ──► ThemeProvider ──► App          (QueryClient e Auth: planejado)
                        │
                      Router ──► Layout "Desktop"
                                   ├── Scene3D (lazy)        → src/components/Scene3D.tsx → src/three/
-                                  └── XpWindow              → src/components/ui/
+                                  └── XpWindow              → src/components/XpWindow.tsx (peças de ui/)
                                         └── páginas (abas)  → src/pages/
                                               │
                                             hooks (useGithubRepos, useContactForm…)
@@ -121,20 +121,21 @@ main.tsx ──► App ──► providers (QueryClient, Theme, Auth)        [pl
 
 ### 4.3 Pastas e responsabilidades
 
-| Pasta                | Responsabilidade                                                    | Pode importar                     | Não pode                   |
-| -------------------- | ------------------------------------------------------------------- | --------------------------------- | -------------------------- |
-| `src/app/`           | `App`, rotas, providers globais                                     | tudo                              | —                          |
-| `src/pages/`         | uma página por rota; só compõe                                      | `components`, `hooks`, `types`    | chamar `services` direto   |
-| `src/components/`    | blocos de uma área (lista de projetos, formulário)                  | `components/ui`, `hooks`, `types` | chamar `fetch`/Supabase    |
-| `src/components/ui/` | peças base reaproveitadas (Button, Window, Card, Skeleton, Spinner) | só React, estilos e `types`       | hooks de dados, `services` |
-| `src/hooks/`         | estado, efeitos e acesso a dados via TanStack Query                 | `services`, `types`               | JSX de página              |
-| `src/services/`      | comunicação com APIs; funções puras assíncronas                     | `types`, `lib` de clientes        | React (nada de hooks)      |
-| `src/contexts/`      | estado global: tema e autenticação                                  | `services`, `types`               | —                          |
-| `src/types/`         | tipos compartilhados (`Repository`, `ContactMessage`)               | nada                              | —                          |
-| `src/styles/`        | `global.css` com reset e **tokens** (variáveis CSS)                 | —                                 | —                          |
-| `src/three/`         | cena 3D (computador, estrelas, câmera) em Three.js (seção 10)       | `three`                           | React                      |
-| `src/games/`         | jogos em JavaScript (ver seção 10)                                  | `three`                           | —                          |
-| `src/assets/`        | imagens importadas pelo código                                      | —                                 | —                          |
+| Pasta                | Responsabilidade                                                             | Pode importar                                 | Não pode                                  |
+| -------------------- | ---------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------- |
+| `src/app/`           | `App`, rotas, providers globais                                              | tudo                                          | —                                         |
+| `src/pages/`         | uma página por rota; só compõe                                               | `components`, `hooks`, `types`, `content`     | chamar `services` direto                  |
+| `src/components/`    | blocos de uma área (lista de projetos, formulário)                           | `components/ui`, `hooks`, `contexts`, `types` | chamar `fetch`/Supabase; importar `pages` |
+| `src/components/ui/` | peças base reaproveitadas (Button, Window, Card, Skeleton, Spinner)          | só React, estilos e `types`                   | hooks de dados, `services`                |
+| `src/hooks/`         | estado, efeitos e acesso a dados via TanStack Query                          | `services`, `types`                           | JSX de página                             |
+| `src/services/`      | comunicação com APIs; funções puras assíncronas                              | `types`, `lib` de clientes                    | React (nada de hooks)                     |
+| `src/contexts/`      | estado global: tema e autenticação                                           | `services`, `types`                           | —                                         |
+| `src/types/`         | tipos compartilhados (`Repository`, `ContactMessage`)                        | nada                                          | —                                         |
+| `src/content/`       | textos e links pessoais (`profile.ts`), para trocar sem mexer em componentes | nada                                          | —                                         |
+| `src/styles/`        | `global.css` com reset e **tokens** (variáveis CSS)                          | —                                             | —                                         |
+| `src/three/`         | cena 3D (computador, estrelas, câmera) em Three.js (seção 10)                | `three`                                       | React                                     |
+| `src/games/`         | jogos em JavaScript (ver seção 10)                                           | `three`                                       | —                                         |
+| `src/assets/`        | imagens importadas pelo código                                               | —                                             | —                                         |
 
 Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam em `public/`.
 
@@ -250,6 +251,9 @@ export function ProjectList() {
 - Mobile-first: estilo base para celular; `@media (min-width: …)` para telas maiores.
 - Unidades `rem` para texto e espaçamento; evite `!important`.
 - Teste em **375 px** e **1440 px** de largura.
+- Pontos de quebra do layout: até `40rem` a janela ocupa a tela toda; de `40rem` a `64rem` ela fica com uma margem sobre o céu estrelado; a partir de `64rem` a cena 3D carrega e a janela é encaixada no monitor (o tamanho do texto acompanha a altura dela, com `cqh`).
+- Em telas de toque (`pointer: coarse`), botões e abas têm pelo menos 2,5rem de altura.
+- O tema é aplicado por um script no `index.html` antes da primeira pintura (sem piscar), e o `ThemeContext` assume a partir daí. A chave no `localStorage` é `theme`.
 
 ### 5.5 Acessibilidade
 
@@ -450,7 +454,7 @@ O harness funciona em **camadas**: cada camada pega o que a anterior deixou pass
 | --- | ----- | --------------------------------- | --------------------------------------------------------------------------- | ------ |
 | 1   | 25/10 | `chore/setup`                     | Projeto base, Biome, Husky + commitlint, pastas, harness de IA, CI, README  | ✅     |
 | 2   | 27/10 | `feature/cena-3d`                 | Cena 3D (computador e espaço) em React, sob demanda; deploy na Vercel       | ✅     |
-| 3   | 27/10 | `feature/janela-xp`               | Janela XP com componentes reaproveitáveis, conteúdo, tema salvo, responsivo | ⏳     |
+| 3   | 27/10 | `feature/janela-xp`               | Janela XP com componentes reaproveitáveis, conteúdo, tema salvo, responsivo | ✅     |
 | 4   | 28/10 | `feature/rotas`, `feature/github` | Rotas, `/projetos/:slug`, 404, projetos da API do GitHub com os 3 estados   | ⏳     |
 | 5   | 29/10 | `feature/contato`                 | Formulário validado, salvo no Supabase e enviado por e-mail                 | ⏳     |
 | 6   | 30/10 | `feature/dashboard`               | Login, rota protegida, mensagens e destaques                                | ⏳     |
