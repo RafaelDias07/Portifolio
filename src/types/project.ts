@@ -12,4 +12,6 @@ export type Project = {
   topics: string[]
   codeUrl: string
   siteUrl: string | null
+  /** Escolhido como destaque no dashboard */
+  featured: boolean
 }

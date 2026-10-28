@@ -1,3 +1,4 @@
+import { FeaturedProjects } from '@/components/FeaturedProjects'
 import { GroupBox } from '@/components/ui/GroupBox'
 import { TagList } from '@/components/ui/TagList'
 import { PROFILE } from '@/content/profile'
@@ -29,6 +30,10 @@ export function HomePage() {
         {PROFILE.about.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
+      </GroupBox>
+
+      <GroupBox title="⭐ Projetos em destaque">
+        <FeaturedProjects />
       </GroupBox>
 
       <GroupBox title="📡 Sistema">
