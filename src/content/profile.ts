@@ -110,8 +110,8 @@ export const SOLUTIONS: Solution[] = [
   },
   { title: 'Planejo rápido', detail: 'planejamentos estratégicos com IA em pouco tempo' },
   {
-    title: 'Construo automações e dashboards com IA',
-    detail: 'e resolvo os problemas dos times de Agilidade e QA no G4',
+    title: 'Execução com rapidez',
+    detail: 'o que aprendo no G4, onde tudo precisa ser feito rápido e bem feito',
   },
   { title: 'Uso IA com critério', detail: 'rapidez sem abrir mão da qualidade' },
   { title: 'Conecto sistemas', detail: 'integrações por APIs para os dados andarem sozinhos' },
