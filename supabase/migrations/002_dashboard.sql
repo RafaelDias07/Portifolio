@@ -2,8 +2,8 @@
 --
 -- Como aplicar no Supabase:
 -- 1. SQL Editor > New query > cole este arquivo inteiro > Run (deve aparecer "Success").
--- 2. Authentication > Users > Add user > Create new user: o e-mail abaixo e uma senha,
---    com "Auto Confirm User" marcado.
+-- 2. Authentication > Users > Add user > Create new user: o e-mail do dono (admin@rafaeldias.dev)
+--    e uma senha, com "Auto Confirm User" marcado. A senha nunca entra no código.
 -- 3. Authentication > Sign In / Providers: desligue "Allow new users to sign up".
 
 -- "Logado" não basta: o projeto é compartilhado com o CodeCam, que tem os próprios usuários.
@@ -14,7 +14,7 @@ language sql
 stable
 set search_path = ''
 as $$
-  select coalesce(auth.jwt() ->> 'email', '') = 'rafael071007@gmail.com'
+  select coalesce(auth.jwt() ->> 'email', '') = 'admin@rafaeldias.dev'
 $$;
 
 -- As políticas do 001 liberavam qualquer usuário logado; agora só o dono
