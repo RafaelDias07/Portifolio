@@ -12,7 +12,10 @@ function toProject(repository: Repository, featured: boolean): Project {
   return {
     slug: repository.name,
     name: texts?.name ?? repository.name,
+    icon: texts?.icon ?? '📁',
     description: texts?.description ?? repository.description,
+    // Etiquetas escritas à mão; sem elas, a linguagem e os tópicos do GitHub
+    tags: texts?.tags ?? [repository.language, ...repository.topics].filter((tag) => tag !== null),
     language: repository.language,
     updatedAt: repository.pushed_at,
     stars: repository.stargazers_count,
@@ -69,15 +72,5 @@ export function useProjects() {
     queryKey: ['repos', GITHUB_USERNAME],
     queryFn: fetchAllRepositories,
     select: (repositories) => buildProjects(repositories, featured),
-  })
-}
-
-// O detalhe usa a mesma lista em cache: abrir um projeto não faz outra chamada
-export function useProject(slug: string) {
-  return useQuery({
-    queryKey: ['repos', GITHUB_USERNAME],
-    queryFn: fetchAllRepositories,
-    select: (repositories) =>
-      buildProjects(repositories).find((project) => sameName(project.slug, slug)) ?? null,
   })
 }

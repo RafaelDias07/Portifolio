@@ -131,6 +131,7 @@ main.tsx ──► ThemeProvider ──► QueryClientProvider ──► RouterP
   - `EXTRA_REPOSITORIES`: repositórios de fora da conta (ex.: `Code-Cam-Solutions/code-cam-APP`), buscados pela API em paralelo; se um falhar, só ele some da lista;
   - `SHOWN_REPOSITORIES`: **só estes repositórios aparecem**, nesta ordem; os dados de cada um continuam vindo da API.
 - Os componentes recebem o tipo `Project` (`src/types/project.ts`), não o formato cru da API.
+- A aba segue o "Projetos em Órbita" do RetroOffice: um card largo por projeto, com ícone, descrição inteira, etiquetas (`tags` em `projects.ts`; sem elas, linguagem e tópicos do GitHub) e os botões Explorar (site) e Ver Código (GitHub). Não há página de detalhe: a rota `/projetos/:slug` saiu em 28/10.
 - Destaques: o dashboard escolhe quais destes ficam em destaque (tabela `featured_projects`). `useFeaturedProjects` lê a tabela com `fetch` (`featuredService`, sem o `supabase-js`) e `buildProjects` põe os destaques primeiro, com o selo "★ Destaque". (A caixa de destaques saiu da página inicial no redesenho de 28/10.) Se a leitura falhar, a lista aparece sem destaques.
 
 ### 4.2.3 Dashboard (`/painel`)
@@ -174,17 +175,16 @@ Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam e
 
 ### 4.4 Rotas (`src/app/router.tsx`)
 
-| Rota              | Página                               | Observação                                          |
-| ----------------- | ------------------------------------ | --------------------------------------------------- |
-| `/`               | apresentação (aba inicial da janela) | cena 3D ao fundo                                    |
-| `/habilidades`    | tecnologias e níveis                 |                                                     |
-| `/projetos`       | lista de projetos do GitHub          | destaques escolhidos no dashboard aparecem primeiro |
-| `/projetos/:slug` | detalhe do projeto                   | `slug` = nome do repositório                        |
-| `/contato`        | formulário                           |                                                     |
-| `/multimidia`     | galeria, player e jogos              | cada jogo é um chunk, baixado ao clicar em Jogar    |
-| `/painel/login`   | login do dono                        | quem já está logado vai para `/painel`              |
-| `/painel`         | dashboard protegido                  | sem login → `/painel/login`                         |
-| `*`               | 404 "File not found"                 | dentro do monitor, num navegador antigo             |
+| Rota            | Página                               | Observação                                          |
+| --------------- | ------------------------------------ | --------------------------------------------------- |
+| `/`             | apresentação (aba inicial da janela) | cena 3D ao fundo                                    |
+| `/habilidades`  | tecnologias e níveis                 |                                                     |
+| `/projetos`     | lista de projetos do GitHub          | destaques escolhidos no dashboard aparecem primeiro |
+| `/contato`      | formulário                           |                                                     |
+| `/multimidia`   | galeria, player e jogos              | cada jogo é um chunk, baixado ao clicar em Jogar    |
+| `/painel/login` | login do dono                        | quem já está logado vai para `/painel`              |
+| `/painel`       | dashboard protegido                  | sem login → `/painel/login`                         |
+| `*`             | 404 "File not found"                 | dentro do monitor, num navegador antigo             |
 - As rotas do portfólio são filhas do `DesktopLayout` (`src/app/DesktopLayout.tsx`): a cena 3D e a janela ficam montadas e só o `<Outlet />` troca. As abas são `NavLink` (`src/components/WindowNav.tsx`), com `aria-current="page"` na atual.
 - A 404 é filha do layout com `handle: { ownWindow: true, skipIntro: true }`. O `skipIntro` faz quem abre o site direto numa URL inexistente ver o monitor na hora, sem o voo e a caixa de carregamento. O `ownWindow`: o `DesktopLayout` não desenha a janela XP e a página mostra a própria janela (o "Rafael_OS Explorer"), então a cena 3D continua ao fundo.
 - Cada página define o próprio `<title>` (React 19 leva a tag para o `<head>`).

@@ -7,7 +7,6 @@ import { ErrorPage } from '@/pages/ErrorPage'
 import { HomePage } from '@/pages/HomePage'
 import { MediaPage } from '@/pages/MediaPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
-import { ProjectDetailPage } from '@/pages/ProjectDetailPage'
 import { ProjectsPage } from '@/pages/ProjectsPage'
 import { SkillsPage } from '@/pages/SkillsPage'
 
@@ -23,7 +22,7 @@ const DashboardApp = lazy(() =>
 )
 
 // Cada aba da janela é uma rota. O vercel.json manda toda URL para o index.html,
-// então um link compartilhado (ex.: /projetos/WatchNext) abre certo ao atualizar
+// então um link compartilhado (ex.: /projetos) abre certo ao atualizar
 export const router = createBrowserRouter([
   {
     element: <DesktopLayout />,
@@ -32,7 +31,6 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'habilidades', element: <SkillsPage /> },
       { path: 'projetos', element: <ProjectsPage /> },
-      { path: 'projetos/:slug', element: <ProjectDetailPage /> },
       {
         path: 'contato',
         element: (

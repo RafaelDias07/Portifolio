@@ -19,7 +19,7 @@ export function ProjectList() {
         <ul className={styles.grid}>
           {SKELETON_KEYS.map((key) => (
             <li key={key}>
-              <Skeleton height="6.5em" />
+              <Skeleton height="9em" />
             </li>
           ))}
         </ul>

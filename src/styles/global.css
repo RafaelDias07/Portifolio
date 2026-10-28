@@ -44,6 +44,11 @@
   --color-level: linear-gradient(to bottom, #3b7de0, #1a56c9 55%, #1546a8);
   --color-level-track: #ece9d8;
 
+  /* Botões dos projetos: Explorar (azul) e Ver Código (preto, como o GitHub) */
+  --color-explore: linear-gradient(to bottom, #4a86e8, #1f5fd1);
+  --color-code: #1f2328;
+  --color-on-dark: #ffffff;
+
   /* Barra de tarefas da câmera livre (Windows XP Luna) */
   --color-taskbar: linear-gradient(to bottom, #3168d5, #245edb 10%, #1f4fbf 92%, #1941a5);
   --color-taskbar-text: #ffffff;
