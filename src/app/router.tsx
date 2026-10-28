@@ -58,8 +58,9 @@ export const router = createBrowserRouter([
         ),
         handle: { ownWindow: true },
       },
-      // A 404 abre dentro do monitor, numa janela de navegador antigo no lugar da janela XP
-      { path: '*', element: <NotFoundPage />, handle: { ownWindow: true } },
+      // A 404 abre dentro do monitor, numa janela de navegador antigo no lugar da janela XP.
+      // Quem cai direto nela vê o monitor na hora, sem o voo e a caixa de carregamento
+      { path: '*', element: <NotFoundPage />, handle: { ownWindow: true, skipIntro: true } },
     ],
   },
 ])

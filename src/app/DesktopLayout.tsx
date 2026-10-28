@@ -14,16 +14,22 @@ const Scene3D = lazy(() => import('@/components/Scene3D').then((m) => ({ default
 // A janela só é encaixada no monitor 3D em telas largas; abaixo disso ela ocupa a tela
 const DESKTOP_QUERY = '(min-width: 64rem)'
 
-// Uma rota com handle { ownWindow: true } desenha a própria janela (ex.: a 404)
-function hasOwnWindow(handle: unknown) {
-  return typeof handle === 'object' && handle !== null && 'ownWindow' in handle
+// Opções que uma rota passa no handle: ownWindow desenha a própria janela (ex.: a 404)
+// e skipIntro abre a cena já em frente ao monitor, sem a caixa de carregamento
+function hasHandleFlag(handle: unknown, flag: 'ownWindow' | 'skipIntro') {
+  return typeof handle === 'object' && handle !== null && flag in handle
 }
 
 // Layout de todas as rotas do portfólio: a cena 3D fica montada enquanto o visitante
 // troca de página, e só o conteúdo da janela (o <Outlet />) muda
 export function DesktopLayout() {
   const isDesktop = useMediaQuery(DESKTOP_QUERY)
-  const ownWindow = useMatches().some((match) => hasOwnWindow(match.handle))
+  const matches = useMatches()
+  const ownWindow = matches.some((match) => hasHandleFlag(match.handle, 'ownWindow'))
+  // Só vale para a página em que o site abriu: a cena é criada uma vez
+  const [skipIntro] = useState(() =>
+    matches.some((match) => hasHandleFlag(match.handle, 'skipIntro')),
+  )
   const overlayRef = useRef<HTMLDivElement>(null)
   const [mode, setMode] = useState<CameraMode>('focus')
   const [focused, setFocused] = useState(false)
@@ -74,6 +80,7 @@ export function DesktopLayout() {
             onFocusChange={setFocused}
             onUnavailable={handleSceneUnavailable}
             onScreenClick={backToWindow}
+            skipIntro={skipIntro}
           />
         </Suspense>
       )}

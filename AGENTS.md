@@ -184,7 +184,7 @@ Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam e
 | `/painel`         | dashboard protegido                  | sem login → `/painel/login`                         |
 | `*`               | 404 "File not found"                 | dentro do monitor, num navegador antigo             |
 - As rotas do portfólio são filhas do `DesktopLayout` (`src/app/DesktopLayout.tsx`): a cena 3D e a janela ficam montadas e só o `<Outlet />` troca. As abas são `NavLink` (`src/components/WindowNav.tsx`), com `aria-current="page"` na atual.
-- A 404 é filha do layout com `handle: { ownWindow: true }`: o `DesktopLayout` não desenha a janela XP e a página mostra a própria janela (o "Rafael_OS Explorer"), então a cena 3D continua ao fundo.
+- A 404 é filha do layout com `handle: { ownWindow: true, skipIntro: true }`. O `skipIntro` faz quem abre o site direto numa URL inexistente ver o monitor na hora, sem o voo e a caixa de carregamento. O `ownWindow`: o `DesktopLayout` não desenha a janela XP e a página mostra a própria janela (o "Rafael_OS Explorer"), então a cena 3D continua ao fundo.
 - Cada página define o próprio `<title>` (React 19 leva a tag para o `<head>`).
 - Erros: uma página que quebra cai no `errorElement` (`ErrorPage`, caixa de erro do XP); erro de API aparece dentro da página com o `ErrorDialog` e o botão "Tentar de novo".
 - `vercel.json` reescreve toda URL (menos `/api/`) para o `index.html`, então atualizar ou abrir um link direto funciona.
