@@ -22,14 +22,11 @@ import {
   isMudo,
 } from '../audio.js'
 import {
-  ALIADOS_FICTICIOS,
-  SELECAO,
+  PERSONAGENS,
   FALA_INSTRUCOES,
-  FALAS_PERSONAGEM,
-  DIALOGOS_FINAL,
+  FALAS_FIM,
   DIALOGOS_ONDA,
   FALAS_ITEM,
-  FALAS_ENTRADA,
   INSTRUCOES,
   TELA_FINAL,
   HUD,
@@ -49,13 +46,6 @@ const CHAVE_RANKING = 'fox64_ranking'
 // velocidade em monitores de 120/144 Hz
 const PASSO = 1 / 60
 
-// Quem são os aliados de cada piloto: [suporte (manda itens), radar]
-const ALIADOS_DE = {
-  piloto: ['byte', 'vega'],
-  byte: ['piloto', 'vega'],
-  vega: ['piloto', 'byte'],
-}
-
 // Nomes e HTML vão para innerHTML: escapa o que vem de fora (nome do jogador, ranking)
 function esc(valor) {
   return String(valor)
@@ -66,7 +56,7 @@ function esc(valor) {
     .replace(/'/g, '&#39;')
 }
 
-export function startGame({ container, player, onExit }) {
+export function startGame({ container, onExit }) {
   // ════════════════════════════════════════════════════════════════════════
   // ── REGISTRO DE RECURSOS (tudo que o dispose precisa desfazer) ───────────
   // ════════════════════════════════════════════════════════════════════════
@@ -121,12 +111,8 @@ export function startGame({ container, player, onExit }) {
   // ════════════════════════════════════════════════════════════════════════
   // ── PERSONAGENS ──────────────────────────────────────────────────────────
   // ════════════════════════════════════════════════════════════════════════
-  // "piloto" é quem joga (nome e foto do startGame); os outros dois são fictícios
-  const PERS = {
-    piloto: { nome: String(player?.name || 'PILOTO'), foto: player?.photo || '' },
-    byte: { ...ALIADOS_FICTICIOS.byte },
-    vega: { ...ALIADOS_FICTICIOS.vega },
-  }
+  // Um jogador só: a nave de quem joga. A base (o computador) fala pelo rádio
+  const PERS = { ...PERSONAGENS }
 
   function avatarHTML(chave, classe) {
     const p = PERS[chave]
@@ -168,72 +154,6 @@ export function startGame({ container, player, onExit }) {
         const luzB = luzPonto(0x00ffff, 2, 3)
         luzB.position.set(0, 0, 0.8)
         grupo.add(luzB)
-      },
-    },
-    byte: {
-      corNave: 0x4488ff,
-      corLaser: 0x00ccff, // ciano
-      corUpgrade: 0x00ffff,
-      corHyper: 0x0044ff, // azul profundo
-      criarCorpo: (grupo) => {
-        const matC = new THREE.MeshLambertMaterial({ color: 0x4488ff })
-        const matD = new THREE.MeshLambertMaterial({ color: 0xaaddff })
-        const corpo = new THREE.Mesh(new THREE.ConeGeometry(0.14, 0.9, 4), matC)
-        corpo.rotation.x = Math.PI / 2
-        grupo.add(corpo)
-        const asaGeo = new THREE.BoxGeometry(1.1, 0.03, 0.28)
-        const asaE = new THREE.Mesh(asaGeo, matD)
-        asaE.position.set(-0.5, 0, 0.1)
-        asaE.rotation.y = 0.15
-        grupo.add(asaE)
-        const asaD = new THREE.Mesh(asaGeo, matD)
-        asaD.position.set(0.5, 0, 0.1)
-        asaD.rotation.y = -0.15
-        grupo.add(asaD)
-        const asaP = new THREE.BoxGeometry(0.5, 0.03, 0.2)
-        const apE = new THREE.Mesh(asaP, matC)
-        apE.position.set(-0.2, 0, 0.35)
-        grupo.add(apE)
-        const apD = new THREE.Mesh(asaP, matC)
-        apD.position.set(0.2, 0, 0.35)
-        grupo.add(apD)
-        const luzN = luzPonto(0x00ccff, 2, 3)
-        luzN.position.set(0, 0, 0.8)
-        grupo.add(luzN)
-      },
-    },
-    vega: {
-      corNave: 0xff44aa,
-      corLaser: 0xff00ff, // magenta
-      corUpgrade: 0xff88ff,
-      corHyper: 0xcc00ff, // violeta
-      criarCorpo: (grupo) => {
-        const matC = new THREE.MeshLambertMaterial({ color: 0xff44aa })
-        const matA = new THREE.MeshLambertMaterial({ color: 0xffaadd })
-        const corpo = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.8, 6), matC)
-        corpo.rotation.x = Math.PI / 2
-        grupo.add(corpo)
-        const asaGeo = new THREE.BoxGeometry(0.8, 0.03, 0.45)
-        const asaE = new THREE.Mesh(asaGeo, matA)
-        asaE.position.set(-0.35, 0, 0.2)
-        asaE.rotation.y = 0.35
-        grupo.add(asaE)
-        const asaD = new THREE.Mesh(asaGeo, matA)
-        asaD.position.set(0.35, 0, 0.2)
-        asaD.rotation.y = -0.35
-        grupo.add(asaD)
-        const nac = new THREE.CylinderGeometry(0.06, 0.06, 0.5, 6)
-        const nE = new THREE.Mesh(nac, matC)
-        nE.position.set(-0.5, 0, 0.3)
-        nE.rotation.x = Math.PI / 2
-        grupo.add(nE)
-        const nD = new THREE.Mesh(nac, matC)
-        nD.position.set(0.5, 0, 0.3)
-        nD.rotation.x = Math.PI / 2
-        grupo.add(nD)
-        const luzA = luzPonto(0xff00ff, 2, 3)
-        luzA.position.set(0, 0, 0.8)
-        grupo.add(luzA)
       },
     },
   }
@@ -314,7 +234,6 @@ export function startGame({ container, player, onExit }) {
   const geoMet = new THREE.DodecahedronGeometry(1, 0)
   const geoLaserNormal = new THREE.CylinderGeometry(0.04, 0.04, 1.8, 4)
   const geoLaserHyper = new THREE.CylinderGeometry(0.28, 0.28, 2.5, 6)
-  const geoLaserAliado = new THREE.CylinderGeometry(0.035, 0.035, 1.4, 4)
   const geoParticula = new THREE.SphereGeometry(0.1, 4, 4)
   const CFG_ITEM = {
     cura: { cor: 0x00ff88, hex: '#00ff88', label: '💊 +30 SHIELD', geo: new THREE.OctahedronGeometry(0.38, 0) },
@@ -325,7 +244,6 @@ export function startGame({ container, player, onExit }) {
     geoMet,
     geoLaserNormal,
     geoLaserHyper,
-    geoLaserAliado,
     geoParticula,
     CFG_ITEM.cura.geo,
     CFG_ITEM.upgrade.geo,
@@ -387,8 +305,7 @@ export function startGame({ container, player, onExit }) {
   let dialogoIntervalo = null
   let dialogoTimeout = null
   let dificuldade = 'facil'
-  let escolhido = 'piloto' // 'piloto' | 'byte' | 'vega'
-  let naveAliada = [] // [{mesh, cfg, lasers[], timerTiro, falaTimer, alvo, ...}]
+  const escolhido = 'piloto' // a nave de quem joga (o original tinha seleção de piloto)
   const explosoes = []
   // Câmera: 'menu' (deriva em volta do PC), jogo, ou diálogo da cena final
   let modoDialogo = false
@@ -397,21 +314,8 @@ export function startGame({ container, player, onExit }) {
   const lookDialogo = new THREE.Vector3(0, 2.5, 4)
   const lookMenu = new THREE.Vector3(0, 1, 0)
 
-  // Atalhos para os papéis de cada personagem nesta partida
-  const aliadoSuporte = () => ALIADOS_DE[escolhido][0] // dá itens, onda 3/5
-  const aliadoRadar = () => ALIADOS_DE[escolhido][1] // comenta radar, ondas pares
-  const aliadoPrincipal = () => escolhido
-
-  // Troca {piloto}, {suporte}, {radar} e extras nas falas do content.js
-  function fmt(txt, extras = {}) {
-    const valores = {
-      piloto: PERS[escolhido].nome,
-      suporte: primeiroNome(aliadoSuporte()),
-      radar: primeiroNome(aliadoRadar()),
-      ...extras,
-    }
-    return txt.replace(/\{(\w+)\}/g, (m, chave) => (chave in valores ? valores[chave] : m))
-  }
+  // A base fala pelo rádio: avisa as ondas e manda os itens
+  const VOZ = 'base'
 
   // ════════════════════════════════════════════════════════════════════════
   // ── HUD ──────────────────────────────────────────────────────────────────
@@ -648,80 +552,14 @@ export function startGame({ container, player, onExit }) {
 
   function mostrarDialogoOnda(onda) {
     const d = DIALOGOS_ONDA[Math.min(onda, 10)] || DIALOGOS_ONDA[10]
-    const chave = d.quem === 'suporte' ? aliadoSuporte() : d.quem === 'radar' ? aliadoRadar() : aliadoPrincipal()
-    mostrarDialogo(chave, fmt(d.txt))
+    mostrarDialogo(VOZ, d.txt)
   }
 
   // ════════════════════════════════════════════════════════════════════════
   // ── TELAS: seleção de piloto, instruções, game over, vitória ─────────────
   // ════════════════════════════════════════════════════════════════════════
-  function mostrarSelecaoPersonagem(onProximo) {
-    const el = document.createElement('div')
-    el.id = 'sel-personagem'
-    const cards = Object.keys(PERS)
-      .map((chave) => {
-        const p = PERS[chave]
-        const card = SELECAO.cards[chave]
-        const cor = `#${NAVES[chave].corLaser.toString(16).padStart(6, '0')}`
-        return `
-          <div class="sel-card ${chave === escolhido ? 'act' : ''}" data-p="${chave}" role="button" tabindex="0" aria-label="${esc(p.nome)}">
-            ${avatarHTML(chave, 'sel-face')}
-            <div class="sel-info">
-              <div class="sel-nome">${esc(p.nome)}</div>
-              <div class="sel-laser" style="color:${cor}">● Laser ${card.laser}</div>
-              <div class="sel-desc">${card.desc}</div>
-            </div>
-          </div>`
-      })
-      .join('')
-
-    el.innerHTML = `
-      <div class="sel-box">
-        <div class="sel-titulo">${SELECAO.titulo}</div>
-        <div class="sel-subtitulo">${SELECAO.subtitulo}</div>
-        <div class="sel-cards">${cards}</div>
-        <div class="sel-preview">
-          <div class="sel-aliados-label">${SELECAO.aliadosLabel}</div>
-          <div id="sel-aliados"></div>
-        </div>
-        <button type="button" id="sel-confirmar">${SELECAO.confirmar}</button>
-      </div>
-    `
-    raiz.appendChild(el)
-
-    function atualizarPreview(chave) {
-      const div = el.querySelector('#sel-aliados')
-      div.innerHTML = ALIADOS_DE[chave]
-        .map((a) => `<div class="sel-aliado">${avatarHTML(a, 'sel-aliado-face')}<span>${esc(PERS[a].nome)}</span></div>`)
-        .join('')
-    }
-    atualizarPreview(escolhido)
-
-    function escolher(card) {
-      for (const c of el.querySelectorAll('.sel-card')) c.classList.remove('act')
-      card.classList.add('act')
-      escolhido = card.dataset.p
-      atualizarPreview(escolhido)
-    }
-    for (const card of el.querySelectorAll('.sel-card')) {
-      card.addEventListener('click', () => escolher(card))
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          escolher(card)
-        }
-      })
-    }
-    const confirmar = el.querySelector('#sel-confirmar')
-    confirmar.addEventListener('click', () => {
-      el.remove()
-      onProximo()
-    })
-    confirmar.focus()
-  }
-
   function mostrarTelaInstrucoes(onStart) {
-    const P = PERS[escolhido]
+    const P = PERS[VOZ]
     const el = document.createElement('div')
     el.id = 'game-instrucoes'
     el.innerHTML = `
@@ -731,10 +569,10 @@ export function startGame({ container, player, onExit }) {
           <div class="gi-sub-logo">${INSTRUCOES.subLogo}</div>
         </div>
         <div class="gi-dialogo-box">
-          ${avatarHTML(escolhido, 'gi-face')}
+          ${avatarHTML(VOZ, 'gi-face')}
           <div>
             <div class="gi-nome-char">${esc(P.nome)}</div>
-            <div class="gi-fala">"${esc(fmt(FALA_INSTRUCOES[escolhido]))}"</div>
+            <div class="gi-fala">"${esc(FALA_INSTRUCOES)}"</div>
           </div>
         </div>
         <div class="gi-regras">
@@ -790,8 +628,8 @@ export function startGame({ container, player, onExit }) {
 
   function mostrarGameOver(pts, ganhou) {
     const ranking = lerRanking()
-    const falaChave = ganhou ? escolhido : aliadoSuporte()
-    const fala = ganhou ? FALAS_PERSONAGEM[escolhido].vitoria : FALAS_PERSONAGEM[escolhido].derrota
+    const falaChave = VOZ
+    const fala = ganhou ? FALAS_FIM.vitoria : FALAS_FIM.derrota
     const el = document.createElement('div')
     el.id = 'game-over'
     el.innerHTML = `
@@ -924,7 +762,7 @@ export function startGame({ container, player, onExit }) {
   }
 
   function aplicarEfeitoItem(tipo) {
-    const S = aliadoSuporte()
+    const S = VOZ
     if (tipo === 'cura') {
       vidaNave = Math.min(100, vidaNave + 30)
       atualizarHUD()
@@ -984,8 +822,8 @@ export function startGame({ container, player, onExit }) {
     scene.add(mesh)
     itens.push(mesh)
 
-    // Aviso de spawn — vem do aliado de suporte
-    const S = aliadoSuporte()
+    // Aviso de spawn — vem da base
+    const S = VOZ
     mostrarNotificacao(`${primeiroNome(S)}: ${cfg.label}`, cfg.hex)
     mostrarDialogo(
       S,
@@ -1129,7 +967,6 @@ export function startGame({ container, player, onExit }) {
     tiroHyper = false
     tiroHyperTimer = 0
     cutscenePausa = false
-    removerNavesAliadas()
     limparObjetosDaPartida()
     criarHUD()
     atualizarHUD()
@@ -1153,7 +990,7 @@ export function startGame({ container, player, onExit }) {
     itens = []
   }
 
-  function pararJogo(manterAliadas = false) {
+  function pararJogo() {
     jogando = false
     pararMusica()
     raiz.classList.remove('f64-jogando')
@@ -1165,7 +1002,6 @@ export function startGame({ container, player, onExit }) {
     dialogoTimeout = null
     fx.replaceChildren()
     limparObjetosDaPartida()
-    if (!manterAliadas) removerNavesAliadas()
     teclas.w = teclas.a = teclas.s = teclas.d = false
   }
 
@@ -1193,7 +1029,6 @@ export function startGame({ container, player, onExit }) {
     if (!jogando) return
 
     atualizarItens()
-    atualizarNavesAliadas()
 
     // Move lasers + colisão precisa por segmento
     for (let i = lasers.length - 1; i >= 0; i--) {
@@ -1359,7 +1194,7 @@ export function startGame({ container, player, onExit }) {
       // Itens por onda
       if (ondaAtual === 3) {
         depois(() => spawnItem('hyper'), 1200)
-        depois(() => mostrarDialogo(aliadoSuporte(), FALAS_ITEM.hyperAviso, 3500), 200)
+        depois(() => mostrarDialogo(VOZ, FALAS_ITEM.hyperAviso, 3500), 200)
       } else if (ondaAtual >= 5 && !tiroUpgrade && !tiroHyper) {
         depois(() => spawnItem('upgrade'), 1500)
       } else if (ondaAtual >= 4) {
@@ -1369,17 +1204,6 @@ export function startGame({ container, player, onExit }) {
       if (ondaAtual >= 6) depois(() => spawnItem('cura'), 5000)
       if (ondaAtual >= 8) depois(() => spawnItem('cura'), 9000)
 
-      // Onda 7: os aliados entram com uma sequência de falas; uma segunda
-      // leva de meteoros só chega depois dela (≈13 s), como no original
-      if (ondaAtual === 7) {
-        cutscenePausa = true
-        depois(() => ativarNavesAliadas(), 800)
-        depois(() => {
-          for (let i = 0; i < qtd; i++) spawnMeteoro()
-          mostrarDialogo(aliadoPrincipal(), FALAS_ENTRADA.atacar, 2000)
-          cutscenePausa = false
-        }, 13500)
-      }
     }
   }
 
@@ -1438,187 +1262,20 @@ export function startGame({ container, player, onExit }) {
   }
 
   // ════════════════════════════════════════════════════════════════════════
-  // ── NAVES ALIADAS (onda 7+) ──────────────────────────────────────────────
+  // ── VITÓRIA (placar, com a câmera orbitando a nave) ──────────────────────
   // ════════════════════════════════════════════════════════════════════════
-  function criarNaveAliada(chave, posX) {
-    const N = NAVES[chave]
-    const grupo = new THREE.Group()
-    N.criarCorpo(grupo)
-    const luzMotor = luzPonto(N.corNave, 3, 3)
-    luzMotor.position.set(0, 0, 0.6)
-    grupo.add(luzMotor)
-    grupo.position.set(posX, 2, 6)
-    scene.add(grupo)
-
-    return {
-      mesh: grupo,
-      cfg: { chave, corLaser: N.corLaser, posX, fala: FALAS_PERSONAGEM[chave].combate },
-      lasers: [],
-      timerTiro: 40 + Math.random() * 40,
-      falaTimer: 180 + Math.random() * 300,
-      alvo: null,
-      vivo: true,
-      flutuacao: Math.random() * Math.PI * 2,
-    }
-  }
-
-  function dispararLaserAliado(aliada) {
-    if (!aliada.alvo) return
-    const laser = new THREE.Mesh(geoLaserAliado, matLaser(aliada.cfg.corLaser))
-    laser.position.copy(aliada.mesh.position)
-    const dir = aliada.alvo.position.clone().sub(aliada.mesh.position).normalize()
-    laser.userData = { vel: dir.clone().multiplyScalar(2.2) }
-    laser.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir)
-    // O original punha uma PointLight em cada tiro aliado; trocar o número de
-    // luzes recompila os shaders e trava o jogo, então o tiro vai sem luz
-    scene.add(laser)
-    aliada.lasers.push(laser)
-  }
-
-  function removerNavesAliadas() {
-    for (const a of naveAliada) {
-      for (const l of a.lasers) descartar(l)
-      descartar(a.mesh)
-    }
-    naveAliada = []
-  }
-
-  function ativarNavesAliadas() {
-    removerNavesAliadas()
-    const aliados = ALIADOS_DE[escolhido]
-    const posicoes = [-2.5, 2.5]
-    aliados.forEach((chave, idx) => {
-      const a = criarNaveAliada(chave, posicoes[idx])
-      a.mesh.position.set(posicoes[idx] < 0 ? -35 : 35, 2, 6)
-      a.chegando = true
-      a.chegandoTimer = 120
-      naveAliada.push(a)
-    })
-
-    // Falas de entrada conforme o piloto escolhido
-    const [al0, al1] = aliados
-    depois(() => mostrarDialogo(escolhido, fmt(FALAS_PERSONAGEM[escolhido].onda7), 2800), 200)
-    depois(() => mostrarDialogo(al0, fmt(FALAS_ENTRADA.aliadoEsquerda, { nome: PERS[al0].nome }), 3000), 3400)
-    depois(() => mostrarDialogo(al1, fmt(FALAS_ENTRADA.aliadoDireita, { nome: PERS[al1].nome }), 3000), 7000)
-    depois(() => mostrarDialogo(escolhido, fmt(FALAS_ENTRADA.principalFim), 3000), 10500)
-  }
-
-  function atualizarNavesAliadas() {
-    if (naveAliada.length === 0 || !naveJogador) return
-
-    for (const aliada of naveAliada) {
-      if (!aliada.vivo) continue
-
-      // Chegada: desliza da lateral até a posição de combate
-      if (aliada.chegando) {
-        aliada.chegandoTimer--
-        aliada.mesh.position.lerp(new THREE.Vector3(aliada.cfg.posX, 2, 6), 0.06)
-        aliada.mesh.rotation.z = THREE.MathUtils.lerp(aliada.mesh.rotation.z, aliada.cfg.posX < 0 ? 0.6 : -0.6, 0.05)
-        if (aliada.chegandoTimer <= 0) {
-          aliada.chegando = false
-          aliada.mesh.rotation.z = 0
-        }
-        continue // não atira durante a entrada
-      }
-
-      // Flutua ao lado do jogador
-      aliada.flutuacao += 0.025
-      const alvoX = aliada.cfg.posX + naveJogador.position.x * 0.3
-      const alvoY = naveJogador.position.y + Math.sin(aliada.flutuacao) * 0.4
-      const alvoZ = naveJogador.position.z + 1.5
-      aliada.mesh.position.x += (alvoX - aliada.mesh.position.x) * 0.05
-      aliada.mesh.position.y += (alvoY - aliada.mesh.position.y) * 0.05
-      aliada.mesh.position.z += (alvoZ - aliada.mesh.position.z) * 0.05
-      aliada.mesh.rotation.z = THREE.MathUtils.lerp(aliada.mesh.rotation.z, (alvoX - aliada.mesh.position.x) * -0.8, 0.1)
-
-      // Mira no meteoro mais próximo
-      let melhorAlvo = null
-      let melhorDist = Number.POSITIVE_INFINITY
-      for (const m of meteoros) {
-        const dist = aliada.mesh.position.distanceTo(m.position)
-        if (dist < melhorDist && m.position.z > -60) {
-          melhorDist = dist
-          melhorAlvo = m
-        }
-      }
-      aliada.alvo = melhorAlvo
-
-      // Tiro automático — mais frequente nas ondas altas
-      aliada.timerTiro--
-      const freqTiro = ondaAtual >= 9 ? 30 : ondaAtual >= 8 ? 40 : 55
-      if (aliada.timerTiro <= 0 && aliada.alvo) {
-        aliada.timerTiro = freqTiro + Math.random() * 30
-        dispararLaserAliado(aliada)
-      }
-
-      // Move e colide os lasers da aliada
-      for (let i = aliada.lasers.length - 1; i >= 0; i--) {
-        const l = aliada.lasers[i]
-        l.position.add(l.userData.vel)
-        if (l.position.z < -130 || Math.abs(l.position.x) > 60) {
-          descartar(l)
-          aliada.lasers.splice(i, 1)
-          continue
-        }
-        const prev = l.position.clone().sub(l.userData.vel)
-        const segDir = l.userData.vel.clone().normalize()
-        const segLen = l.userData.vel.length()
-        for (let j = meteoros.length - 1; j >= 0; j--) {
-          const m = meteoros[j]
-          const toM = m.position.clone().sub(prev)
-          const t = Math.max(0, Math.min(segLen, toM.dot(segDir)))
-          const maisPerto = prev.clone().add(segDir.clone().multiplyScalar(t))
-          if (m.position.distanceTo(maisPerto) < 0.45 + m.userData.escala * 0.5) {
-            criarExplosao(m.position.clone(), aliada.cfg.corLaser)
-            descartar(m)
-            meteoros.splice(j, 1)
-            descartar(l)
-            aliada.lasers.splice(i, 1)
-            pontos += Math.ceil((80 * ondaAtual) / (m.userData.escala + 0.1))
-            atualizarHUD()
-            break
-          }
-        }
-      }
-
-      // Falas periódicas
-      aliada.falaTimer--
-      if (aliada.falaTimer <= 0 && meteoros.length > 0) {
-        aliada.falaTimer = 300 + Math.random() * 400
-        const fala = aliada.cfg.fala[Math.floor(Math.random() * aliada.cfg.fala.length)]
-        mostrarDialogo(aliada.cfg.chave, fala, 2000)
-      }
-    }
-  }
-
-  // ════════════════════════════════════════════════════════════════════════
-  // ── CENA FINAL (diálogo com a câmera orbitando a formação) ───────────────
-  // ════════════════════════════════════════════════════════════════════════
+  // No original aqui vinha um diálogo entre os pilotos e uma foto pessoal
   function mostrarCenaFinal(ptsFinais) {
-    const cenas = DIALOGOS_FINAL[escolhido].map((d) => ({
-      chave: d.p,
-      txt: fmt(d.txt),
-      dur: d.ultimo ? 5500 : 4500 + d.txt.length * 18,
-    }))
-
     const el = document.createElement('div')
     el.id = 'cf-hud'
     el.className = 'cf-hud-cheio'
     el.innerHTML = `
-      <div id="cf-dialogo">
-        <div class="cf-face-wrap" id="cf-face"></div>
-        <div id="cf-corpo">
-          <div id="cf-nome"></div>
-          <div id="cf-txt"></div>
-        </div>
-      </div>
-      <div id="cf-foto-wrap" style="display:none">
+      <div id="cf-foto-wrap">
         <div id="cf-foto-titulo">${TELA_FINAL.vitoria}</div>
         <div id="cf-foto-sub">${TELA_FINAL.subVitoria}</div>
         <div class="cf-placar">
           <div class="cf-placar-label">SCORE FINAL</div>
           <div class="cf-placar-pts">${ptsFinais}</div>
-          <div class="cf-placar-label">${esc(PERS[escolhido].nome)} · ${esc(primeiroNome(ALIADOS_DE[escolhido][0]))} · ${esc(primeiroNome(ALIADOS_DE[escolhido][1]))}</div>
         </div>
         <div class="cf-botoes">
           <button type="button" id="cf-btn-ranking">${TELA_FINAL.continuar}</button>
@@ -1628,65 +1285,27 @@ export function startGame({ container, player, onExit }) {
       </div>
     `
     raiz.appendChild(el)
-
-    let digitacao = null
-    function limparDigitacao() {
-      if (digitacao) {
-        pararIntervalo(digitacao)
-        digitacao = null
-      }
-    }
+    const wrap = el.querySelector('#cf-foto-wrap')
+    wrap.style.display = 'flex'
+    wrap.style.animation = 'f64-cf-entrada 1.2s ease-out forwards'
 
     function fecharCenaFinal() {
-      limparDigitacao()
       el.remove()
       modoDialogo = false
-      removerNavesAliadas()
       if (naveJogador) naveJogador.visible = false
     }
 
-    // No original aqui aparecia uma foto pessoal; agora é um placar de vitória
-    function mostrarTelaVitoria() {
-      limparDigitacao()
-      el.querySelector('#cf-dialogo').style.display = 'none'
-      const wrap = el.querySelector('#cf-foto-wrap')
-      wrap.style.display = 'flex'
-      wrap.style.animation = 'f64-cf-entrada 1.2s ease-out forwards'
-      const btnRanking = el.querySelector('#cf-btn-ranking')
-      const btnSairFinal = el.querySelector('#cf-btn-voltar')
-      btnRanking.addEventListener('click', () => {
-        fecharCenaFinal()
-        mostrarGameOver(ptsFinais, true)
-      })
-      el.querySelector('#cf-btn-jogar').addEventListener('click', () => {
-        fecharCenaFinal()
-        novaPartida()
-      })
-      btnSairFinal.addEventListener('click', () => sair())
-      btnRanking.focus()
-    }
-
-    function mostrarCena(idx) {
-      if (idx >= cenas.length) {
-        mostrarTelaVitoria()
-        return
-      }
-      const c = cenas[idx]
-      el.querySelector('#cf-face').innerHTML = avatarHTML(c.chave, 'cf-face')
-      el.querySelector('#cf-nome').textContent = PERS[c.chave].nome
-      const txt = el.querySelector('#cf-txt')
-      txt.textContent = ''
-      tocarDialogo()
-      limparDigitacao()
-      let i = 0
-      digitacao = aCada(() => {
-        if (i < c.txt.length) txt.textContent += c.txt[i++]
-        else limparDigitacao()
-      }, 28)
-      depois(() => mostrarCena(idx + 1), c.dur)
-    }
-
-    mostrarCena(0)
+    const btnRanking = el.querySelector('#cf-btn-ranking')
+    btnRanking.addEventListener('click', () => {
+      fecharCenaFinal()
+      mostrarGameOver(ptsFinais, true)
+    })
+    el.querySelector('#cf-btn-jogar').addEventListener('click', () => {
+      fecharCenaFinal()
+      novaPartida()
+    })
+    el.querySelector('#cf-btn-voltar').addEventListener('click', () => sair())
+    btnRanking.focus()
   }
 
   function encerrarJogo() {
@@ -1698,33 +1317,25 @@ export function startGame({ container, player, onExit }) {
 
   function venceuJogo() {
     const ptsFinais = pontos
-    // Mantém as aliadas na cena final
-    pararJogo(true)
+    pararJogo()
     tocarVitoria()
-    // A nave do jogador continua visível, parada no centro da formação
+    // A nave continua visível, parada, com a câmera girando em volta
     if (naveJogador) {
       naveJogador.visible = true
       naveJogador.position.set(0, 2, 5)
       naveJogador.rotation.set(0, 0, 0)
-    }
-    for (const a of naveAliada) {
-      for (const l of a.lasers) descartar(l)
-      a.lasers = []
     }
     modoDialogo = true
     orbitaTempo = 0
     mostrarCenaFinal(ptsFinais)
   }
 
-  // Seleção → instruções → partida (também usado pelo "Jogar de novo")
+  // Instruções → partida (também usado pelo "Jogar de novo")
   function novaPartida() {
     modoDialogo = false
-    removerNavesAliadas()
     if (naveJogador) naveJogador.visible = false
-    mostrarSelecaoPersonagem(() => {
-      criarNaveJogador()
-      mostrarTelaInstrucoes(() => iniciarJogo())
-    })
+    criarNaveJogador()
+    mostrarTelaInstrucoes(() => iniciarJogo())
   }
 
   // ════════════════════════════════════════════════════════════════════════
@@ -1733,7 +1344,6 @@ export function startGame({ container, player, onExit }) {
   function centroFormacao() {
     const pontosF = []
     if (naveJogador?.visible) pontosF.push(naveJogador.position)
-    for (const a of naveAliada) pontosF.push(a.mesh.position)
     if (pontosF.length === 0) return new THREE.Vector3(0, 2, 4)
     const centro = new THREE.Vector3()
     for (const p of pontosF) centro.add(p)

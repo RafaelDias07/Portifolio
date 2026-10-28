@@ -51,12 +51,8 @@ export const CSS = `
     font-size: 2.6em;
     text-shadow: 0 0 12px rgba(255,255,255,0.35);
 }
-.fox64 .sel-face.f64-avatar { font-size: 4.5em; }
 .fox64 .hud-face-img.f64-avatar { font-size: 3.5em; }
-.fox64 .cf-face.f64-avatar { font-size: 3.4em; }
-.fox64 .dialogo-face-wrap, .fox64 .cf-face-wrap { display: flex; flex-shrink: 0; }
-.fox64 .cf-face-wrap { border-right: 2px solid rgba(80,180,255,0.25); }
-.fox64 .sel-aliado .f64-avatar { font-size: 1.3em; }
+.fox64 .dialogo-face-wrap { display: flex; flex-shrink: 0; }
 
 /* Botões do HUD precisam receber clique (o HUD em si ignora o mouse) */
 .fox64 #hud-acoes { pointer-events: auto; }
@@ -351,50 +347,6 @@ export const CSS = `
     font-family: 'Courier New', monospace;
 }
 
-/* Diálogo flutuante (inferior, sobre o 3D) */
-.fox64 #cf-dialogo {
-    width: min(620px, 94vw);
-    display: flex; align-items: stretch;
-    background: linear-gradient(135deg, rgba(0,5,20,0.92), rgba(0,12,38,0.90));
-    border: 2px solid rgba(80,180,255,0.55);
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 0 40px rgba(0,60,200,0.35), 0 8px 32px rgba(0,0,0,0.6);
-    backdrop-filter: blur(6px);
-    min-height: 130px;
-    pointer-events: all;
-    animation: f64-cf-slide-up 0.5s ease-out;
-}
-@keyframes f64-cf-slide-up {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.fox64 .cf-face {
-    width: 120px; min-width: 120px;
-    object-fit: cover; object-position: top center;
-    display: block;
-    border-right: 2px solid rgba(80,180,255,0.25);
-    transition: src 0.3s;
-}
-.fox64 #cf-corpo {
-    flex: 1; padding: 16px 20px;
-    display: flex; flex-direction: column; justify-content: center; gap: 8px;
-}
-.fox64 #cf-nome {
-    color: #FFD700;
-    font-size: 0.7em;
-    letter-spacing: 4px;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(255,200,0,0.5);
-}
-.fox64 #cf-txt {
-    color: #d0eaff;
-    font-size: 0.95em;
-    line-height: 1.65;
-    letter-spacing: 0.3px;
-    min-height: 2.8em;
-}
-
 /* Foto final — aparece sobre o 3D centralizada */
 .fox64 #cf-foto-wrap {
     position: absolute;
@@ -465,149 +417,6 @@ export const CSS = `
     background: linear-gradient(to bottom, #002050, #001228);
     border-color: rgba(80,180,255,0.9);
     box-shadow: 0 0 24px rgba(0,100,255,0.3);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   SELEÇÃO DE PERSONAGEM
-   ═══════════════════════════════════════════════════════════ */
-.fox64 #sel-personagem {
-    position: absolute; inset: 0; z-index: 400;
-    display: flex; align-items: center; justify-content: center;
-    background: radial-gradient(ellipse at center, rgba(0,8,30,0.97) 0%, rgba(0,0,0,0.99) 100%);
-    font-family: 'Courier New', monospace;
-}
-.fox64 .sel-box {
-    background: linear-gradient(145deg, #000814, #000f28);
-    border: 2px solid rgba(80,180,255,0.5);
-    border-radius: 6px;
-    padding: 28px 32px;
-    width: min(760px, 96vw);
-    color: #c0e0ff;
-    box-shadow: 0 0 80px rgba(0,80,255,0.15);
-    display: flex; flex-direction: column; gap: 16px;
-}
-.fox64 .sel-titulo {
-    font-size: 1.6em;
-    font-weight: bold;
-    color: #FFD700;
-    letter-spacing: 5px;
-    text-align: center;
-    text-shadow: 0 0 20px rgba(255,200,0,0.5);
-}
-.fox64 .sel-subtitulo {
-    color: rgba(80,180,255,0.6);
-    font-size: 0.68em;
-    letter-spacing: 3px;
-    text-align: center;
-    margin-top: -10px;
-}
-.fox64 .sel-cards {
-    display: flex;
-    gap: 12px;
-}
-.fox64 .sel-card {
-    flex: 1;
-    display: flex; flex-direction: column;
-    background: rgba(0,10,30,0.8);
-    border: 2px solid rgba(80,180,255,0.2);
-    border-radius: 5px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all .2s;
-}
-.fox64 .sel-card:hover {
-    border-color: rgba(80,180,255,0.6);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,80,255,0.2);
-}
-.fox64 .sel-card.act {
-    border-color: #FFD700;
-    box-shadow: 0 0 24px rgba(255,200,0,0.2), 0 8px 24px rgba(0,80,255,0.15);
-    transform: translateY(-4px);
-}
-.fox64 .sel-face {
-    width: 100%;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-    object-position: top center;
-    display: block;
-}
-.fox64 .sel-info {
-    padding: 10px 12px;
-    display: flex; flex-direction: column; gap: 5px;
-}
-.fox64 .sel-nome {
-    font-size: 0.72em;
-    font-weight: bold;
-    letter-spacing: 2px;
-    color: #fff;
-}
-.fox64 .sel-laser {
-    font-size: 0.62em;
-    letter-spacing: 1px;
-    font-weight: bold;
-}
-.fox64 .sel-desc {
-    font-size: 0.58em;
-    color: rgba(160,200,255,0.65);
-    line-height: 1.5;
-    letter-spacing: 0.5px;
-}
-/* Preview de aliados */
-.fox64 .sel-preview {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-.fox64 .sel-aliados-label {
-    font-size: 0.62em;
-    color: rgba(80,180,255,0.6);
-    letter-spacing: 3px;
-}
-.fox64 #sel-aliados {
-    display: flex;
-    gap: 12px;
-}
-.fox64 .sel-aliado {
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(0,20,60,0.5);
-    border: 1px solid rgba(80,180,255,0.25);
-    border-radius: 4px;
-    padding: 5px 10px;
-}
-.fox64 .sel-aliado .sel-aliado-face {
-    width: 36px; height: 36px;
-    object-fit: cover; object-position: top;
-    border-radius: 3px;
-}
-.fox64 .sel-aliado span {
-    font-size: 0.62em;
-    letter-spacing: 1px;
-    color: #9abfd8;
-}
-.fox64 #sel-confirmar {
-    display: block;
-    width: 100%;
-    background: linear-gradient(to bottom, #001840, #000f28);
-    color: #FFD700;
-    border: 2px solid rgba(255,200,0,0.5);
-    padding: 13px 32px;
-    font-family: inherit;
-    font-size: 1em;
-    letter-spacing: 4px;
-    cursor: pointer;
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-weight: bold;
-    transition: all .2s;
-    text-align: center;
-    text-shadow: 0 0 12px rgba(255,200,0,0.4);
-}
-.fox64 #sel-confirmar:hover {
-    background: linear-gradient(to bottom, #002050, #001638);
-    box-shadow: 0 0 30px rgba(255,200,0,0.2);
-    border-color: rgba(255,220,0,0.8);
-    transform: scale(1.01);
 }
 
 /* ═══════════════════════════════════════════════════════════
