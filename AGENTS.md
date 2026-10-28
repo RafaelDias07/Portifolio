@@ -99,7 +99,7 @@ Cada linha registra **o que foi comparado, o critério e o que aceitamos perder*
 ```
 navegador
    │
-main.tsx ──► ThemeProvider ──► App          (QueryClient e Auth: planejado)
+main.tsx ──► ThemeProvider ──► QueryClientProvider ──► RouterProvider   (Auth: planejado no dia 6)
                        │
                      Router ──► Layout "Desktop"
                                   ├── Scene3D (lazy)        → src/components/Scene3D.tsx → src/three/
@@ -135,7 +135,7 @@ main.tsx ──► ThemeProvider ──► App          (QueryClient e Auth: pla
 1. `ContactForm` (apresentação) usa o hook `useContactForm`: React Hook Form + `zodResolver(contactSchema)` validam cada campo; o envio é um `useMutation`.
 2. `contactService.sendContactMessage` faz `POST /api/contact`.
 3. A função `api/contact.ts` (Vercel, servidor) **valida de novo** com o mesmo `contactSchema`, salva em `messages` pela API REST do Supabase e manda o e-mail pelo Resend. Se o e-mail falhar, a mensagem já está salva e aparece no dashboard.
-4. Campo escondido `website` é uma armadilha para robôs: se vier preenchido, a função responde sucesso e não salva nada.
+4. Campo escondido `trap` é uma armadilha para robôs: se vier preenchido, a função responde sucesso e não salva nada.
 5. No `npm run dev`, o plugin `vercelApiInDev` do `vite.config.ts` atende `/api/contact` com a mesma função.
 6. A tabela e as regras de acesso estão em `supabase/migrations/001_messages.sql`.
 
@@ -401,6 +401,7 @@ Como garantir:
 - Segredos ficam no `.env`, fora do Git. O `.env.example` lista as variáveis **sem valores reais**.
 - **Toda variável `VITE_*` vai para o navegador e é pública.** Nunca coloque com esse prefixo a `service_role` do Supabase, tokens do GitHub ou chaves de e-mail; esses só existem em ambiente de servidor.
 - A proteção dos dados do Supabase vem das regras de acesso (RLS, seção 4.5), não de esconder a chave anônima.
+- **Risco conhecido:** `/api/contact` não tem limite de envios por IP. O campo-armadilha segura robôs simples; um ataque em loop poderia lotar o e-mail e a cota grátis do Resend. Aceito para um portfólio; se acontecer, a saída é um limite por IP (ex.: Vercel Firewall ou uma tabela de tentativas no Supabase).
 - Agentes não leem, não imprimem, não copiam e não commitam o `.env`. Isso é garantido em três pontos: o `deny` do `.claude/settings.json` (ferramentas de leitura e edição), o hook `guard-bash` (comandos de terminal como `cat .env` e `git add -f .env`) e o `.gitignore`.
 
 Variáveis atuais:
