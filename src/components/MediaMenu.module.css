@@ -1,0 +1,71 @@
+/* Ícones como os da aba "Modo Livre" do RetroOffice */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin: 1em 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: center;
+  width: 100px;
+  height: 100%;
+  padding: 1em;
+  font: inherit;
+  color: var(--color-text);
+  text-align: center;
+  cursor: pointer;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.item:hover:not(:disabled) {
+  background: var(--color-hover);
+  border-color: var(--color-accent);
+}
+
+.item:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  filter: grayscale(100%);
+}
+
+.icon {
+  font-size: 2.5em;
+}
+
+.title {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.status {
+  font-size: 0.75em;
+  font-weight: bold;
+}
+
+.status[data-tone="player"] {
+  color: var(--color-accent);
+}
+
+.status[data-tone="fox64"] {
+  color: var(--color-progress);
+}
+
+.status[data-tone="bzero64"] {
+  color: var(--color-race);
+}
+
+.player {
+  max-width: 34rem;
+  margin-top: var(--space-md);
+}

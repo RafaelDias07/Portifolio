@@ -92,10 +92,3 @@
   align-items: center;
   padding: 0.35em 0.5em;
 }
-
-/* Galeria e player: um embaixo do outro no celular, lado a lado quando cabe */
-.mediaGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  gap: 0 var(--space-md);
-}
