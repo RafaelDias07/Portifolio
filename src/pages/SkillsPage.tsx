@@ -1,5 +1,6 @@
 import { GroupBox } from '@/components/ui/GroupBox'
-import { SITE_STACK } from '@/content/profile'
+import { TagList } from '@/components/ui/TagList'
+import { SITE_STACK, SKILL_GROUPS } from '@/content/profile'
 import styles from './pages.module.css'
 
 export function SkillsPage() {
@@ -7,6 +8,14 @@ export function SkillsPage() {
     <>
       <title>Habilidades | Rafael Dias</title>
       <h2 className={styles.heading}>⚙️ Habilidades</h2>
+
+      <div className={styles.skillGrid}>
+        {SKILL_GROUPS.map((group) => (
+          <GroupBox key={group.title} title={group.title}>
+            <TagList label={group.title} items={group.items} />
+          </GroupBox>
+        ))}
+      </div>
 
       <GroupBox title="🔧 Tecnologias deste site">
         <ul className={styles.list}>
