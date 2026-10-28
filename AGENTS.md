@@ -297,7 +297,7 @@ export function ProjectList() {
 - Mobile-first: estilo base para celular; `@media (min-width: …)` para telas maiores.
 - Unidades `rem` para texto e espaçamento; evite `!important`.
 - Teste em **375 px** e **1440 px** de largura.
-- Pontos de quebra do layout: até `40rem` a janela ocupa a tela toda; de `40rem` a `64rem` ela fica com uma margem sobre o céu estrelado; a partir de `64rem` a cena 3D carrega e a janela é encaixada no monitor (o tamanho do texto acompanha a altura dela, com `cqh`).
+- Pontos de quebra do layout: até `40rem` a janela ocupa a tela toda; de `40rem` a `64rem` ela fica com uma margem sobre o céu estrelado; a partir de `64rem` a cena 3D carrega e a janela é encaixada no monitor, com texto fixo de 11px como no RetroOffice (a janela cresce com a tela, a letra não).
 - Em telas de toque (`pointer: coarse`), botões e abas têm pelo menos 2,5rem de altura.
 - A página inicial segue o RetroOffice: foto redonda em preto e branco, caixas "Missão", "Sistema Ativo" e "Trajetória" (barras `LevelBar`), com os textos em `src/content/profile.ts`. A barra de título tem minimizar (câmera livre) e maximizar/fechar só de enfeite (`TitleBarIcon`).
 
