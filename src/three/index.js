@@ -9,6 +9,8 @@ const SCREEN_HALF_WIDTH = 0.8
 const SCREEN_HALF_HEIGHT = 0.65
 // Duração aproximada do voo de abertura, para a barra de "Carregando..." encher no tempo certo
 const INTRO_SECONDS = 4.5
+// Até quantos pixels o ponteiro pode andar entre apertar e soltar para contar como clique, e não arraste
+const CLICK_TOLERANCE = 6
 
 // Monta a cena inteira dentro de `container` e devolve como controlá-la.
 // Quem chama (o componente Scene3D) é responsável por chamar dispose() ao desmontar.
@@ -19,6 +21,7 @@ export function createScene({
   initialMode = 'focus',
   skipIntro,
   onFocusChange,
+  onScreenClick,
 }) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -55,10 +58,50 @@ export function createScene({
     skipIntro: skipIntro || initialMode === 'free',
   })
 
+  let currentMode = initialMode
   function setMode(mode) {
+    currentMode = mode
     renderer.domElement.style.cursor = mode === 'free' ? 'grab' : 'default'
     director.setMode(mode)
   }
+
+  // Na câmera livre, clicar na tela do monitor volta para o portfólio.
+  // O raycaster "atira" um raio da câmera pelo ponto clicado e vê se ele acerta a malha da tela.
+  const raycaster = new THREE.Raycaster()
+  const pointer = new THREE.Vector2()
+  let pressedAt = null
+
+  function hitsScreen(event) {
+    const rect = renderer.domElement.getBoundingClientRect()
+    pointer.set(
+      ((event.clientX - rect.left) / rect.width) * 2 - 1,
+      -((event.clientY - rect.top) / rect.height) * 2 + 1,
+    )
+    raycaster.setFromCamera(pointer, camera)
+    return raycaster.intersectObject(computer.screen).length > 0
+  }
+
+  function handlePointerDown(event) {
+    pressedAt = { x: event.clientX, y: event.clientY }
+  }
+
+  function handlePointerUp(event) {
+    if (currentMode !== 'free' || !pressedAt) return
+    const moved = Math.hypot(event.clientX - pressedAt.x, event.clientY - pressedAt.y)
+    pressedAt = null
+    if (moved <= CLICK_TOLERANCE && hitsScreen(event)) onScreenClick?.()
+  }
+
+  // Mãozinha sobre a tela para mostrar que ela é clicável (sem botão apertado, ou seja, sem arrastar)
+  function handlePointerMove(event) {
+    if (currentMode !== 'free' || event.buttons !== 0) return
+    renderer.domElement.style.cursor = hitsScreen(event) ? 'pointer' : 'grab'
+  }
+
+  const canvas = renderer.domElement
+  canvas.addEventListener('pointerdown', handlePointerDown)
+  canvas.addEventListener('pointerup', handlePointerUp)
+  canvas.addEventListener('pointermove', handlePointerMove)
   if (initialMode === 'free') setMode('free')
   // Sem voo de abertura, não há o que carregar: a tela já mostra a área de trabalho
   if (skipIntro || initialMode === 'free') monitorScreen.showDesktop()
@@ -145,6 +188,9 @@ export function createScene({
   function dispose() {
     cancelAnimationFrame(frame)
     resizeObserver.disconnect()
+    canvas.removeEventListener('pointerdown', handlePointerDown)
+    canvas.removeEventListener('pointerup', handlePointerUp)
+    canvas.removeEventListener('pointermove', handlePointerMove)
     controls.dispose()
 
     scene.traverse((object) => {
