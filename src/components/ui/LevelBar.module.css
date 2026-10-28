@@ -25,6 +25,46 @@
   display: block;
   height: 100%;
   background: var(--color-level);
+  transform-origin: left;
+  /* A barra enche ao abrir a aba */
+  animation: fill 1s ease-out both;
+}
+
+/* Cada barra começa um pouco depois da anterior */
+.row:nth-child(2) .fill {
+  animation-delay: 0.08s;
+}
+
+.row:nth-child(3) .fill {
+  animation-delay: 0.16s;
+}
+
+.row:nth-child(4) .fill {
+  animation-delay: 0.24s;
+}
+
+.row:nth-child(5) .fill {
+  animation-delay: 0.32s;
+}
+
+.row:nth-child(6) .fill {
+  animation-delay: 0.4s;
+}
+
+.row:nth-child(n + 7) .fill {
+  animation-delay: 0.48s;
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    animation: none;
+  }
 }
 
 .value {
