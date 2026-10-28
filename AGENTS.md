@@ -392,8 +392,8 @@ Variáveis atuais:
   2. **limpa tudo ao desmontar**: `cancelAnimationFrame`, remoção de listeners, `dispose()` de geometrias, materiais, texturas e do renderer;
   3. é carregado com `React.lazy`, fora do pacote inicial.
 - Three.js vem do npm (`import * as THREE from 'three'`), nunca de CDN.
-- A cena expõe uma API pequena, tipada em `src/three/index.d.ts`: `createScene({ container, overlay, bootLines, initialMode, skipIntro, onFocusChange })` devolve `{ setMode, dispose }`. A cada quadro em foco ela projeta os cantos da tela do monitor e escreve `left`/`top`/`width`/`height` no `overlay` (a janela XP); no `dispose` remove esses estilos.
-- A tela de boot do monitor é uma textura de canvas (`bootScreen.js`), e não o `CSS3DRenderer` do projeto original: uma cena e um renderer a menos.
+- A cena expõe uma API pequena, tipada em `src/three/index.d.ts`: `createScene({ container, overlay, title, initialMode, skipIntro, onFocusChange })` devolve `{ setMode, dispose }`. A cada quadro em foco ela projeta os cantos da tela do monitor e escreve `left`/`top`/`width`/`height` no `overlay` (a janela XP); no `dispose` remove esses estilos.
+- A tela do monitor é uma textura de canvas (`monitorScreen.js`), e não o `CSS3DRenderer` do projeto original: uma cena e um renderer a menos. Durante a abertura ela mostra uma caixa "Carregando..." do Windows antigo, cuja barra enche junto com o voo da câmera (para em 95% até a câmera chegar); depois mostra a área de trabalho do Rafael_OS, vista na câmera livre. Só redesenha quando muda um bloco da barra.
 - Com `prefers-reduced-motion`, o voo de abertura é pulado e a câmera já começa em foco.
 - Textos e dados pessoais (nomes, falas, legendas, playlist) ficam em arquivos de dados separados, para trocar sem mexer na lógica.
 
