@@ -30,9 +30,10 @@ export async function POST(request: Request): Promise<Response> {
   // 1. Salva no Supabase pela API REST. A regra de acesso (RLS) só deixa inserir
   const saved = await fetch(`${supabaseUrl}/rest/v1/messages`, {
     method: 'POST',
+    // Só o cabeçalho apikey: funciona com a chave publishable nova (sb_publishable_...) e com a
+    // anon antiga; sem Authorization, o Supabase trata o pedido como visitante (papel anon)
     headers: {
       apikey: supabaseKey,
-      authorization: `Bearer ${supabaseKey}`,
       'content-type': 'application/json',
       prefer: 'return=minimal',
     },
