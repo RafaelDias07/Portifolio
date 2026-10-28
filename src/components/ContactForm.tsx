@@ -1,19 +1,24 @@
+import { ContactSending, ContactSent } from '@/components/ContactStatus'
 import { Button } from '@/components/ui/Button'
 import { ErrorDialog } from '@/components/ui/ErrorDialog'
 import { FormField } from '@/components/ui/FormField'
-import { Spinner } from '@/components/ui/Spinner'
 import { useContactForm } from '@/hooks/useContactForm'
 import { MESSAGE_MAX_LENGTH } from '@/types/contact'
 import styles from './ContactForm.module.css'
 
 export function ContactForm() {
-  const { form, onSubmit, mutation } = useContactForm()
+  const { form, onSubmit, mutation, backToForm } = useContactForm()
   const {
     register,
     watch,
     formState: { errors },
   } = form
   const messageLength = watch('message')?.length ?? 0
+
+  // O formulário dá lugar à caixa de envio e depois à de confirmação.
+  // Os valores digitados ficam guardados no React Hook Form: se der erro, voltam na tela
+  if (mutation.isPending) return <ContactSending />
+  if (mutation.isSuccess) return <ContactSent onClose={backToForm} />
 
   return (
     // noValidate: as mensagens vêm do Zod, iguais em todo navegador
@@ -46,23 +51,8 @@ export function ContactForm() {
         <ErrorDialog title="A mensagem não foi enviada" message={mutation.error.message} />
       )}
 
-      {mutation.isSuccess && (
-        <p className={styles.success} role="status">
-          <span aria-hidden="true">✅ </span>
-          Mensagem enviada! Vou responder no e-mail que você informou.
-        </p>
-      )}
-
       <div>
-        <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? (
-            <>
-              <Spinner /> Enviando…
-            </>
-          ) : (
-            'Enviar mensagem'
-          )}
-        </Button>
+        <Button type="submit">Enviar mensagem</Button>
       </div>
     </form>
   )

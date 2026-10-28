@@ -1,0 +1,111 @@
+/* Relevo clássico: claro em cima/esquerda, escuro embaixo/direita */
+.dialog {
+  width: min(100%, 26rem);
+  margin: var(--space-lg) auto;
+  padding: 3px;
+  font-family: Tahoma, Verdana, sans-serif;
+  color: var(--color-classic-text);
+  background: var(--color-classic-face);
+  border: 2px solid;
+  border-color: var(--color-classic-light) var(--color-classic-dark) var(--color-classic-dark)
+    var(--color-classic-light);
+  box-shadow: 1px 1px 0 var(--color-classic-dark);
+}
+
+.titleBar {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: 0.2em 0.25em 0.2em 0.45em;
+  background: var(--color-classic-title);
+}
+
+.title {
+  flex: 1;
+  margin: 0;
+  font-size: 0.95em;
+  color: var(--color-classic-title-text);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 1.3em;
+  height: 1.15em;
+  font-weight: bold;
+  line-height: 1;
+  background: var(--color-classic-face);
+  border: 1px solid;
+  border-color: var(--color-classic-light) var(--color-classic-dark) var(--color-classic-dark)
+    var(--color-classic-light);
+}
+
+.body {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: flex-start;
+  padding: var(--space-lg) var(--space-lg) var(--space-md);
+}
+
+.infoIcon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2em;
+  height: 2em;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--color-classic-light);
+  background: var(--color-classic-info);
+  border: 2px solid var(--color-classic-light);
+  border-radius: 50%;
+  box-shadow: 1px 1px 0 var(--color-classic-dark);
+}
+
+.content {
+  display: grid;
+  flex: 1;
+  gap: var(--space-sm);
+  min-width: 0;
+}
+
+.content p {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  padding: var(--space-sm) var(--space-lg) var(--space-md);
+}
+
+.button {
+  min-width: 6.5em;
+  min-height: 1.9em;
+  padding: 0.2em 1em;
+  font: inherit;
+  color: var(--color-classic-text);
+  cursor: pointer;
+  background: var(--color-classic-face);
+  border: 2px solid;
+  border-color: var(--color-classic-light) var(--color-classic-dark) var(--color-classic-dark)
+    var(--color-classic-light);
+}
+
+.button:active {
+  border-color: var(--color-classic-dark) var(--color-classic-light) var(--color-classic-light)
+    var(--color-classic-dark);
+}
+
+.button:focus-visible {
+  outline: 1px dotted var(--color-classic-text);
+  outline-offset: -5px;
+}
+
+@media (pointer: coarse) {
+  .button {
+    min-height: 2.5rem;
+  }
+}
