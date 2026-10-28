@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { EXTRA_REPOSITORIES, FEATURED_SLUGS, PROJECT_TEXTS } from '@/content/projects'
+import { EXTRA_REPOSITORIES, PROJECT_TEXTS, SHOWN_REPOSITORIES } from '@/content/projects'
 import { fetchRepositories, fetchRepository, GITHUB_USERNAME } from '@/services/githubService'
 import type { Repository } from '@/types/github'
 import type { Project } from '@/types/project'
@@ -33,20 +33,12 @@ async function fetchAllRepositories(): Promise<Repository[]> {
   return [...found, ...own]
 }
 
-// Destaques primeiro, na ordem de FEATURED_SLUGS; o resto mantém a ordem da API (mais recente)
-function featuredRank(project: Project) {
-  const index = FEATURED_SLUGS.findIndex(
-    (slug) => slug.toLowerCase() === project.slug.toLowerCase(),
-  )
-  return index === -1 ? FEATURED_SLUGS.length : index
-}
-
+// Fica só com os repositórios de SHOWN_REPOSITORIES, na ordem definida lá
 export function buildProjects(repositories: Repository[]): Project[] {
-  return repositories
-    .map(toProject)
-    .map((project, order) => ({ project, order }))
-    .sort((a, b) => featuredRank(a.project) - featuredRank(b.project) || a.order - b.order)
-    .map(({ project }) => project)
+  return SHOWN_REPOSITORIES.flatMap((name) => {
+    const repository = repositories.find((repo) => repo.name.toLowerCase() === name.toLowerCase())
+    return repository ? [toProject(repository)] : []
+  })
 }
 
 // Uma busca por sessão (1 chamada + 1 por repositório extra): o cache vale 10 minutos

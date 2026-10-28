@@ -32,22 +32,16 @@ export const PROJECT_TEXTS: ProjectText[] = [
     description:
       'Página de apresentação do CodeCam para o Challenge JOVI, feita só com HTML e CSS: o problema, a solução, a galeria de telas do app e a equipe, com CSS Grid e layout para celular, tablet e desktop.',
   },
-  {
-    repo: 'CP4-Frontend-1ESPW',
-    name: 'Grid & Responsividade',
-    description:
-      'Página feita só com HTML e CSS Grid, que se adapta do celular ao desktop: banner, galeria de fotos, depoimentos e contato. Projeto em dupla.',
-  },
 ]
 
 // Repositórios de fora da minha conta (ex.: de organizações) que também entram na lista
 export const EXTRA_REPOSITORIES = ['Code-Cam-Solutions/code-cam']
 
-// Ordem dos destaques no topo da lista (os demais vêm depois, do mais recente)
-export const FEATURED_SLUGS = [
-  'code-cam',
+// Só estes repositórios aparecem no site, nesta ordem. Os dados vêm da API do GitHub;
+// para mostrar outro, acrescente o nome do repositório aqui
+export const SHOWN_REPOSITORIES = [
   'LandingPage-CodeCam',
+  'code-cam',
   'WatchNext',
   'Bootstrap-Tailwind-e-React',
-  'CP4-Frontend-1ESPW',
 ]
