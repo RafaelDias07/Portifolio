@@ -1,15 +1,10 @@
-import { isRouteErrorResponse, Link, useRouteError } from 'react-router'
+import { Link } from 'react-router'
 import { Button } from '@/components/ui/Button'
 import { Window } from '@/components/ui/Window'
-import { NotFoundPage } from '@/pages/NotFoundPage'
 import styles from './ErrorPage.module.css'
 
 // Página de erro das rotas: aparece se uma página quebrar ao renderizar
 export function ErrorPage() {
-  const error = useRouteError()
-
-  if (isRouteErrorResponse(error) && error.status === 404) return <NotFoundPage />
-
   return (
     <main className={styles.screen}>
       <title>Erro | Rafael Dias</title>
