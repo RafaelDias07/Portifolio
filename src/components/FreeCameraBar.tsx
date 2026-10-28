@@ -1,11 +1,12 @@
 import { Clock } from '@/components/Clock'
+import { XpFlag } from '@/components/XpFlag'
 import styles from './FreeCameraBar.module.css'
 
 type FreeCameraBarProps = {
   onBack: () => void
 }
 
-// Barra de tarefas do Windows XP mostrada na câmera livre: o botão "iniciar" volta para o
+// Barra de tarefas do Windows XP mostrada na câmera livre: o botão "iniciar", com a bandeira do XP, volta para o
 // portfólio, o meio traz as dicas de controle e a bandeja mostra o relógio
 export function FreeCameraBar({ onBack }: FreeCameraBarProps) {
   return (
@@ -17,9 +18,7 @@ export function FreeCameraBar({ onBack }: FreeCameraBarProps) {
         // biome-ignore lint/a11y/noAutofocus: a janela some; o foco precisa ir para a única ação disponível
         autoFocus
       >
-        <span className={styles.orb} aria-hidden="true">
-          R
-        </span>
+        <XpFlag className={styles.flag} />
         Voltar ao portfólio
       </button>
 
