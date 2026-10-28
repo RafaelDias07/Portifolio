@@ -17,7 +17,9 @@ export function FreeCameraBar({ onBack }: FreeCameraBarProps) {
         // biome-ignore lint/a11y/noAutofocus: a janela some; o foco precisa ir para a única ação disponível
         autoFocus
       >
-        <span className={styles.flag} aria-hidden="true" />
+        <span className={styles.orb} aria-hidden="true">
+          R
+        </span>
         Voltar ao portfólio
       </button>
 
