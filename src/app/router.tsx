@@ -8,6 +8,7 @@ import { HomePage } from '@/pages/HomePage'
 import { MediaPage } from '@/pages/MediaPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { ProjectsPage } from '@/pages/ProjectsPage'
+import { ServicesPage } from '@/pages/ServicesPage'
 import { SkillsPage } from '@/pages/SkillsPage'
 
 // O formulário (React Hook Form) só é baixado quando alguém abre o contato.
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'habilidades', element: <SkillsPage /> },
       { path: 'projetos', element: <ProjectsPage /> },
+      { path: 'servicos', element: <ServicesPage /> },
       {
         path: 'contato',
         element: (

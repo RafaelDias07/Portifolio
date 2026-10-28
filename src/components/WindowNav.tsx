@@ -6,6 +6,7 @@ const SECTIONS = [
   { to: '/', icon: '🧭', label: 'Início' },
   { to: '/habilidades', icon: '⚙️', label: 'Habilidades' },
   { to: '/projetos', icon: '🚀', label: 'Projetos' },
+  { to: '/servicos', icon: '💼', label: 'Serviços' },
   { to: '/contato', icon: '📬', label: 'Contato' },
   { to: '/multimidia', icon: '💿', label: 'Multimídia' },
 ]
