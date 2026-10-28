@@ -17,6 +17,11 @@ export const PROJECT_TEXTS: Record<string, { name: string; description: string }
     description:
       'Fotografe a lousa ou o caderno e receba resumo, tópicos e flashcards gerados por IA. Acessibilidade no centro: fonte OpenDyslexic, alto contraste e leitura em voz alta. Projeto em equipe com React, NestJS e PostgreSQL.',
   },
+  'LandingPage-CodeCam': {
+    name: 'CodeCam — Landing Page',
+    description:
+      'Página de apresentação do CodeCam para o Challenge JOVI, feita só com HTML e CSS: o problema, a solução, a galeria de telas do app e a equipe, com CSS Grid e layout para celular, tablet e desktop.',
+  },
   'CP4-Frontend-1ESPW': {
     name: 'Grid & Responsividade',
     description:
@@ -28,4 +33,10 @@ export const PROJECT_TEXTS: Record<string, { name: string; description: string }
 export const EXTRA_REPOSITORIES = ['Code-Cam-Solutions/code-cam']
 
 // Ordem dos destaques no topo da lista (os demais vêm depois, do mais recente)
-export const FEATURED_SLUGS = ['code-cam', 'CP4-Webdev-1ESPW', 'CP5-Frontend', 'CP4-Frontend-1ESPW']
+export const FEATURED_SLUGS = [
+  'code-cam',
+  'LandingPage-CodeCam',
+  'CP4-Webdev-1ESPW',
+  'CP5-Frontend',
+  'CP4-Frontend-1ESPW',
+]
