@@ -400,21 +400,21 @@ Como garantir:
 
 - Segredos ficam no `.env`, fora do Git. O `.env.example` lista as variáveis **sem valores reais**.
 - **Toda variável `VITE_*` vai para o navegador e é pública.** Nunca coloque com esse prefixo a `service_role` do Supabase, tokens do GitHub ou chaves de e-mail; esses só existem em ambiente de servidor.
-- A proteção dos dados do Supabase vem das regras de acesso (RLS, seção 4.5), não de esconder a chave anônima.
+- A proteção dos dados do Supabase vem das regras de acesso (RLS, seção 4.5), não de esconder a chave publishable.
 - **Risco conhecido:** `/api/contact` não tem limite de envios por IP. O campo-armadilha segura robôs simples; um ataque em loop poderia lotar o e-mail e a cota grátis do Resend. Aceito para um portfólio; se acontecer, a saída é um limite por IP (ex.: Vercel Firewall ou uma tabela de tentativas no Supabase).
 - Agentes não leem, não imprimem, não copiam e não commitam o `.env`. Isso é garantido em três pontos: o `deny` do `.claude/settings.json` (ferramentas de leitura e edição), o hook `guard-bash` (comandos de terminal como `cat .env` e `git add -f .env`) e o `.gitignore`.
 
 Variáveis atuais:
 
-| Variável                 | Uso                                        |
-| ------------------------ | ------------------------------------------ |
-| `VITE_GITHUB_USERNAME`   | usuário do GitHub de onde vêm os projetos  |
-| `VITE_SUPABASE_URL`      | URL do projeto Supabase                    |
-| `VITE_SUPABASE_ANON_KEY` | chave anônima (pública) do Supabase        |
-| `RESEND_API_KEY`         | **só servidor**: chave do Resend (e-mail)  |
-| `CONTACT_TO_EMAIL`       | **só servidor**: e-mail que recebe o aviso |
+| Variável                        | Uso                                                           |
+| ------------------------------- | ------------------------------------------------------------- |
+| `VITE_GITHUB_USERNAME`          | usuário do GitHub de onde vêm os projetos                     |
+| `VITE_SUPABASE_URL`             | URL do projeto Supabase                                       |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | chave publishable (`sb_publishable_...`, pública) do Supabase |
+| `RESEND_API_KEY`                | **só servidor**: chave do Resend (e-mail)                     |
+| `CONTACT_TO_EMAIL`              | **só servidor**: e-mail que recebe o aviso                    |
 
-Na Vercel, as quatro primeiras ficam em Settings > Environment Variables. A função `api/contact.ts` lê `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` pelo `process.env`.
+Na Vercel, as quatro primeiras ficam em Settings > Environment Variables. A função `api/contact.ts` lê `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` pelo `process.env`.
 
 ---
 

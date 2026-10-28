@@ -9,7 +9,7 @@ function reply(status: number, body: Record<string, unknown>) {
 // biome-ignore lint/style/useNamingConvention: a Vercel exige o nome do método HTTP (POST)
 export async function POST(request: Request): Promise<Response> {
   const supabaseUrl = process.env.VITE_SUPABASE_URL
-  const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY
+  const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY
   const resendKey = process.env.RESEND_API_KEY
   const ownerEmail = process.env.CONTACT_TO_EMAIL
 
