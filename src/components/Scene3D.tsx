@@ -2,12 +2,7 @@ import { type RefObject, useEffect, useRef } from 'react'
 import { type CameraMode, createScene, type SceneHandle } from '@/three'
 import styles from './Scene3D.module.css'
 
-const BOOT_LINES = [
-  'RAFAEL_OS v1.0',
-  '> KERNEL: OK',
-  '> VIDEO: CRT_EMULATION_ON',
-  '> STATUS: ATIVO',
-]
+const SYSTEM_NAME = 'Rafael_OS'
 
 type Scene3DProps = {
   /** Elemento que a cena encaixa sobre a tela do monitor (a janela XP) */
@@ -40,7 +35,7 @@ export function Scene3D({ overlayRef, mode, onFocusChange, onUnavailable }: Scen
       scene = createScene({
         container,
         overlay: overlayRef.current,
-        bootLines: BOOT_LINES,
+        title: SYSTEM_NAME,
         initialMode: lastModeRef.current,
         skipIntro: reducedMotion,
         onFocusChange: (focused) => callbacksRef.current.onFocusChange(focused),
