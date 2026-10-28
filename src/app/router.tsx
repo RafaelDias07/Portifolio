@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router'
 import { DesktopLayout } from '@/app/DesktopLayout'
-import { ContactPage } from '@/pages/ContactPage'
 import { ErrorPage } from '@/pages/ErrorPage'
 import { HomePage } from '@/pages/HomePage'
 import { MediaPage } from '@/pages/MediaPage'
@@ -20,7 +19,11 @@ export const router = createBrowserRouter([
       { path: 'habilidades', element: <SkillsPage /> },
       { path: 'projetos', element: <ProjectsPage /> },
       { path: 'projetos/:slug', element: <ProjectDetailPage /> },
-      { path: 'contato', element: <ContactPage /> },
+      {
+        path: 'contato',
+        // O formulário (React Hook Form) só é baixado quando alguém abre o contato
+        lazy: () => import('@/pages/ContactPage').then((m) => ({ element: <m.ContactPage /> })),
+      },
       { path: 'multimidia', element: <MediaPage /> },
       // A 404 abre dentro do monitor, numa janela de navegador antigo no lugar da janela XP
       { path: '*', element: <NotFoundPage />, handle: { ownWindow: true } },

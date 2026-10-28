@@ -1,0 +1,44 @@
+.field {
+  display: grid;
+  gap: 0.3em;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.field :is(input, textarea) {
+  width: 100%;
+  padding: 0.45em 0.55em;
+  /* 16px no celular evita o zoom automático do iOS ao focar o campo */
+  font: inherit;
+  font-size: max(1em, 16px);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.field textarea {
+  min-height: 8em;
+  resize: vertical;
+}
+
+.field :is(input, textarea):focus-visible {
+  outline-offset: 0;
+  border-color: var(--color-accent);
+}
+
+.field :is(input, textarea)[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.hint {
+  font-size: 0.85em;
+  color: var(--color-text-muted);
+}
+
+.error {
+  font-size: 0.9em;
+  color: var(--color-danger);
+}
