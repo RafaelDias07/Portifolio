@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { sendContactMessage } from '@/services/contactService'
 import { type ContactInput, type ContactMessage, contactSchema } from '@/types/contact'
 
-const EMPTY_FORM: ContactInput = { name: '', email: '', message: '', website: '' }
+const EMPTY_FORM: ContactInput = { name: '', email: '', message: '', trap: '' }
 
 // Junta a validação (React Hook Form + Zod) e o envio (TanStack Query).
 // O componente só desenha os campos com o que este hook devolve.

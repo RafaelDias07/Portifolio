@@ -38,7 +38,7 @@ export function ContactForm() {
       <div className={styles.trap} aria-hidden="true">
         <label>
           Site
-          <input type="text" tabIndex={-1} autoComplete="off" {...register('website')} />
+          <input type="text" tabIndex={-1} autoComplete="off" {...register('trap')} />
         </label>
       </div>
 
