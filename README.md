@@ -1,6 +1,6 @@
 # Portfólio — Rafael Dias
 
-Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser clicado, abre uma janela no estilo Windows XP com meus projetos, contato, player de música e dois jogos.
+Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser clicado, abre uma janela no estilo Windows XP com meus projetos, contato, galeria, player de música e dois jogos.
 
 **Site:** https://portifolio-rafaeldias.vercel.app
 
