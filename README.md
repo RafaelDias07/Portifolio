@@ -17,7 +17,7 @@ Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser 
 | Dados             | [TanStack Query](https://tanstack.com/query) (cache de 10 min dos projetos do GitHub) + [Zod](https://zod.dev) para validar as respostas                                   |
 | Contato           | [React Hook Form](https://react-hook-form.com) + Zod; função da Vercel que salva no [Supabase](https://supabase.com) e avisa por e-mail com o [Resend](https://resend.com) |
 | Dashboard         | [Supabase Auth](https://supabase.com/docs/guides/auth) com o `supabase-js`, baixado só por quem abre `/painel`; regras de acesso (RLS) no banco                            |
-| 3D                | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial)                                                                                            |
+| 3D e jogos        | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial); os jogos Fox 64 e B-Zero 64 com sons procedurais (Web Audio)                              |
 | CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                                               |
 | Deploy            | [Vercel](https://vercel.com), publicação automática a cada push na `main`                                                                                                  |
 

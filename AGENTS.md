@@ -179,7 +179,7 @@ Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam e
 | `/projetos`       | lista de projetos do GitHub          | destaques escolhidos no dashboard aparecem primeiro |
 | `/projetos/:slug` | detalhe do projeto                   | `slug` = nome do repositório                        |
 | `/contato`        | formulário                           |                                                     |
-| `/multimidia`     | galeria, player e jogos              | jogos carregados sob demanda                        |
+| `/multimidia`     | galeria, player e jogos              | cada jogo é um chunk, baixado ao clicar em Jogar    |
 | `/painel/login`   | login do dono                        | quem já está logado vai para `/painel`              |
 | `/painel`         | dashboard protegido                  | sem login → `/painel/login`                         |
 | `*`               | 404 "File not found"                 | dentro do monitor, num navegador antigo             |
@@ -450,6 +450,22 @@ Na Vercel, todas ficam em Settings > Environment Variables. A função `api/cont
 - Na câmera livre, clicar na tela do monitor (um `Raycaster` testa se o clique acertou a malha da tela) chama `onScreenClick`, que volta para o portfólio. Arrastar mais de 6 px conta como girar a cena, não como clique; o cursor vira mãozinha sobre a tela.
 - Textos e dados pessoais (nomes, falas, legendas, playlist) ficam em arquivos de dados separados, para trocar sem mexer na lógica.
 
+### Jogos (`src/games/`)
+
+- **Fox 64** (`fox64/`, nave que defende o computador de ondas de meteoros) e **B-Zero 64** (`bzero64/`, corrida contra três rivais) foram portados do RetroOffice. Lá eles rodavam dentro da cena principal; aqui cada um é independente: cria o próprio renderer, cena, câmera e loop.
+- Contrato em `src/games/types.d.ts`: `startGame({ container, player, onExit })` devolve `{ dispose }`. Todo HTML do jogo (HUD, menus, falas) e o CSS (um `<style>` com seletores dentro de `.fox64`/`.bzero64`) ficam dentro do `container`; nada vai para o `<body>` nem para o `window`.
+- A lógica roda em passos fixos de 1/60 s, então a velocidade é a mesma em monitores de 60, 120 ou 144 Hz.
+- Saída: botão "Sair", tecla Esc e "Voltar" nas telas finais chamam `onExit`; o React desmonta e o `dispose` cancela o loop e os timers, remove listeners, para o som e libera a GPU.
+- Os sons são procedurais (Web Audio, `audio.js`, compartilhado pelos dois): nenhum arquivo de áudio.
+- O piloto é o Rafael (`GAME_PLAYER` em `src/content/media.ts`: nome e foto). Os outros pilotos são personagens fictícios, com avatar em CSS/emoji; nomes e falas ficam em `fox64/content.js` e `bzero64/content.js`. Nenhuma imagem nem texto pessoal do projeto original foi copiado.
+- Ponte: `GameHost` (`src/components/GameHost.tsx`, um para os dois jogos) importa o jogo sob demanda, monta numa camada de tela cheia (portal no `<body>`, porque a janela XP fica presa ao monitor) e chama `dispose` ao sair. `GameList` abre o `GameHost` com `React.lazy`.
+- Em telas de toque (`pointer: coarse`) o botão "Jogar" fica desativado: os jogos precisam de teclado e mouse.
+
+### Galeria e player (`/multimidia`)
+
+- `PhotoGallery` mostra as fotos de `PHOTOS` e `MusicPlayer` toca a `PLAYLIST` (ambas em `src/content/media.ts`).
+- O player usa o embed do YouTube (`youtube-nocookie.com`), criado só quando o visitante aperta play: até lá nenhum script ou cookie do YouTube entra na página.
+
 ---
 
 ## 11. Como um agente deve trabalhar
@@ -503,17 +519,17 @@ O harness funciona em **camadas**: cada camada pega o que a anterior deixou pass
 
 ## 13. Cronograma e status
 
-| Dia | Data  | Branch                            | Entrega                                                                     | Status                     |
-| --- | ----- | --------------------------------- | --------------------------------------------------------------------------- | -------------------------- |
-| 1   | 25/10 | `chore/setup`                     | Projeto base, Biome, Husky + commitlint, pastas, harness de IA, CI, README  | ✅                         |
-| 2   | 27/10 | `feature/cena-3d`                 | Cena 3D (computador e espaço) em React, sob demanda; deploy na Vercel       | ✅                         |
-| 3   | 27/10 | `feature/janela-xp`               | Janela XP com componentes reaproveitáveis, conteúdo, tema salvo, responsivo | ✅                         |
-| 4   | 27/10 | `feature/rotas`, `feature/github` | Rotas, `/projetos/:slug`, 404, projetos da API do GitHub com os 3 estados   | ✅                         |
-| 5   | 27/10 | `feature/contato`                 | Formulário validado, salvo no Supabase e enviado por e-mail                 | ✅ (falta ligar as contas) |
-| 6   | 28/10 | `feature/dashboard`               | Login, rota protegida, mensagens e destaques                                | ✅                         |
-| 7   | 31/10 | `feature/jogos`                   | Fox 64, B-Zero 64, galeria e player com conteúdo do Rafael                  | ⏳                         |
-| 8   | 01/11 | `test/…`, `perf/…`                | Testes automatizados e auditoria de performance                             | ⏳                         |
-| 9   | 02/11 | `docs/readme`                     | README final, revisão geral, vídeo                                          | ⏳                         |
-| —   | 03/11 | —                                 | Entrega                                                                     | ⏳                         |
+| Dia | Data  | Branch                            | Entrega                                                                     | Status                      |
+| --- | ----- | --------------------------------- | --------------------------------------------------------------------------- | --------------------------- |
+| 1   | 25/10 | `chore/setup`                     | Projeto base, Biome, Husky + commitlint, pastas, harness de IA, CI, README  | ✅                          |
+| 2   | 27/10 | `feature/cena-3d`                 | Cena 3D (computador e espaço) em React, sob demanda; deploy na Vercel       | ✅                          |
+| 3   | 27/10 | `feature/janela-xp`               | Janela XP com componentes reaproveitáveis, conteúdo, tema salvo, responsivo | ✅                          |
+| 4   | 27/10 | `feature/rotas`, `feature/github` | Rotas, `/projetos/:slug`, 404, projetos da API do GitHub com os 3 estados   | ✅                          |
+| 5   | 27/10 | `feature/contato`                 | Formulário validado, salvo no Supabase e enviado por e-mail                 | ✅ (falta ligar as contas)  |
+| 6   | 28/10 | `feature/dashboard`               | Login, rota protegida, mensagens e destaques                                | ✅                          |
+| 7   | 28/10 | `feature/jogos`                   | Fox 64, B-Zero 64, galeria e player com conteúdo do Rafael                  | ✅ (faltam fotos e músicas) |
+| 8   | 01/11 | `test/…`, `perf/…`                | Testes automatizados e auditoria de performance                             | ⏳                          |
+| 9   | 02/11 | `docs/readme`                     | README final, revisão geral, vídeo                                          | ⏳                          |
+| —   | 03/11 | —                                 | Entrega                                                                     | ⏳                          |
 
 Ao concluir uma etapa, marque o status aqui e na seção 2 no mesmo PR.
