@@ -87,6 +87,7 @@ export type SkillLevel = {
 export const SKILL_LEVELS: SkillLevel[] = [
   { label: 'IA aplicada', value: 90 },
   { label: 'Automação', value: 85 },
+  { label: 'Arquitetura Harness', value: 85 },
   { label: 'Agentes de IA', value: 80 },
   { label: 'Git/GitHub', value: 80 },
   { label: 'Python', value: 70 },
