@@ -13,7 +13,7 @@ export const PROFILE = {
   about: [
     'Eternamente aprendiz: sou estudante de Engenharia de Software na FIAP e entusiasta de programação. Quero evoluir como desenvolvedor aprofundando lógica de programação, estruturas de dados e boas práticas.',
     'Tenho perfil analítico e disciplinado, gosto de desafios técnicos e de aprender na prática. Acredito que organização, consistência e processos bem definidos são a base de um código de qualidade.',
-    'Também trabalho com automação de processos, integrações entre ferramentas e Inteligência Artificial para otimizar rotinas. Me interesso muito por modelos generativos e pelo impacto deles no trabalho, sempre com fundamentos sólidos de programação por trás.',
+    'No front-end, desenvolvo interfaces com React e TypeScript, cuidando de componentes reaproveitáveis, responsividade e acessibilidade. Também uso Inteligência Artificial no dia a dia de desenvolvimento e me interesso muito por modelos generativos e pelo impacto deles no trabalho, sempre com fundamentos sólidos de programação por trás.',
     'Mais do que programar, quero usar a tecnologia para gerar valor real e facilitar a vida das pessoas.',
   ],
 }
