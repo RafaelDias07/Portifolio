@@ -1,39 +1,70 @@
-.screen {
-  display: grid;
-  place-items: center;
-  min-height: 100dvh;
-  padding: var(--space-xl) var(--space-lg);
-  font-family: var(--font-mono);
-  line-height: 1.6;
-  color: var(--color-bsod-text);
-  background: var(--color-bsod);
+.bar {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  align-items: center;
 }
 
-.content {
-  max-width: 40rem;
+.address {
+  display: flex;
+  flex: 1 1 14rem;
+  gap: var(--space-xs);
+  align-items: center;
+  font-size: 0.9em;
 }
 
-.badge {
-  display: table;
-  margin: 0 auto var(--space-xl);
-  padding: 0 0.5em;
-  font-size: 1rem;
-  color: var(--color-bsod);
-  background: var(--color-bsod-highlight);
+.address input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.2em 0.4em;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+/* A página em si imita um site de 2004: fundo branco, fonte do sistema, links azuis */
+.page {
+  flex: 1;
+  min-height: 0;
+  margin: 0.3em;
+  padding: 0.75em 1em;
+  overflow-y: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  color: var(--color-web-text);
+  background: var(--color-web-bg);
+  border: 1px solid var(--color-border);
+}
+
+.title {
+  margin: 0 0 0.6em;
+  font-size: 1.9em;
+}
+
+.code {
+  color: var(--color-web-link);
+  text-decoration: underline;
 }
 
 .path {
   word-break: break-all;
 }
 
-.list {
-  padding-left: 1.25rem;
-}
-
 .link {
-  color: var(--color-bsod-text);
+  color: var(--color-web-link);
 }
 
-.link:focus-visible {
-  outline-color: var(--color-bsod-text);
+.link:visited {
+  color: var(--color-web-visited);
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--color-web-rule);
+}
+
+.footer {
+  font-style: italic;
 }

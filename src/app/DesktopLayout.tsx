@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { Outlet } from 'react-router'
+import { Outlet, useMatches } from 'react-router'
 import { XpWindow } from '@/components/XpWindow'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import type { CameraMode } from '@/three'
@@ -11,10 +11,16 @@ const Scene3D = lazy(() => import('@/components/Scene3D').then((m) => ({ default
 // A janela só é encaixada no monitor 3D em telas largas; abaixo disso ela ocupa a tela
 const DESKTOP_QUERY = '(min-width: 64rem)'
 
+// Uma rota com handle { ownWindow: true } desenha a própria janela (ex.: a 404)
+function hasOwnWindow(handle: unknown) {
+  return typeof handle === 'object' && handle !== null && 'ownWindow' in handle
+}
+
 // Layout de todas as rotas do portfólio: a cena 3D fica montada enquanto o visitante
 // troca de página, e só o conteúdo da janela (o <Outlet />) muda
 export function DesktopLayout() {
   const isDesktop = useMediaQuery(DESKTOP_QUERY)
+  const ownWindow = useMatches().some((match) => hasOwnWindow(match.handle))
   const overlayRef = useRef<HTMLDivElement>(null)
   const [mode, setMode] = useState<CameraMode>('focus')
   const [focused, setFocused] = useState(false)
@@ -75,9 +81,13 @@ export function DesktopLayout() {
         data-visible={windowVisible}
         inert={!windowVisible}
       >
-        <XpWindow onFreeCamera={sceneFailed ? undefined : () => setMode('free')}>
+        {ownWindow ? (
           <Outlet />
-        </XpWindow>
+        ) : (
+          <XpWindow onFreeCamera={sceneFailed ? undefined : () => setMode('free')}>
+            <Outlet />
+          </XpWindow>
+        )}
       </main>
 
       {loading && (
