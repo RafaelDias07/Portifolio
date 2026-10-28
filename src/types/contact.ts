@@ -27,7 +27,7 @@ export const contactSchema = z.object({
       z.maxLength(2000, 'A mensagem pode ter no máximo 2000 caracteres.'),
     ),
   // Armadilha para robôs: campo escondido que pessoas não preenchem
-  website: z.optional(z.string()),
+  trap: z.optional(z.string()),
 })
 
 export type ContactInput = z.input<typeof contactSchema>

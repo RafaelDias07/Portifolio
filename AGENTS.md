@@ -13,7 +13,7 @@ Este arquivo é a **fonte única de verdade** do projeto para qualquer agente de
 
 ## 1. O projeto
 
-Portfólio pessoal de **Rafael Dias**, desenvolvedor front-end, feito em React.
+Portfólio pessoal de **Rafael Dias**, desenvolvedor front-end (com foco também em IA) e estudante de Engenharia de Software na FIAP, feito em React.
 
 **A experiência:**
 
@@ -99,7 +99,7 @@ Cada linha registra **o que foi comparado, o critério e o que aceitamos perder*
 ```
 navegador
    │
-main.tsx ──► ThemeProvider ──► App          (QueryClient e Auth: planejado)
+main.tsx ──► ThemeProvider ──► QueryClientProvider ──► RouterProvider   (Auth: planejado no dia 6)
                        │
                      Router ──► Layout "Desktop"
                                   ├── Scene3D (lazy)        → src/components/Scene3D.tsx → src/three/
@@ -134,8 +134,8 @@ main.tsx ──► ThemeProvider ──► App          (QueryClient e Auth: pla
 
 1. `ContactForm` (apresentação) usa o hook `useContactForm`: React Hook Form + `zodResolver(contactSchema)` validam cada campo; o envio é um `useMutation`.
 2. `contactService.sendContactMessage` faz `POST /api/contact`.
-3. A função `api/contact.ts` (Vercel, servidor) **valida de novo** com o mesmo `contactSchema`, salva em `messages` pela API REST do Supabase e manda o e-mail pelo Resend. Se o e-mail falhar, a mensagem já está salva e aparece no dashboard.
-4. Campo escondido `website` é uma armadilha para robôs: se vier preenchido, a função responde sucesso e não salva nada.
+3. A função `api/contact.ts` (Vercel, servidor) **valida de novo** com o mesmo `contactSchema`, salva em `messages` pela API REST do Supabase e manda o e-mail pelo Resend para `CONTACT_EMAIL` (`src/content/contact.ts`; não é segredo, já aparece no site). Se o e-mail falhar, a mensagem já está salva e aparece no dashboard.
+4. Campo escondido `trap` é uma armadilha para robôs: se vier preenchido, a função responde sucesso e não salva nada.
 5. No `npm run dev`, o plugin `vercelApiInDev` do `vite.config.ts` atende `/api/contact` com a mesma função.
 6. A tabela e as regras de acesso estão em `supabase/migrations/001_messages.sql`.
 
@@ -400,20 +400,20 @@ Como garantir:
 
 - Segredos ficam no `.env`, fora do Git. O `.env.example` lista as variáveis **sem valores reais**.
 - **Toda variável `VITE_*` vai para o navegador e é pública.** Nunca coloque com esse prefixo a `service_role` do Supabase, tokens do GitHub ou chaves de e-mail; esses só existem em ambiente de servidor.
-- A proteção dos dados do Supabase vem das regras de acesso (RLS, seção 4.5), não de esconder a chave anônima.
+- A proteção dos dados do Supabase vem das regras de acesso (RLS, seção 4.5), não de esconder a chave publishable.
+- **Risco conhecido:** `/api/contact` não tem limite de envios por IP. O campo-armadilha segura robôs simples; um ataque em loop poderia lotar o e-mail e a cota grátis do Resend. Aceito para um portfólio; se acontecer, a saída é um limite por IP (ex.: Vercel Firewall ou uma tabela de tentativas no Supabase).
 - Agentes não leem, não imprimem, não copiam e não commitam o `.env`. Isso é garantido em três pontos: o `deny` do `.claude/settings.json` (ferramentas de leitura e edição), o hook `guard-bash` (comandos de terminal como `cat .env` e `git add -f .env`) e o `.gitignore`.
 
 Variáveis atuais:
 
-| Variável                 | Uso                                        |
-| ------------------------ | ------------------------------------------ |
-| `VITE_GITHUB_USERNAME`   | usuário do GitHub de onde vêm os projetos  |
-| `VITE_SUPABASE_URL`      | URL do projeto Supabase                    |
-| `VITE_SUPABASE_ANON_KEY` | chave anônima (pública) do Supabase        |
-| `RESEND_API_KEY`         | **só servidor**: chave do Resend (e-mail)  |
-| `CONTACT_TO_EMAIL`       | **só servidor**: e-mail que recebe o aviso |
+| Variável                        | Uso                                                           |
+| ------------------------------- | ------------------------------------------------------------- |
+| `VITE_GITHUB_USERNAME`          | usuário do GitHub de onde vêm os projetos                     |
+| `VITE_SUPABASE_URL`             | URL do projeto Supabase                                       |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | chave publishable (`sb_publishable_...`, pública) do Supabase |
+| `RESEND_API_KEY`                | **só servidor**: chave do Resend (e-mail)                     |
 
-Na Vercel, as quatro primeiras ficam em Settings > Environment Variables. A função `api/contact.ts` lê `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` pelo `process.env`.
+Na Vercel, todas ficam em Settings > Environment Variables. A função `api/contact.ts` lê `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` pelo `process.env`.
 
 ---
 
@@ -426,9 +426,10 @@ Na Vercel, as quatro primeiras ficam em Settings > Environment Variables. A fun�
   2. **limpa tudo ao desmontar**: `cancelAnimationFrame`, remoção de listeners, `dispose()` de geometrias, materiais, texturas e do renderer;
   3. é carregado com `React.lazy`, fora do pacote inicial.
 - Three.js vem do npm (`import * as THREE from 'three'`), nunca de CDN.
-- A cena expõe uma API pequena, tipada em `src/three/index.d.ts`: `createScene({ container, overlay, title, initialMode, skipIntro, onFocusChange })` devolve `{ setMode, dispose }`. A cada quadro em foco ela projeta os cantos da tela do monitor e escreve `left`/`top`/`width`/`height` no `overlay` (a janela XP); no `dispose` remove esses estilos.
+- A cena expõe uma API pequena, tipada em `src/three/index.d.ts`: `createScene({ container, overlay, title, initialMode, skipIntro, onFocusChange, onScreenClick })` devolve `{ setMode, dispose }`. A cada quadro em foco ela projeta os cantos da tela do monitor e escreve `left`/`top`/`width`/`height` no `overlay` (a janela XP); no `dispose` remove esses estilos.
 - A tela do monitor é uma textura de canvas (`monitorScreen.js`), e não o `CSS3DRenderer` do projeto original: uma cena e um renderer a menos. Durante a abertura ela mostra uma caixa "Carregando..." do Windows antigo, cuja barra enche junto com o voo da câmera (para em 95% até a câmera chegar); depois mostra a área de trabalho do Rafael_OS, vista na câmera livre. Só redesenha quando muda um bloco da barra.
 - Com `prefers-reduced-motion`, o voo de abertura é pulado e a câmera já começa em foco.
+- Na câmera livre, clicar na tela do monitor (um `Raycaster` testa se o clique acertou a malha da tela) chama `onScreenClick`, que volta para o portfólio. Arrastar mais de 6 px conta como girar a cena, não como clique; o cursor vira mãozinha sobre a tela.
 - Textos e dados pessoais (nomes, falas, legendas, playlist) ficam em arquivos de dados separados, para trocar sem mexer na lógica.
 
 ---

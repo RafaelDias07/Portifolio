@@ -13,6 +13,8 @@ export type SceneOptions = {
   /** Pula o voo de abertura (usado com prefers-reduced-motion) */
   skipIntro: boolean
   onFocusChange?: (focused: boolean) => void
+  /** Clique (não arraste) na tela do monitor durante a câmera livre */
+  onScreenClick?: () => void
 }
 
 export type SceneHandle = {

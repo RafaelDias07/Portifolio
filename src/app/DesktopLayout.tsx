@@ -70,6 +70,7 @@ export function DesktopLayout() {
             mode={mode}
             onFocusChange={setFocused}
             onUnavailable={handleSceneUnavailable}
+            onScreenClick={backToWindow}
           />
         </Suspense>
       )}
@@ -98,7 +99,9 @@ export function DesktopLayout() {
 
       {mode === 'free' && (
         <div className={styles.freeBar}>
-          <p className={styles.freeHint}>Arraste para girar · role ou pince para dar zoom</p>
+          <p className={styles.freeHint}>
+            Arraste para girar · role ou pince para dar zoom · clique na tela para voltar
+          </p>
           <button
             type="button"
             className={styles.backButton}
