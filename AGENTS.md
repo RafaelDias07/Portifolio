@@ -13,7 +13,7 @@ Este arquivo é a **fonte única de verdade** do projeto para qualquer agente de
 
 ## 1. O projeto
 
-Portfólio pessoal de **Rafael Dias**, desenvolvedor front-end, feito em React.
+Portfólio pessoal de **Rafael Dias**, desenvolvedor de software (back-end, automação e IA) e estudante de Engenharia de Software na FIAP, feito em React.
 
 **A experiência:**
 
