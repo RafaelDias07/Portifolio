@@ -39,6 +39,17 @@
   --color-note-border: #e0d890;
   --shadow-window: 0 6px 32px rgb(0 0 0 / 0.7);
 
+  /* Caixas de diálogo clássicas do Windows (envio do contato): iguais nos dois temas */
+  --color-classic-face: #d4d0c8;
+  --color-classic-text: #000000;
+  --color-classic-light: #ffffff;
+  --color-classic-shadow: #808080;
+  --color-classic-dark: #404040;
+  --color-classic-title: linear-gradient(to right, #0a246a, #a6caf0);
+  --color-classic-title-text: #ffffff;
+  --color-classic-block: #0a246a;
+  --color-classic-info: #1c4fbf;
+
   /* Página da web antiga dentro do navegador da 404: branca nos dois temas, como em 2004 */
   --color-web-bg: #ffffff;
   --color-web-text: #000000;
