@@ -38,9 +38,11 @@
   --color-note-border: #e0d890;
   --shadow-window: 0 6px 32px rgb(0 0 0 / 0.7);
 
-  /* Fundo listrado do conteúdo da janela, como no RetroOffice */
+  /* Fundo listrado do conteúdo da janela e barras de nível, como no RetroOffice */
   --color-content: repeating-linear-gradient(to bottom, #f4f3ee 0 3px, #fdfdfb 3px 5px);
   --color-group-body: rgb(255 255 255 / 0.55);
+  --color-level: linear-gradient(to bottom, #3b7de0, #1a56c9 55%, #1546a8);
+  --color-level-track: #ece9d8;
 
   /* Barra de tarefas da câmera livre (Windows XP Luna) */
   --color-taskbar: linear-gradient(to bottom, #3168d5, #245edb 10%, #1f4fbf 92%, #1941a5);

@@ -69,13 +69,6 @@
   color: var(--color-accent);
 }
 
-/* Grupos de habilidades: uma coluna no celular, duas quando cabe */
-.skillGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-  gap: 0 var(--space-md);
-}
-
 .heading {
   margin: 0 0 var(--space-md);
   padding-bottom: 0.3em;

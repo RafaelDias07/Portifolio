@@ -77,51 +77,41 @@ export const PROFILE_LINKS: ProfileLink[] = [
   { label: 'github.com/RafaelDias07', href: 'https://github.com/RafaelDias07', icon: '🐙' },
 ]
 
-export type SkillGroup = {
-  title: string
-  items: string[]
+export type SkillLevel = {
+  label: string
+  /** De 0 a 100 */
+  value: number
 }
 
-export const SKILL_GROUPS: SkillGroup[] = [
-  {
-    title: '🎨 Front-end',
-    items: [
-      'React',
-      'TypeScript',
-      'JavaScript',
-      'HTML',
-      'CSS',
-      'Tailwind',
-      'Bootstrap',
-      'Three.js',
-    ],
-  },
-  {
-    title: '🤖 Inteligência artificial',
-    items: [
-      'IA generativa',
-      'Claude Code',
-      'Agentes de IA',
-      'Harness (instruções, skills e hooks)',
-      'APIs de IA',
-    ],
-  },
-  { title: '⚙️ Back-end', items: ['Python', 'Django', 'FastAPI', 'APIs REST'] },
-  { title: '🧰 Ferramentas', items: ['Git', 'GitHub', 'VS Code', 'Vite', 'Vercel'] },
+// Caixa "Tecnologias" da aba Habilidades, da mais forte para a mais fraca
+export const SKILL_LEVELS: SkillLevel[] = [
+  { label: 'IA aplicada', value: 90 },
+  { label: 'Automação', value: 85 },
+  { label: 'Python', value: 70 },
+  { label: 'HTML/CSS', value: 70 },
+  { label: 'JavaScript', value: 65 },
+  { label: 'Git/GitHub', value: 65 },
+  { label: 'React', value: 55 },
 ]
 
-export type StackItem = {
-  name: string
-  usage: string
+export type Solution = {
+  /** Parte em negrito */
+  title: string
+  detail: string
 }
 
-// Tecnologias usadas neste próprio site
-export const SITE_STACK: StackItem[] = [
-  { name: 'React 19 + TypeScript', usage: 'interface em componentes, com tipos em tudo' },
-  { name: 'Three.js', usage: 'o computador e o espaço em 3D' },
-  { name: 'Vite', usage: 'servidor de desenvolvimento e build' },
-  { name: 'CSS Modules', usage: 'estilo por componente e cores por variáveis CSS' },
-  { name: 'Claude Code', usage: 'desenvolvimento com IA, guiado pelo AGENTS.md, skills e hooks' },
-  { name: 'Biome + Husky', usage: 'lint e padrão de commits antes de todo commit' },
-  { name: 'Vercel', usage: 'publicação automática a cada push na main' },
+// Caixa "O que eu realmente resolvo" da aba Habilidades
+export const SOLUTIONS: Solution[] = [
+  { title: 'Resolvo problemas reais com IA', detail: 'do diagnóstico à solução funcionando' },
+  {
+    title: 'Automatizo processos',
+    detail: 'o que aprendi como fundador da AI For Business',
+  },
+  { title: 'Planejo rápido', detail: 'planejamentos estratégicos com IA em pouco tempo' },
+  {
+    title: 'Dou suporte de IA a times',
+    detail: 'Agilidade e QA no G4, em problemas do dia a dia',
+  },
+  { title: 'Uso IA com critério', detail: 'rapidez sem abrir mão da qualidade' },
+  { title: 'Entrego interfaces', detail: 'React, TypeScript e componentes reaproveitáveis' },
 ]
