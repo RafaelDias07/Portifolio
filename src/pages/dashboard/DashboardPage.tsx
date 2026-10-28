@@ -1,7 +1,6 @@
 import { Clock } from '@/components/Clock'
 import { FeaturedProjectsForm } from '@/components/FeaturedProjectsForm'
 import { MessageList } from '@/components/MessageList'
-import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/Button'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { GroupBox } from '@/components/ui/GroupBox'
@@ -26,7 +25,6 @@ export function DashboardPage() {
           <Button onClick={signOut}>
             <span aria-hidden="true">🚪</span> Sair
           </Button>
-          <ThemeToggle />
         </>
       }
       statusBar={
