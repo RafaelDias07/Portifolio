@@ -5,10 +5,10 @@ import photo from '@/assets/rafael-dias.webp'
 export const PROFILE = {
   name: 'Rafael Dias',
   fullName: 'Rafael Dias Fontes',
-  role: 'Desenvolvedor de software',
+  role: 'Desenvolvedor front-end',
   education: 'Engenharia de Software · FIAP',
   photo,
-  badges: ['Back-end', 'Automação', 'IA'],
+  badges: ['Front-end', 'IA'],
   // Resumo do "Sobre" do LinkedIn do Rafael
   about: [
     'Eternamente aprendiz: sou estudante de Engenharia de Software na FIAP e entusiasta de programação. Quero evoluir como desenvolvedor aprofundando lógica de programação, estruturas de dados e boas práticas.',
@@ -40,10 +40,18 @@ export type SkillGroup = {
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
-    title: '⚙️ Back-end',
-    items: ['Python', 'Django', 'FastAPI', 'APIs REST', 'Autenticação (OAuth2)'],
+    title: '🎨 Front-end',
+    items: [
+      'React',
+      'TypeScript',
+      'JavaScript',
+      'HTML',
+      'CSS',
+      'Tailwind',
+      'Bootstrap',
+      'Three.js',
+    ],
   },
-  { title: '🗄️ Dados', items: ['PostgreSQL', 'MongoDB', 'SQL', 'Análise de dados'] },
   {
     title: '🤖 Inteligência artificial',
     items: [
@@ -54,18 +62,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
       'APIs de IA',
     ],
   },
-  {
-    title: '🔗 Automação',
-    items: [
-      'Automação de processos',
-      'Integrações entre ferramentas',
-      'Otimização de rotinas com IA',
-    ],
-  },
-  {
-    title: '🎨 Front-end',
-    items: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Tailwind', 'Bootstrap'],
-  },
+  { title: '⚙️ Back-end', items: ['Python', 'Django', 'FastAPI', 'APIs REST'] },
   { title: '🧰 Ferramentas', items: ['Git', 'GitHub', 'VS Code', 'Vite', 'Vercel'] },
 ]
 
