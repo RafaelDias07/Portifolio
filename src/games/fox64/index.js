@@ -45,6 +45,8 @@ const CHAVE_RANKING = 'fox64_ranking'
 // O original contava tudo em quadros a 60 fps; o passo fixo mantém a mesma
 // velocidade em monitores de 120/144 Hz
 const PASSO = 1 / 60
+// Até onde a mira "enxerga" quando não há nada sob ela (os meteoros nascem por volta de z = -55)
+const DISTANCIA_MIRA = 70
 
 // Nomes e HTML vão para innerHTML: escapa o que vem de fora (nome do jogador, ranking)
 function esc(valor) {
@@ -924,9 +926,15 @@ export function startGame({ container, onExit }) {
     const laser = new THREE.Mesh(ehHyper ? geoLaserHyper : geoLaserNormal, matLaser(cor))
     laser.position.copy(naveJogador.position)
     if (offsetX) laser.position.x += offsetX
+    // O tiro sai da nave, mas a mira está na linha de visão da câmera. Usar só a
+    // direção do raio da câmera deixava o tiro paralelo à mira, passando ao lado.
+    // Agora ele vai até o ponto que está sob a mira: o meteoro ou item apontado ou,
+    // sem nada ali, um ponto lá no fundo, onde os meteoros aparecem
     vMouse.set(mouseX, mouseY)
     ray.setFromCamera(vMouse, camera)
-    const dir = ray.ray.direction.clone().normalize()
+    const [acerto] = ray.intersectObjects([...meteoros, ...itens], false)
+    const alvo = acerto ? acerto.point : ray.ray.at(DISTANCIA_MIRA, new THREE.Vector3())
+    const dir = alvo.sub(laser.position).normalize()
     const spd = ehHyper ? 3.5 : 1.8
     laser.userData = { vel: dir.clone().multiplyScalar(spd), hitbox: ehHyper ? 1.4 : tiroUpgrade ? 0.55 : 0.45 }
     laser.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir)
