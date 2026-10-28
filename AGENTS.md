@@ -134,10 +134,10 @@ main.tsx ──► ThemeProvider ──► QueryClientProvider ──► RouterP
 
 1. `ContactForm` (apresentação) usa o hook `useContactForm`: React Hook Form + `zodResolver(contactSchema)` validam cada campo; o envio é um `useMutation`.
 2. `contactService.sendContactMessage` faz `POST /api/contact`.
-3. A função `api/contact.ts` (Vercel, servidor) **valida de novo** com o mesmo `contactSchema`, salva em `messages` pela API REST do Supabase e manda o e-mail pelo Resend para `CONTACT_EMAIL` (`src/content/contact.ts`; não é segredo, já aparece no site). Se o e-mail falhar, a mensagem já está salva e aparece no dashboard.
+3. A função `api/contact.ts` (Vercel, servidor) **valida de novo** com o mesmo `contactSchema`, salva em `portfolio.messages` pela API REST do Supabase e manda o e-mail pelo Resend para `CONTACT_EMAIL` (`src/content/contact.ts`; não é segredo, já aparece no site). Se o e-mail falhar, a mensagem já está salva e aparece no dashboard.
 4. Campo escondido `trap` é uma armadilha para robôs: se vier preenchido, a função responde sucesso e não salva nada.
 5. No `npm run dev`, o plugin `vercelApiInDev` do `vite.config.ts` atende `/api/contact` com a mesma função.
-6. A tabela e as regras de acesso estão em `supabase/migrations/001_messages.sql`.
+6. O schema, a tabela, as permissões e as regras de acesso estão em `supabase/migrations/001_messages.sql`.
 
 ### 4.3 Pastas e responsabilidades
 
@@ -180,12 +180,19 @@ Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam e
 - Erros: uma página que quebra cai no `errorElement` (`ErrorPage`, caixa de erro do XP); erro de API aparece dentro da página com o `ErrorDialog` e o botão "Tentar de novo".
 - `vercel.json` reescreve toda URL (menos `/api/`) para o `index.html`, então atualizar ou abrir um link direto funciona.
 
-### 4.5 Dados no Supabase _(planejado — dias 5–6)_
+### 4.5 Dados no Supabase (schema `portfolio`)
 
-| Tabela              | Colunas                                                           | Acesso (RLS)                                                           |
-| ------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `messages`          | `id`, `name`, `email`, `message`, `answered` (bool), `created_at` | qualquer visitante **insere**; só o dono autenticado **lê e atualiza** |
-| `featured_projects` | `repo_name`, `position`, `updated_at`                             | qualquer visitante **lê**; só o dono **altera**                        |
+O projeto Supabase é compartilhado com o CodeCam, cujas tabelas (Prisma) ficam no schema `public`. Tudo do portfólio fica no schema **`portfolio`**, para não misturar nem ser afetado pelas migrações do Prisma. Por isso:
+
+- o schema precisa estar em **Project Settings > Data API > Exposed schemas**;
+- chamadas REST mandam o cabeçalho `Content-Profile: portfolio` (escrita) ou `Accept-Profile: portfolio` (leitura);
+- no dia 6, o cliente do Supabase é criado com `{ db: { schema: 'portfolio' } }`.
+
+
+| Tabela                                  | Colunas                                                           | Acesso (RLS)                                                           |
+| --------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `portfolio.messages` (✅ dia 5)         | `id`, `name`, `email`, `message`, `answered` (bool), `created_at` | qualquer visitante **insere**; só o dono autenticado **lê e atualiza** |
+| `portfolio.featured_projects` _(dia 6)_ | `repo_name`, `position`, `updated_at`                             | qualquer visitante **lê**; só o dono **altera**                        |
 
 ---
 
@@ -401,6 +408,7 @@ Como garantir:
 - Segredos ficam no `.env`, fora do Git. O `.env.example` lista as variáveis **sem valores reais**.
 - **Toda variável `VITE_*` vai para o navegador e é pública.** Nunca coloque com esse prefixo a `service_role` do Supabase, tokens do GitHub ou chaves de e-mail; esses só existem em ambiente de servidor.
 - A proteção dos dados do Supabase vem das regras de acesso (RLS, seção 4.5), não de esconder a chave publishable.
+- **Projeto compartilhado:** o Supabase é o mesmo do CodeCam. A chave publishable dá acesso de visitante a todos os schemas expostos na Data API, então as tabelas do CodeCam no `public` precisam ter RLS ligado para não ficarem abertas.
 - **Risco conhecido:** `/api/contact` não tem limite de envios por IP. O campo-armadilha segura robôs simples; um ataque em loop poderia lotar o e-mail e a cota grátis do Resend. Aceito para um portfólio; se acontecer, a saída é um limite por IP (ex.: Vercel Firewall ou uma tabela de tentativas no Supabase).
 - Agentes não leem, não imprimem, não copiam e não commitam o `.env`. Isso é garantido em três pontos: o `deny` do `.claude/settings.json` (ferramentas de leitura e edição), o hook `guard-bash` (comandos de terminal como `cat .env` e `git add -f .env`) e o `.gitignore`.
 

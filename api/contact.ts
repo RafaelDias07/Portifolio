@@ -27,13 +27,15 @@ export async function POST(request: Request): Promise<Response> {
   // Robô preencheu o campo escondido: finge que deu certo e não salva nada
   if (trap) return reply(201, { ok: true })
 
-  // 1. Salva no Supabase pela API REST. A regra de acesso (RLS) só deixa inserir
+  // 1. Salva em portfolio.messages pela API REST do Supabase. A regra de acesso (RLS) só deixa inserir
   const saved = await fetch(`${supabaseUrl}/rest/v1/messages`, {
     method: 'POST',
     // Só o cabeçalho apikey: funciona com a chave publishable nova (sb_publishable_...) e com a
     // anon antiga; sem Authorization, o Supabase trata o pedido como visitante (papel anon)
     headers: {
       apikey: supabaseKey,
+      // A tabela fica no schema "portfolio", não no "public" padrão (ver supabase/migrations)
+      'content-profile': 'portfolio',
       'content-type': 'application/json',
       prefer: 'return=minimal',
     },

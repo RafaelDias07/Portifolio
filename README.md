@@ -61,7 +61,8 @@ Todas estão listadas no [`.env.example`](.env.example). O `.env` fica fora do G
 
 ### Ligar o formulário de contato
 
-1. Crie um projeto no [Supabase](https://supabase.com). Em **SQL Editor**, rode `supabase/migrations/001_messages.sql`.
+1. No [Supabase](https://supabase.com), em **SQL Editor**, rode `supabase/migrations/001_messages.sql` inteiro. Ele cria o schema `portfolio` com a tabela `messages`.
+   Depois, em **Project Settings > Data API > Exposed schemas**, acrescente `portfolio` e salve.
 2. No botão **Connect** do Supabase, escolha **Framework > React** e copie os dois valores do `.env` mostrado (`VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`).
 3. Crie uma conta no [Resend](https://resend.com) **com o mesmo e-mail de `src/content/contact.ts`** (no plano grátis ele só envia para o dono da conta), gere uma API key e coloque em `RESEND_API_KEY`.
 4. Coloque as mesmas variáveis na Vercel (Settings > Environment Variables) e faça um novo deploy.
