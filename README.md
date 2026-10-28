@@ -83,7 +83,7 @@ src/
 ├── pages/        # uma página por rota
 ├── services/     # acesso a dados (GitHub, Supabase, e-mail)
 ├── hooks/        # hooks personalizados
-├── contexts/     # tema e autenticação
+├── contexts/     # autenticação e player de música
 ├── types/        # tipos compartilhados
 ├── content/      # textos e links pessoais
 ├── styles/       # estilos globais e variáveis CSS
