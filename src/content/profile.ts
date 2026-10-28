@@ -113,5 +113,5 @@ export const SOLUTIONS: Solution[] = [
     detail: 'Agilidade e QA no G4, em problemas do dia a dia',
   },
   { title: 'Uso IA com critério', detail: 'rapidez sem abrir mão da qualidade' },
-  { title: 'Entrego interfaces', detail: 'React, TypeScript e componentes reaproveitáveis' },
+  { title: 'Conecto sistemas', detail: 'integrações por APIs para os dados andarem sozinhos' },
 ]
