@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useRef } from 'react'
-import { useLocation } from 'react-router'
+import { Link, useLocation } from 'react-router'
 import { Clock } from '@/components/Clock'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/Button'
@@ -51,7 +51,13 @@ export function XpWindow({ children, onFreeCamera }: XpWindowProps) {
           <span className={styles.panel}>
             <Clock />
           </span>
-          <span className={styles.panel}>Rafael_OS XP</span>
+          <span className={styles.panel}>
+            Rafael_OS XP
+            {/* Acesso discreto ao painel do dono; quem não tem login cai na tela de entrar */}
+            <Link to="/painel" className={styles.lock} aria-label="Painel do dono" title="Painel">
+              🔐
+            </Link>
+          </span>
         </>
       }
     >
