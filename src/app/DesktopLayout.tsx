@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Outlet, useMatches } from 'react-router'
+import { FreeCameraBar } from '@/components/FreeCameraBar'
 import { XpWindow } from '@/components/XpWindow'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import type { CameraMode } from '@/three'
@@ -97,22 +98,7 @@ export function DesktopLayout() {
         </p>
       )}
 
-      {mode === 'free' && (
-        <div className={styles.freeBar}>
-          <p className={styles.freeHint}>
-            Arraste para girar · role ou pince para dar zoom · clique na tela para voltar
-          </p>
-          <button
-            type="button"
-            className={styles.backButton}
-            onClick={backToWindow}
-            // biome-ignore lint/a11y/noAutofocus: a janela some; o foco precisa ir para a única ação disponível
-            autoFocus
-          >
-            🖥️ Voltar ao portfólio
-          </button>
-        </div>
-      )}
+      {mode === 'free' && <FreeCameraBar onBack={backToWindow} />}
     </>
   )
 }

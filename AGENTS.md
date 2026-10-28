@@ -435,8 +435,9 @@ Na Vercel, todas ficam em Settings > Environment Variables. A função `api/cont
   3. é carregado com `React.lazy`, fora do pacote inicial.
 - Three.js vem do npm (`import * as THREE from 'three'`), nunca de CDN.
 - A cena expõe uma API pequena, tipada em `src/three/index.d.ts`: `createScene({ container, overlay, title, initialMode, skipIntro, onFocusChange, onScreenClick })` devolve `{ setMode, dispose }`. A cada quadro em foco ela projeta os cantos da tela do monitor e escreve `left`/`top`/`width`/`height` no `overlay` (a janela XP); no `dispose` remove esses estilos.
-- A tela do monitor é uma textura de canvas (`monitorScreen.js`), e não o `CSS3DRenderer` do projeto original: uma cena e um renderer a menos. Durante a abertura ela mostra uma caixa "Carregando..." do Windows antigo, cuja barra enche junto com o voo da câmera (para em 95% até a câmera chegar); depois mostra a área de trabalho do Rafael_OS, vista na câmera livre. Só redesenha quando muda um bloco da barra.
+- A tela do monitor é uma textura de canvas (`monitorScreen.js`), e não o `CSS3DRenderer` do projeto original: uma cena e um renderer a menos. Durante a abertura ela mostra uma caixa "Carregando..." no estilo do Windows XP (barra de blocos verdes), cuja barra enche junto com o voo da câmera (para em 95% até a câmera chegar); depois mostra a área de trabalho do Rafael_OS, vista na câmera livre. Só redesenha quando muda um bloco da barra.
 - Com `prefers-reduced-motion`, o voo de abertura é pulado e a câmera já começa em foco.
+- Na câmera livre aparece uma barra de tarefas do XP (`FreeCameraBar`): o botão verde "iniciar" com a bandeira do XP (`XpFlag`, SVG; marca da Microsoft, usada como homenagem) volta ao portfólio, e a bandeja mostra o relógio.
 - Na câmera livre, clicar na tela do monitor (um `Raycaster` testa se o clique acertou a malha da tela) chama `onScreenClick`, que volta para o portfólio. Arrastar mais de 6 px conta como girar a cena, não como clique; o cursor vira mãozinha sobre a tela.
 - Textos e dados pessoais (nomes, falas, legendas, playlist) ficam em arquivos de dados separados, para trocar sem mexer na lógica.
 

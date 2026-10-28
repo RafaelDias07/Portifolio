@@ -1,18 +1,19 @@
 import { type ReactNode, useId } from 'react'
-import styles from './RetroDialog.module.css'
+import styles from './XpDialog.module.css'
 
-type RetroDialogProps = {
+type XpDialogProps = {
   title: string
-  /** Ícone de informação desenhado em CSS, como nas caixas de aviso do Windows */
+  /** Ícone de informação (bola azul com "i"), desenhado em CSS como nas caixas do XP */
   showInfoIcon?: boolean
   children: ReactNode
-  /** Botões da caixa; use a classe RETRO_BUTTON para o botão em relevo */
+  /** Botões da caixa (ex.: OK) */
   actions?: ReactNode
 }
 
-// Caixa de diálogo do Windows clássico: fundo cinza com relevo, título em degradê azul.
+// Caixa de mensagem no estilo do Windows XP (tema Luna): barra de título azul arredondada,
+// botão de fechar vermelho e corpo bege. Segue o tema claro/escuro do site, como a janela.
 // Fica no fluxo da página (não é modal), então não prende o foco do teclado.
-export function RetroDialog({ title, showInfoIcon, children, actions }: RetroDialogProps) {
+export function XpDialog({ title, showInfoIcon, children, actions }: XpDialogProps) {
   const titleId = useId()
 
   return (
@@ -37,5 +38,3 @@ export function RetroDialog({ title, showInfoIcon, children, actions }: RetroDia
     </section>
   )
 }
-
-export const RETRO_BUTTON = styles.button

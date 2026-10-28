@@ -1,0 +1,104 @@
+/* Barra de tarefas no estilo Luna do Windows XP: igual nos dois temas, como a área de trabalho */
+.taskbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  height: calc(2.5rem + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  font-family: var(--font-ui);
+  color: var(--color-taskbar-text);
+  background: var(--color-taskbar);
+  border-top: 1px solid var(--color-taskbar-highlight);
+  box-shadow: 0 -1px 0 var(--color-taskbar-edge);
+}
+
+/* Botão verde "iniciar", com o canto direito arredondado */
+.start {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 0.5em;
+  align-items: center;
+  height: 100%;
+  padding: 0 1.4em 0 0.8em;
+  font-size: 1rem;
+  font-weight: bold;
+  font-style: italic;
+  color: var(--color-taskbar-text);
+  text-shadow: 1px 1px 1px rgb(0 0 0 / 0.5);
+  cursor: pointer;
+  background: var(--color-start);
+  border: 0;
+  border-radius: 0 0.75rem 0.75rem 0;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.35),
+    2px 0 4px rgb(0 0 0 / 0.35);
+}
+
+.start:hover {
+  filter: brightness(1.1);
+}
+
+.start:active {
+  filter: brightness(0.9);
+}
+
+.start:focus-visible {
+  outline: 1px dotted var(--color-taskbar-text);
+  outline-offset: -4px;
+}
+
+/* Bandeira do XP no botão, com uma leve sombra como no original */
+.flag {
+  width: 1.5em;
+  height: 1.5em;
+  filter: drop-shadow(1px 1px 1px rgb(0 0 0 / 0.45));
+}
+
+.hint {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  opacity: 0.9;
+}
+
+.hintTouch {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .hintDesktop {
+    display: none;
+  }
+
+  .hintTouch {
+    display: inline;
+  }
+}
+
+/* Bandeja do sistema, à direita, com o relógio */
+.tray {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  height: 100%;
+  padding: 0 0.9em;
+  font-size: 0.8rem;
+  background: var(--color-tray);
+  border-left: 1px solid var(--color-taskbar-edge);
+  box-shadow: inset 1px 0 0 var(--color-taskbar-highlight);
+}
+
+@media (max-width: 30rem) {
+  .tray {
+    display: none;
+  }
+}

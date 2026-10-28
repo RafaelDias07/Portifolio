@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 // O que aparece na tela do monitor, desenhado num canvas 2D e usado como textura:
-// 1. durante a abertura, uma caixa "Carregando..." do Windows antigo, com a barra enchendo;
+// 1. durante a abertura, uma caixa "Carregando..." no estilo do Windows XP, com a barra enchendo;
 // 2. depois, a área de trabalho do Rafael_OS (vista quando a janela some, na câmera livre).
 // Mais leve que o CSS3DRenderer do projeto original: não cria uma segunda cena com DOM.
 
@@ -9,14 +9,11 @@ const WIDTH = 1024
 const HEIGHT = 832 // mesma proporção da tela (1,6 × 1,3)
 const BLOCKS = 24
 
-// Borda em relevo dos controles do Windows 9x: claro em cima/esquerda, escuro embaixo/direita
-function bevel(ctx, x, y, w, h, raised) {
-  ctx.fillStyle = raised ? '#ffffff' : '#808080'
-  ctx.fillRect(x, y, w, 3)
-  ctx.fillRect(x, y, 3, h)
-  ctx.fillStyle = raised ? '#404040' : '#ffffff'
-  ctx.fillRect(x, y + h - 3, w, 3)
-  ctx.fillRect(x + w - 3, y, 3, h)
+function roundedRect(ctx, x, y, w, h, radius, fill) {
+  ctx.beginPath()
+  ctx.roundRect(x, y, w, h, radius)
+  ctx.fillStyle = fill
+  ctx.fill()
 }
 
 function scanlines(ctx) {
@@ -24,88 +21,108 @@ function scanlines(ctx) {
   for (let y = 0; y < HEIGHT; y += 4) ctx.fillRect(0, y, WIDTH, 2)
 }
 
-function drawLoading(ctx, filledBlocks, title) {
-  // Fundo verde-azulado clássico da área de trabalho
-  ctx.fillStyle = '#008080'
-  ctx.fillRect(0, 0, WIDTH, HEIGHT)
-
-  const x = 92
-  const y = 186
-  const w = 840
-  const h = 460
-
-  // Caixa de diálogo
-  ctx.fillStyle = '#d4d0c8'
-  ctx.fillRect(x, y, w, h)
-  bevel(ctx, x, y, w, h, true)
-
-  // Barra de título em degradê, com o botão de fechar
-  const bar = ctx.createLinearGradient(x, 0, x + w, 0)
-  bar.addColorStop(0, '#0a246a')
-  bar.addColorStop(1, '#a6caf0')
-  ctx.fillStyle = bar
-  ctx.fillRect(x + 6, y + 6, w - 12, 44)
-  ctx.fillStyle = '#ffffff'
-  ctx.font = 'bold 26px Tahoma, Verdana, sans-serif'
-  ctx.textBaseline = 'middle'
-  ctx.textAlign = 'left'
-  ctx.fillText(title, x + 20, y + 28)
-
-  ctx.fillStyle = '#d4d0c8'
-  ctx.fillRect(x + w - 50, y + 12, 34, 32)
-  bevel(ctx, x + w - 50, y + 12, 34, 32, true)
-  ctx.fillStyle = '#000000'
-  ctx.font = 'bold 24px Tahoma, Verdana, sans-serif'
-  ctx.textAlign = 'center'
-  ctx.fillText('×', x + w - 33, y + 28)
-
-  // Texto
-  ctx.font = 'bold 80px Tahoma, Verdana, sans-serif'
-  ctx.fillText('Carregando...', WIDTH / 2, y + 140)
-
-  // Barra de progresso afundada, com blocos azuis
-  const trackX = x + 60
-  const trackY = y + 215
-  const trackW = w - 120
-  const trackH = 60
-  ctx.fillStyle = '#ffffff'
-  ctx.fillRect(trackX, trackY, trackW, trackH)
-  bevel(ctx, trackX, trackY, trackW, trackH, false)
-
-  const gap = 4
-  const blockW = (trackW - 12 - gap * (BLOCKS - 1)) / BLOCKS
-  ctx.fillStyle = '#0a246a'
-  for (let i = 0; i < filledBlocks; i++) {
-    ctx.fillRect(trackX + 6 + i * (blockW + gap), trackY + 6, blockW, trackH - 12)
-  }
-
-  // Botão Cancelar (decorativo: está desenhado dentro da textura 3D)
-  const buttonW = 240
-  const buttonH = 64
-  const buttonX = WIDTH / 2 - buttonW / 2
-  const buttonY = y + h - 104
-  ctx.fillStyle = '#d4d0c8'
-  ctx.fillRect(buttonX, buttonY, buttonW, buttonH)
-  bevel(ctx, buttonX, buttonY, buttonW, buttonH, true)
-  ctx.fillStyle = '#000000'
-  ctx.font = '34px Tahoma, Verdana, sans-serif'
-  ctx.fillText('Cancelar', WIDTH / 2, buttonY + buttonH / 2)
-
-  scanlines(ctx)
-}
-
-function drawDesktop(ctx, title) {
+// Fundo de céu e colina, o mesmo da área de trabalho, para a caixa "flutuar" sobre ele
+function drawBackdrop(ctx) {
   const sky = ctx.createLinearGradient(0, 0, 0, HEIGHT)
   sky.addColorStop(0, '#2a6fd6')
   sky.addColorStop(0.65, '#8cc4f2')
   ctx.fillStyle = sky
   ctx.fillRect(0, 0, WIDTH, HEIGHT)
 
-  // Colina verde
   ctx.fillStyle = '#3f9b2f'
   ctx.beginPath()
   ctx.ellipse(WIDTH * 0.45, HEIGHT * 1.05, WIDTH * 0.9, HEIGHT * 0.42, 0, 0, Math.PI * 2)
   ctx.fill()
+}
+
+// Caixa de progresso no estilo do Windows XP (tema Luna)
+function drawLoading(ctx, filledBlocks, title) {
+  drawBackdrop(ctx)
+
+  const x = 92
+  const y = 196
+  const w = 840
+  const h = 440
+  const titleH = 60
+
+  // Sombra, borda azul e corpo bege
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.45)'
+  ctx.shadowBlur = 24
+  ctx.shadowOffsetY = 8
+  roundedRect(ctx, x, y, w, h, [18, 18, 6, 6], '#0831d9')
+  ctx.shadowColor = 'transparent'
+  roundedRect(ctx, x + 6, y + titleH, w - 12, h - titleH - 6, [0, 0, 4, 4], '#ece9d8')
+
+  // Barra de título azul com brilho
+  const bar = ctx.createLinearGradient(0, y, 0, y + titleH)
+  bar.addColorStop(0, '#3d95ff')
+  bar.addColorStop(0.15, '#0a5fe8')
+  bar.addColorStop(0.85, '#0450e0')
+  bar.addColorStop(1, '#0339b5')
+  roundedRect(ctx, x, y, w, titleH, [18, 18, 0, 0], bar)
+  ctx.fillStyle = '#ffffff'
+  ctx.font = 'bold 28px Tahoma, Verdana, sans-serif'
+  ctx.textBaseline = 'middle'
+  ctx.textAlign = 'left'
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'
+  ctx.shadowBlur = 3
+  ctx.shadowOffsetY = 2
+  ctx.fillText(title, x + 26, y + titleH / 2)
+  ctx.shadowColor = 'transparent'
+
+  // Fechar vermelho
+  const closeGradient = ctx.createLinearGradient(0, y + 12, 0, y + 50)
+  closeGradient.addColorStop(0, '#e86a4a')
+  closeGradient.addColorStop(1, '#c0391a')
+  roundedRect(ctx, x + w - 58, y + 12, 40, 38, 6, '#ffffff')
+  roundedRect(ctx, x + w - 56, y + 14, 36, 34, 5, closeGradient)
+  ctx.fillStyle = '#ffffff'
+  ctx.font = 'bold 28px Tahoma, Verdana, sans-serif'
+  ctx.textAlign = 'center'
+  ctx.fillText('×', x + w - 38, y + 31)
+
+  // Texto
+  ctx.fillStyle = '#000000'
+  ctx.font = 'bold 72px Tahoma, Verdana, sans-serif'
+  ctx.fillText('Carregando...', WIDTH / 2, y + 150)
+
+  // Barra de progresso: trilho branco arredondado e blocos verdes com brilho
+  const trackX = x + 70
+  const trackY = y + 225
+  const trackW = w - 140
+  const trackH = 52
+  roundedRect(ctx, trackX - 2, trackY - 2, trackW + 4, trackH + 4, 8, '#7f9db9')
+  roundedRect(ctx, trackX, trackY, trackW, trackH, 7, '#ffffff')
+
+  const gap = 5
+  const blockW = (trackW - 16 - gap * (BLOCKS - 1)) / BLOCKS
+  const green = ctx.createLinearGradient(0, trackY + 8, 0, trackY + trackH - 8)
+  green.addColorStop(0, '#a5e89f')
+  green.addColorStop(0.45, '#37b03c')
+  green.addColorStop(1, '#2a8c2e')
+  for (let i = 0; i < filledBlocks; i++) {
+    roundedRect(ctx, trackX + 8 + i * (blockW + gap), trackY + 8, blockW, trackH - 16, 2, green)
+  }
+
+  // Botão Cancelar do XP (decorativo: está desenhado dentro da textura 3D)
+  const buttonW = 230
+  const buttonH = 62
+  const buttonX = WIDTH / 2 - buttonW / 2
+  const buttonY = y + h - 100
+  const face = ctx.createLinearGradient(0, buttonY, 0, buttonY + buttonH)
+  face.addColorStop(0, '#ffffff')
+  face.addColorStop(1, '#e3e0d3')
+  roundedRect(ctx, buttonX, buttonY, buttonW, buttonH, 8, '#003c74')
+  roundedRect(ctx, buttonX + 2, buttonY + 2, buttonW - 4, buttonH - 4, 7, face)
+  ctx.fillStyle = '#000000'
+  ctx.font = '32px Tahoma, Verdana, sans-serif'
+  ctx.fillText('Cancelar', WIDTH / 2, buttonY + buttonH / 2)
+
+  scanlines(ctx)
+}
+
+function drawDesktop(ctx, title) {
+  drawBackdrop(ctx)
 
   ctx.fillStyle = '#ffffff'
   ctx.textAlign = 'center'

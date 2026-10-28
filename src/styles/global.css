@@ -39,16 +39,14 @@
   --color-note-border: #e0d890;
   --shadow-window: 0 6px 32px rgb(0 0 0 / 0.7);
 
-  /* Caixas de diálogo clássicas do Windows (envio do contato): iguais nos dois temas */
-  --color-classic-face: #d4d0c8;
-  --color-classic-text: #000000;
-  --color-classic-light: #ffffff;
-  --color-classic-shadow: #808080;
-  --color-classic-dark: #404040;
-  --color-classic-title: linear-gradient(to right, #0a246a, #a6caf0);
-  --color-classic-title-text: #ffffff;
-  --color-classic-block: #0a246a;
-  --color-classic-info: #1c4fbf;
+  /* Barra de tarefas da câmera livre (Windows XP Luna): igual nos dois temas */
+  --color-taskbar: linear-gradient(to bottom, #3168d5, #245edb 10%, #1f4fbf 92%, #1941a5);
+  --color-taskbar-text: #ffffff;
+  --color-taskbar-highlight: #4d8af0;
+  --color-taskbar-edge: #0f2d84;
+  --color-start: linear-gradient(to bottom, #3c9b3c, #3da33d 15%, #2f8a2f 85%, #276f27);
+  --color-tray: linear-gradient(to bottom, #12a6ef, #0f8fe0 15%, #0b7ad0);
+  --color-orb: radial-gradient(circle at 35% 30%, #9fd2ff, #2b78e4 55%, #0b3d9a);
 
   /* Página da web antiga dentro do navegador da 404: branca nos dois temas, como em 2004 */
   --color-web-bg: #ffffff;
