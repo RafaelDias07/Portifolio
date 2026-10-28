@@ -1,0 +1,14 @@
+/* Uma coluna no celular; mais colunas quando a janela tem espaço */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.loading {
+  display: grid;
+  gap: var(--space-md);
+}

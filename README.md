@@ -14,11 +14,12 @@ Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser 
 | Lint e formatação | [Biome](https://biomejs.dev)                                                                                                                    |
 | Padrão de commits | [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org) |
 | Rotas             | [React Router](https://reactrouter.com): uma URL por aba, 404 dentro do monitor e página de erro                                                |
+| Dados             | [TanStack Query](https://tanstack.com/query) (cache de 10 min dos projetos do GitHub) + [Zod](https://zod.dev) para validar as respostas        |
 | 3D                | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial)                                                                 |
 | CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                    |
 | Deploy            | [Vercel](https://vercel.com), publicação automática a cada push na `main`                                                                       |
 
-Ainda vão entrar: TanStack Query, React Hook Form + Zod, Supabase e Vitest + Testing Library.
+Ainda vão entrar: React Hook Form, Supabase e Vitest + Testing Library.
 
 ## Como rodar
 
@@ -79,7 +80,7 @@ src/
 ### Nomenclatura
 
 - Componentes em `PascalCase`, um por arquivo: `ProjectCard.tsx` + `ProjectCard.module.css`
-- Hooks começam com `use`: `useGithubRepos.ts`
+- Hooks começam com `use`: `useProjects.ts`
 - Services terminam em `Service`: `githubService.ts`
 - Código em inglês; textos da interface, comentários e commits em português
 - Imports internos com o alias `@/`
