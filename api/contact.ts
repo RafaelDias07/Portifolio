@@ -1,5 +1,6 @@
 // Função serverless da Vercel (POST /api/contact). Roda no servidor, então pode usar
 // segredos que não podem ir para o navegador, como a chave do Resend (e-mail).
+import { CONTACT_EMAIL } from '../src/content/contact.js'
 import { contactSchema } from '../src/types/contact.js'
 
 function reply(status: number, body: Record<string, unknown>) {
@@ -11,9 +12,8 @@ export async function POST(request: Request): Promise<Response> {
   const supabaseUrl = process.env.VITE_SUPABASE_URL
   const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY
   const resendKey = process.env.RESEND_API_KEY
-  const ownerEmail = process.env.CONTACT_TO_EMAIL
 
-  if (!supabaseUrl || !supabaseKey || !resendKey || !ownerEmail) {
+  if (!supabaseUrl || !supabaseKey || !resendKey) {
     return reply(503, { error: 'O contato ainda não está configurado. Tente mais tarde.' })
   }
 
@@ -51,7 +51,7 @@ export async function POST(request: Request): Promise<Response> {
       headers: { authorization: `Bearer ${resendKey}`, 'content-type': 'application/json' },
       body: JSON.stringify({
         from: 'Portfólio <onboarding@resend.dev>',
-        to: [ownerEmail],
+        to: [CONTACT_EMAIL],
         reply_to: email,
         subject: `Nova mensagem no portfólio: ${name}`,
         text: `Nome: ${name}\nE-mail: ${email}\n\n${message}`,

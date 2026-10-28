@@ -1,6 +1,7 @@
 // Dados pessoais exibidos no site. Ficam aqui para trocar o conteúdo sem mexer nos componentes.
 // Textos baseados no LinkedIn e no README do perfil do GitHub do Rafael.
 import photo from '@/assets/rafael-dias.webp'
+import { CONTACT_EMAIL } from '@/content/contact'
 
 export const PROFILE = {
   name: 'Rafael Dias',
@@ -25,7 +26,7 @@ export type ProfileLink = {
 }
 
 export const PROFILE_LINKS: ProfileLink[] = [
-  { label: 'rafael071007@gmail.com', href: 'mailto:rafael071007@gmail.com', icon: '✉️' },
+  { label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, icon: '✉️' },
   {
     label: 'linkedin.com/in/rafael-dias-fontes',
     href: 'https://www.linkedin.com/in/rafael-dias-fontes-2a947b3a7/',

@@ -134,7 +134,7 @@ main.tsx ──► ThemeProvider ──► QueryClientProvider ──► RouterP
 
 1. `ContactForm` (apresentação) usa o hook `useContactForm`: React Hook Form + `zodResolver(contactSchema)` validam cada campo; o envio é um `useMutation`.
 2. `contactService.sendContactMessage` faz `POST /api/contact`.
-3. A função `api/contact.ts` (Vercel, servidor) **valida de novo** com o mesmo `contactSchema`, salva em `messages` pela API REST do Supabase e manda o e-mail pelo Resend. Se o e-mail falhar, a mensagem já está salva e aparece no dashboard.
+3. A função `api/contact.ts` (Vercel, servidor) **valida de novo** com o mesmo `contactSchema`, salva em `messages` pela API REST do Supabase e manda o e-mail pelo Resend para `CONTACT_EMAIL` (`src/content/contact.ts`; não é segredo, já aparece no site). Se o e-mail falhar, a mensagem já está salva e aparece no dashboard.
 4. Campo escondido `trap` é uma armadilha para robôs: se vier preenchido, a função responde sucesso e não salva nada.
 5. No `npm run dev`, o plugin `vercelApiInDev` do `vite.config.ts` atende `/api/contact` com a mesma função.
 6. A tabela e as regras de acesso estão em `supabase/migrations/001_messages.sql`.
@@ -412,9 +412,8 @@ Variáveis atuais:
 | `VITE_SUPABASE_URL`             | URL do projeto Supabase                                       |
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | chave publishable (`sb_publishable_...`, pública) do Supabase |
 | `RESEND_API_KEY`                | **só servidor**: chave do Resend (e-mail)                     |
-| `CONTACT_TO_EMAIL`              | **só servidor**: e-mail que recebe o aviso                    |
 
-Na Vercel, as quatro primeiras ficam em Settings > Environment Variables. A função `api/contact.ts` lê `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` pelo `process.env`.
+Na Vercel, todas ficam em Settings > Environment Variables. A função `api/contact.ts` lê `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` pelo `process.env`.
 
 ---
 

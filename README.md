@@ -58,13 +58,12 @@ Todas estão listadas no [`.env.example`](.env.example). O `.env` fica fora do G
 | `VITE_SUPABASE_URL`             | URL do projeto no Supabase                       |
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | chave pública (`sb_publishable_...`) do Supabase |
 | `RESEND_API_KEY`                | só no servidor: chave do Resend                  |
-| `CONTACT_TO_EMAIL`              | só no servidor: quem recebe as mensagens         |
 
 ### Ligar o formulário de contato
 
 1. Crie um projeto no [Supabase](https://supabase.com). Em **SQL Editor**, rode `supabase/migrations/001_messages.sql`.
 2. No botão **Connect** do Supabase, escolha **Framework > React** e copie os dois valores do `.env` mostrado (`VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`).
-3. Crie uma conta no [Resend](https://resend.com), gere uma API key e coloque em `RESEND_API_KEY`. Em `CONTACT_TO_EMAIL`, use o mesmo e-mail da conta do Resend.
+3. Crie uma conta no [Resend](https://resend.com) **com o mesmo e-mail de `src/content/contact.ts`** (no plano grátis ele só envia para o dono da conta), gere uma API key e coloque em `RESEND_API_KEY`.
 4. Coloque as mesmas variáveis na Vercel (Settings > Environment Variables) e faça um novo deploy.
 
 ## Estrutura de pastas
