@@ -39,6 +39,18 @@
   --color-note-border: #e0d890;
   --shadow-window: 0 6px 32px rgb(0 0 0 / 0.7);
 
+  /* Barra de tarefas da câmera livre (Windows XP Luna): igual nos dois temas */
+  --color-taskbar: linear-gradient(to bottom, #3168d5, #245edb 10%, #1f4fbf 92%, #1941a5);
+  --color-taskbar-text: #ffffff;
+  --color-taskbar-highlight: #4d8af0;
+  --color-taskbar-edge: #0f2d84;
+  --color-start: linear-gradient(to bottom, #3c9b3c, #3da33d 15%, #2f8a2f 85%, #276f27);
+  --color-tray: linear-gradient(to bottom, #12a6ef, #0f8fe0 15%, #0b7ad0);
+  --color-flag-red: #f25022;
+  --color-flag-green: #7fba00;
+  --color-flag-blue: #00a4ef;
+  --color-flag-yellow: #ffb900;
+
   /* Caixas de diálogo clássicas do Windows (envio do contato): iguais nos dois temas */
   --color-classic-face: #d4d0c8;
   --color-classic-text: #000000;
