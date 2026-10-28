@@ -6,7 +6,8 @@ export type SceneOptions = {
   container: HTMLElement
   /** Elemento encaixado sobre a tela do monitor quando a câmera está em foco */
   overlay: HTMLElement | null
-  bootLines: string[]
+  /** Nome do sistema, mostrado na caixa de carregamento e na área de trabalho do monitor */
+  title: string
   /** Modo da câmera ao criar a cena (padrão: focus, com o voo de abertura) */
   initialMode?: CameraMode
   /** Pula o voo de abertura (usado com prefers-reduced-motion) */
