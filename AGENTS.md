@@ -457,7 +457,7 @@ Na Vercel, todas ficam em Settings > Environment Variables. A função `api/cont
 - A lógica roda em passos fixos de 1/60 s, então a velocidade é a mesma em monitores de 60, 120 ou 144 Hz.
 - Saída: botão "Sair", tecla Esc e "Voltar" nas telas finais chamam `onExit`; o React desmonta e o `dispose` cancela o loop e os timers, remove listeners, para o som e libera a GPU.
 - Os sons são procedurais (Web Audio, `audio.js`, compartilhado pelos dois): nenhum arquivo de áudio.
-- O piloto é o Rafael (`GAME_PLAYER` em `src/content/media.ts`: nome e foto). Os outros pilotos são personagens fictícios, com avatar em CSS/emoji; nomes e falas ficam em `fox64/content.js` e `bzero64/content.js`. Nenhuma imagem nem texto pessoal do projeto original foi copiado.
+- No Fox 64 só existe a nave de quem joga, sem seleção de piloto nem aliados; quem fala pelo rádio é a base (o computador). No B-Zero 64 o piloto é o Rafael (`GAME_PLAYER` em `src/content/media.ts`: nome e foto) e os rivais são personagens fictícios, com avatar em CSS. Nomes e falas ficam em `fox64/content.js` e `bzero64/content.js`. Nenhuma imagem nem texto pessoal do projeto original foi copiado.
 - Ponte: `GameHost` (`src/components/GameHost.tsx`, um para os dois jogos) importa o jogo sob demanda, monta numa camada de tela cheia (portal no `<body>`, porque a janela XP fica presa ao monitor) e chama `dispose` ao sair. `GameList` abre o `GameHost` com `React.lazy`.
 - Em telas de toque (`pointer: coarse`) o botão "Jogar" fica desativado: os jogos precisam de teclado e mouse.
 
