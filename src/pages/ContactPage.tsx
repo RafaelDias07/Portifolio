@@ -5,6 +5,7 @@ import styles from './pages.module.css'
 export function ContactPage() {
   return (
     <>
+      <title>Contato | Rafael Dias</title>
       <h2 className={styles.heading}>📬 Contato</h2>
       <ul className={styles.list}>
         {PROFILE_LINKS.map((link) => (

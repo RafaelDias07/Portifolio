@@ -1,0 +1,70 @@
+.bar {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.address {
+  display: flex;
+  flex: 1 1 14rem;
+  gap: var(--space-xs);
+  align-items: center;
+  font-size: 0.9em;
+}
+
+.address input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.2em 0.4em;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+/* A página em si imita um site de 2004: fundo branco, fonte do sistema, links azuis */
+.page {
+  flex: 1;
+  min-height: 0;
+  margin: 0.3em;
+  padding: 0.75em 1em;
+  overflow-y: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  color: var(--color-web-text);
+  background: var(--color-web-bg);
+  border: 1px solid var(--color-border);
+}
+
+.title {
+  margin: 0 0 0.6em;
+  font-size: 1.9em;
+}
+
+.code {
+  color: var(--color-web-link);
+  text-decoration: underline;
+}
+
+.path {
+  word-break: break-all;
+}
+
+.link {
+  color: var(--color-web-link);
+}
+
+.link:visited {
+  color: var(--color-web-visited);
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--color-web-rule);
+}
+
+.footer {
+  font-style: italic;
+}

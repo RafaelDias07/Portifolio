@@ -1,0 +1,25 @@
+.screen {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: var(--space-lg);
+}
+
+.dialog {
+  width: min(100%, 26rem);
+  font-size: 0.875rem;
+}
+
+.body {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.link {
+  color: var(--color-accent);
+}

@@ -1,0 +1,36 @@
+.track {
+  position: relative;
+  height: 1em;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.blocks {
+  position: absolute;
+  inset: 1px auto 1px 0;
+  width: 30%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-progress) 0 0.55em,
+    transparent 0.55em 0.7em
+  );
+  animation: slide 1.4s linear infinite;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(340%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blocks {
+    width: 100%;
+    animation: none;
+  }
+}

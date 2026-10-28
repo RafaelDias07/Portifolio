@@ -1,32 +1,26 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import type { TabItem } from '@/components/ui/Tabs'
+import { Outlet, useMatches } from 'react-router'
 import { XpWindow } from '@/components/XpWindow'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { ContactPage } from '@/pages/ContactPage'
-import { HomePage } from '@/pages/HomePage'
-import { MediaPage } from '@/pages/MediaPage'
-import { ProjectsPage } from '@/pages/ProjectsPage'
-import { SkillsPage } from '@/pages/SkillsPage'
 import type { CameraMode } from '@/three'
-import styles from './App.module.css'
+import styles from './DesktopLayout.module.css'
 
 // Three.js fica num chunk separado: só baixa quando a cena vai aparecer
 const Scene3D = lazy(() => import('@/components/Scene3D').then((m) => ({ default: m.Scene3D })))
 
-// Cada aba da janela é uma página; na etapa de rotas cada uma ganha a sua URL
-const TABS: TabItem[] = [
-  { id: 'home', icon: '🧭', label: 'Início', content: <HomePage /> },
-  { id: 'skills', icon: '⚙️', label: 'Habilidades', content: <SkillsPage /> },
-  { id: 'projects', icon: '🚀', label: 'Projetos', content: <ProjectsPage /> },
-  { id: 'contact', icon: '📬', label: 'Contato', content: <ContactPage /> },
-  { id: 'media', icon: '💿', label: 'Multimídia', content: <MediaPage /> },
-]
-
 // A janela só é encaixada no monitor 3D em telas largas; abaixo disso ela ocupa a tela
 const DESKTOP_QUERY = '(min-width: 64rem)'
 
-export function App() {
+// Uma rota com handle { ownWindow: true } desenha a própria janela (ex.: a 404)
+function hasOwnWindow(handle: unknown) {
+  return typeof handle === 'object' && handle !== null && 'ownWindow' in handle
+}
+
+// Layout de todas as rotas do portfólio: a cena 3D fica montada enquanto o visitante
+// troca de página, e só o conteúdo da janela (o <Outlet />) muda
+export function DesktopLayout() {
   const isDesktop = useMediaQuery(DESKTOP_QUERY)
+  const ownWindow = useMatches().some((match) => hasOwnWindow(match.handle))
   const overlayRef = useRef<HTMLDivElement>(null)
   const [mode, setMode] = useState<CameraMode>('focus')
   const [focused, setFocused] = useState(false)
@@ -87,7 +81,13 @@ export function App() {
         data-visible={windowVisible}
         inert={!windowVisible}
       >
-        <XpWindow tabs={TABS} onFreeCamera={sceneFailed ? undefined : () => setMode('free')} />
+        {ownWindow ? (
+          <Outlet />
+        ) : (
+          <XpWindow onFreeCamera={sceneFailed ? undefined : () => setMode('free')}>
+            <Outlet />
+          </XpWindow>
+        )}
       </main>
 
       {loading && (

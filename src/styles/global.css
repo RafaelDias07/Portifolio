@@ -39,6 +39,15 @@
   --color-note-border: #e0d890;
   --shadow-window: 0 6px 32px rgb(0 0 0 / 0.7);
 
+  /* Página da web antiga dentro do navegador da 404: branca nos dois temas, como em 2004 */
+  --color-web-bg: #ffffff;
+  --color-web-text: #000000;
+  --color-web-link: #0000ee;
+  --color-web-visited: #551a8b;
+  --color-web-rule: #888888;
+  --color-danger: #c0391a;
+  --color-progress: #37b03c;
+
   color-scheme: light;
 }
 

@@ -5,6 +5,7 @@ import styles from './pages.module.css'
 export function SkillsPage() {
   return (
     <>
+      <title>Habilidades | Rafael Dias</title>
       <h2 className={styles.heading}>⚙️ Habilidades</h2>
 
       <GroupBox title="🔧 Tecnologias deste site">
