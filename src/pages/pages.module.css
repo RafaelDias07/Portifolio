@@ -93,33 +93,9 @@
   padding: 0.35em 0.5em;
 }
 
-/* Uma coluna no celular, várias no desktop */
+/* Galeria e player: um embaixo do outro no celular, lado a lado quando cabe */
 .mediaGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
-  gap: var(--space-md);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.mediaItem {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3em;
-  align-items: center;
-  padding: var(--space-md);
-  text-align: center;
-  background: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-}
-
-.mediaIcon {
-  font-size: 2.2em;
-}
-
-.mediaStatus {
-  font-size: 0.85em;
-  color: var(--color-text-muted);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0 var(--space-md);
 }

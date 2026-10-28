@@ -1,0 +1,34 @@
+/* Acima da cena 3D, da janela e da barra de tarefas */
+.host {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--color-space);
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+.close {
+  justify-self: center;
+  padding: 0.4em 1em;
+  font: inherit;
+  cursor: pointer;
+  background: var(--color-button);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
