@@ -22,7 +22,7 @@ export const PROJECT_TEXTS: ProjectText[] = [
   },
   {
     repo: 'code-cam-APP',
-    name: 'CodeCam',
+    name: 'CodeCam APP',
     description:
       'Fotografe a lousa ou o caderno e receba resumo, tópicos e flashcards gerados por IA. Acessibilidade no centro: fonte OpenDyslexic, alto contraste e leitura em voz alta. Projeto em equipe com React, NestJS e PostgreSQL.',
   },
