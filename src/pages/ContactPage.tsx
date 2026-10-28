@@ -18,7 +18,12 @@ export function ContactPage() {
           {PROFILE_LINKS.map((link) => (
             <li key={link.href} className={styles.linkRow}>
               <span aria-hidden="true">{link.icon}</span>
-              <a className={styles.link} href={link.href} target="_blank" rel="noreferrer">
+              <a
+                className={styles.link}
+                href={link.href}
+                // O e-mail (mailto:) abre o app de e-mail; os sites abrem em outra aba
+                {...(link.href.startsWith('http') && { target: '_blank', rel: 'noreferrer' })}
+              >
                 {link.label}
               </a>
             </li>

@@ -25,6 +25,7 @@ export type ProfileLink = {
 }
 
 export const PROFILE_LINKS: ProfileLink[] = [
+  { label: 'rafael071007@gmail.com', href: 'mailto:rafael071007@gmail.com', icon: '✉️' },
   {
     label: 'linkedin.com/in/rafael-dias-fontes',
     href: 'https://www.linkedin.com/in/rafael-dias-fontes-2a947b3a7/',
