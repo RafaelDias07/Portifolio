@@ -21,7 +21,7 @@ export const PROJECT_TEXTS: ProjectText[] = [
       'Três sites, uma ferramenta em cada: página de café com Bootstrap, o ateliê de livros "Fio & Prensa" com Tailwind e uma landing page animada do Homem-Aranha em React.',
   },
   {
-    repo: 'code-cam',
+    repo: 'code-cam-APP',
     name: 'CodeCam',
     description:
       'Fotografe a lousa ou o caderno e receba resumo, tópicos e flashcards gerados por IA. Acessibilidade no centro: fonte OpenDyslexic, alto contraste e leitura em voz alta. Projeto em equipe com React, NestJS e PostgreSQL.',
@@ -35,13 +35,13 @@ export const PROJECT_TEXTS: ProjectText[] = [
 ]
 
 // Repositórios de fora da minha conta (ex.: de organizações) que também entram na lista
-export const EXTRA_REPOSITORIES = ['Code-Cam-Solutions/code-cam']
+export const EXTRA_REPOSITORIES = ['Code-Cam-Solutions/code-cam-APP']
 
 // Só estes repositórios aparecem no site, nesta ordem. Os dados vêm da API do GitHub;
 // para mostrar outro, acrescente o nome do repositório aqui
 export const SHOWN_REPOSITORIES = [
   'LandingPage-CodeCam',
-  'code-cam',
+  'code-cam-APP',
   'WatchNext',
   'Bootstrap-Tailwind-e-React',
 ]
