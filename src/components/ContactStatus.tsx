@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { RETRO_BUTTON, RetroDialog } from '@/components/ui/RetroDialog'
-import { RetroProgress } from '@/components/ui/RetroProgress'
+import { Button } from '@/components/ui/Button'
+import { ProgressBar } from '@/components/ui/ProgressBar'
+import { XpDialog } from '@/components/ui/XpDialog'
 import styles from './ContactStatus.module.css'
 
 // Tempo que a confirmação fica na tela antes de voltar sozinha para o formulário
@@ -8,12 +9,12 @@ const AUTO_CLOSE_SECONDS = 8
 
 export function ContactSending() {
   return (
-    <RetroDialog title="Enviando mensagem">
+    <XpDialog title="Enviando mensagem">
       <p className={styles.headline} role="status">
         Enviando...
       </p>
-      <RetroProgress label="Enviando a mensagem" />
-    </RetroDialog>
+      <ProgressBar label="Enviando a mensagem" />
+    </XpDialog>
   )
 }
 
@@ -40,18 +41,18 @@ export function ContactSent({ onClose }: ContactSentProps) {
   }, [secondsLeft, onClose])
 
   return (
-    <RetroDialog
+    <XpDialog
       title="Mensagem enviada"
       showInfoIcon
       actions={
-        <button ref={okRef} type="button" className={RETRO_BUTTON} onClick={onClose}>
+        <Button ref={okRef} className={styles.ok} onClick={onClose}>
           OK
-        </button>
+        </Button>
       }
     >
       <p role="status">Sua mensagem foi enviada com sucesso.</p>
       <p>Vou responder no e-mail que você informou.</p>
       <p className={styles.hint}>Voltando ao formulário em {secondsLeft} segundos.</p>
-    </RetroDialog>
+    </XpDialog>
   )
 }
