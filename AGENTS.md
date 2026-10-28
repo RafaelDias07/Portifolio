@@ -180,6 +180,7 @@ Arquivos estáticos que não passam pelo bundler (favicon, `robots.txt`) ficam e
 | `/`             | apresentação (aba inicial da janela) | cena 3D ao fundo                                    |
 | `/habilidades`  | tecnologias e níveis                 |                                                     |
 | `/projetos`     | lista de projetos do GitHub          | destaques escolhidos no dashboard aparecem primeiro |
+| `/servicos`     | serviços ("Missões Disponíveis")     | textos em `src/content/services.ts`                 |
 | `/contato`      | formulário                           |                                                     |
 | `/multimidia`   | galeria, player e jogos              | cada jogo é um chunk, baixado ao clicar em Jogar    |
 | `/painel/login` | login do dono                        | quem já está logado vai para `/painel`              |
