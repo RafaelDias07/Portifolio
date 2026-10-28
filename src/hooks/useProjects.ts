@@ -5,7 +5,9 @@ import type { Repository } from '@/types/github'
 import type { Project } from '@/types/project'
 
 function toProject(repository: Repository): Project {
-  const texts = PROJECT_TEXTS[repository.name]
+  const texts = PROJECT_TEXTS.find(
+    (text) => text.repo.toLowerCase() === repository.name.toLowerCase(),
+  )
   return {
     slug: repository.name,
     name: texts?.name ?? repository.name,

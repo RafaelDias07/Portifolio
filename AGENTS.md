@@ -124,7 +124,7 @@ main.tsx ──► ThemeProvider ──► App          (QueryClient e Auth: pla
 ### 4.2.1 Projetos
 
 - `useProjects` / `useProject(slug)` buscam os repositórios uma vez por sessão (`githubService`) e montam a lista com `buildProjects`, que junta três fontes de `src/content/projects.ts`:
-  - `PROJECT_TEXTS`: nome e descrição escritos à mão, por nome de repositório (o resto usa os dados do GitHub);
+  - `PROJECT_TEXTS`: lista com nome e descrição escritos à mão para cada repositório (campo `repo`) (o resto usa os dados do GitHub);
   - `EXTRA_REPOSITORIES`: repositórios de fora da conta (ex.: `Code-Cam-Solutions/code-cam`), buscados pela API em paralelo; se um falhar, só ele some da lista;
   - `FEATURED_SLUGS`: a ordem dos destaques no topo; os demais seguem do mais recente para o mais antigo.
 - Os componentes recebem o tipo `Project` (`src/types/project.ts`), não o formato cru da API.
