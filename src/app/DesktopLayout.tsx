@@ -1,7 +1,9 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Outlet, useMatches } from 'react-router'
 import { FreeCameraBar } from '@/components/FreeCameraBar'
+import { MusicPlayerWindow } from '@/components/MusicPlayerWindow'
 import { XpWindow } from '@/components/XpWindow'
+import { MusicPlayerProvider } from '@/contexts/MusicPlayerContext'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import type { CameraMode } from '@/three'
 import styles from './DesktopLayout.module.css'
@@ -63,7 +65,7 @@ export function DesktopLayout() {
   }
 
   return (
-    <>
+    <MusicPlayerProvider>
       {showScene && (
         <Suspense fallback={null}>
           <Scene3D
@@ -99,6 +101,9 @@ export function DesktopLayout() {
       )}
 
       {mode === 'free' && <FreeCameraBar onBack={backToWindow} />}
-    </>
+
+      {/* Fica fora da janela: a música continua ao trocar de aba ou na câmera livre */}
+      <MusicPlayerWindow />
+    </MusicPlayerProvider>
   )
 }

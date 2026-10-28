@@ -53,7 +53,7 @@
   font-weight: bold;
 }
 
-.status[data-tone="player"] {
+.status[data-tone="link"] {
   color: var(--color-accent);
 }
 
@@ -63,9 +63,4 @@
 
 .status[data-tone="bzero64"] {
   color: var(--color-race);
-}
-
-.player {
-  max-width: 34rem;
-  margin-top: var(--space-md);
 }

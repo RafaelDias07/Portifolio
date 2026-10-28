@@ -1,0 +1,266 @@
+/* Janela flutuante no canto, como o Music Player do RetroOffice */
+.window {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 5rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  width: min(25rem, calc(100vw - 2rem));
+  overflow: hidden;
+  font-size: 0.75rem;
+  color: var(--color-text);
+  background: var(--color-window);
+  border: 2px solid var(--color-window-border);
+  border-radius: 6px 6px 3px 3px;
+  box-shadow: 0 8px 40px rgb(0 0 0 / 0.75);
+}
+
+.titleBar {
+  display: flex;
+  gap: 0.4em;
+  align-items: center;
+  padding: 0.27em 0.4em 0.35em 0.65em;
+  color: var(--color-titlebar-text);
+  cursor: move;
+  user-select: none;
+  touch-action: none;
+  background: var(--color-titlebar);
+}
+
+.title {
+  flex: 1;
+  margin: 0;
+  overflow: hidden;
+  font-size: 0.95em;
+  white-space: nowrap;
+  text-shadow: 1px 1px 2px rgb(0 0 0 / 0.5);
+}
+
+.host {
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.body[hidden] {
+  display: none;
+}
+
+.nowPlaying {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.6rem 0.9rem;
+  background: var(--color-player-bg);
+}
+
+.emoji {
+  font-size: 2.2em;
+  line-height: 1;
+}
+
+.nowText {
+  min-width: 0;
+}
+
+.nowTitle,
+.nowArtist {
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.nowTitle {
+  font-size: 1.05em;
+  font-weight: bold;
+  color: var(--color-player-text);
+}
+
+.nowArtist {
+  margin-top: 2px;
+  color: var(--color-player-accent);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-player-controls);
+  border-top: 1px solid var(--color-player-border);
+}
+
+.control {
+  padding: 0.25rem 0.55rem;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--color-player-accent);
+  cursor: pointer;
+  background: rgb(0 40 80 / 0.5);
+  border: 1px solid var(--color-player-border);
+  border-radius: 4px;
+}
+
+.control:hover {
+  color: var(--color-player-text);
+  border-color: var(--color-player-accent);
+}
+
+.playButton {
+  padding: 0.25rem 0.9rem;
+  font-size: 15px;
+}
+
+.control[data-toggle] {
+  opacity: 0.45;
+}
+
+.control[aria-pressed="true"] {
+  opacity: 1;
+  box-shadow: 0 0 8px rgb(0 200 255 / 0.4);
+}
+
+.separator {
+  width: 1px;
+  height: 20px;
+  background: var(--color-player-border);
+}
+
+.volume {
+  display: flex;
+  flex: 1;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--color-player-accent);
+}
+
+.volume input {
+  width: 65px;
+  cursor: pointer;
+  accent-color: var(--color-player-accent);
+}
+
+.volumeLabel {
+  min-width: 2.5em;
+}
+
+.error {
+  margin: 0;
+  padding: 0.4rem 0.75rem;
+  color: var(--color-danger);
+  background: var(--color-surface);
+}
+
+.playlistHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9em;
+  font-weight: bold;
+  background: var(--color-group-title);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.count {
+  color: var(--color-accent);
+}
+
+.playlist {
+  max-height: 190px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  background: var(--color-surface);
+  scrollbar-width: thin;
+}
+
+.item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  border-left: 3px solid transparent;
+}
+
+.item:hover,
+.item[aria-current="true"] {
+  background: var(--color-hover);
+}
+
+.item[aria-current="true"] {
+  border-left-color: var(--color-accent);
+}
+
+.number {
+  width: 16px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.item[aria-current="true"] .number {
+  color: var(--color-accent);
+}
+
+.thumb {
+  flex-shrink: 0;
+  width: 52px;
+  height: 32px;
+  object-fit: cover;
+  border: 1px solid var(--color-player-border);
+  border-radius: 4px;
+}
+
+.itemText {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+
+.itemTitle {
+  overflow: hidden;
+  font-weight: bold;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.itemArtist {
+  font-size: 0.9em;
+  color: var(--color-text-muted);
+}
+
+.itemPlay {
+  padding: 3px 9px;
+  color: var(--color-control-text);
+  background: var(--color-control);
+  border-radius: 3px;
+}
+
+@media (pointer: coarse) {
+  .control {
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+  }
+}
+
+/* No celular a janela fica presa embaixo, ocupando a largura */
+@media (max-width: 40rem) {
+  .window {
+    right: 1rem;
+    bottom: 1rem;
+  }
+}

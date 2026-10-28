@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useState } from 'react'
-import { MusicPlayer } from '@/components/MusicPlayer'
-import { GroupBox } from '@/components/ui/GroupBox'
+import { PhotoGallery } from '@/components/PhotoGallery'
 import { GAMES, type GameId } from '@/content/media'
+import { useMusicPlayer } from '@/contexts/MusicPlayerContext'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import styles from './MediaMenu.module.css'
 
@@ -11,30 +11,39 @@ const GameHost = lazy(() => import('@/components/GameHost').then((m) => ({ defau
 // Os jogos usam teclado e mouse; em telas de toque o ícone aparece, mas não abre
 const TOUCH_QUERY = '(pointer: coarse)'
 
-// Ícones da aba Multimídia, como no RetroOffice: o player abre embaixo e os jogos
-// abrem em tela cheia
+// Ícones da aba Multimídia, como no RetroOffice: Fotos abre a galeria no lugar dos
+// ícones, Música abre o player flutuante e os jogos abrem em tela cheia
 export function MediaMenu() {
-  const [playerOpen, setPlayerOpen] = useState(false)
+  const [galleryOpen, setGalleryOpen] = useState(false)
   const [running, setRunning] = useState<GameId | null>(null)
   const isTouch = useMediaQuery(TOUCH_QUERY)
+  const musicPlayer = useMusicPlayer()
   const stop = useCallback(() => setRunning(null), [])
+
+  if (galleryOpen) return <PhotoGallery onClose={() => setGalleryOpen(false)} />
 
   return (
     <>
       <ul className={styles.grid}>
         <li>
-          <button
-            type="button"
-            className={styles.item}
-            aria-expanded={playerOpen}
-            onClick={() => setPlayerOpen(!playerOpen)}
-          >
+          <button type="button" className={styles.item} onClick={() => setGalleryOpen(true)}>
+            <span className={styles.icon} aria-hidden="true">
+              📷
+            </span>
+            <span className={styles.title}>Fotos</span>
+            <span className={styles.status} data-tone="link">
+              Ver Galeria
+            </span>
+          </button>
+        </li>
+        <li>
+          <button type="button" className={styles.item} onClick={musicPlayer.open}>
             <span className={styles.icon} aria-hidden="true">
               🎵
             </span>
             <span className={styles.title}>Música</span>
-            <span className={styles.status} data-tone="player">
-              {playerOpen ? 'Fechar Player' : 'Abrir Player'}
+            <span className={styles.status} data-tone="link">
+              {musicPlayer.isOpen ? 'Player aberto' : 'Abrir Player'}
             </span>
           </button>
         </li>
@@ -57,14 +66,6 @@ export function MediaMenu() {
           </li>
         ))}
       </ul>
-
-      {playerOpen && (
-        <div className={styles.player}>
-          <GroupBox title="🎵 Player de música">
-            <MusicPlayer />
-          </GroupBox>
-        </div>
-      )}
 
       {running && (
         <Suspense fallback={null}>

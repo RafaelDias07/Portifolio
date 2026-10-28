@@ -58,6 +58,13 @@
   --color-progress: #37b03c;
   --color-race: #e07800;
 
+  /* Painel escuro do Music Player (igual nos dois temas, como no RetroOffice) */
+  --color-player-bg: linear-gradient(135deg, #001428, #002040);
+  --color-player-controls: #001e3c;
+  --color-player-text: #e0f4ff;
+  --color-player-accent: #80ccff;
+  --color-player-border: rgb(0 200 255 / 0.3);
+
   color-scheme: light;
 }
 
