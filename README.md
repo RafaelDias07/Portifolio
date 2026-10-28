@@ -13,7 +13,7 @@ Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser 
 | Base              | [Vite](https://vite.dev) + [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org)                                         |
 | Lint e formatação | [Biome](https://biomejs.dev)                                                                                                                    |
 | Padrão de commits | [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org) |
-| Rotas             | [React Router](https://reactrouter.com): uma URL por aba, 404 "tela azul" e página de erro                                                      |
+| Rotas             | [React Router](https://reactrouter.com): uma URL por aba, 404 dentro do monitor e página de erro                                                |
 | 3D                | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial)                                                                 |
 | CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                    |
 | Deploy            | [Vercel](https://vercel.com), publicação automática a cada push na `main`                                                                       |
