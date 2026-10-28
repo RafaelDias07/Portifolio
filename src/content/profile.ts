@@ -11,7 +11,7 @@ export const PROFILE = {
   badges: ['Front-end', 'IA'],
   // Resumo do "Sobre" do LinkedIn do Rafael
   about: [
-    'Eternamente aprendiz: sou estudante de Engenharia de Software na FIAP e entusiasta de programação. Quero evoluir como desenvolvedor aprofundando lógica de programação, estruturas de dados e boas práticas.',
+    'Eternamente aprendiz: sou estudante de Engenharia de Software na FIAP e entusiasta de programação. Quero evoluir como desenvolvedor aprofundando lógica de programação, a construção de interfaces modernas e boas práticas.',
     'Tenho perfil analítico e disciplinado, gosto de desafios técnicos e de aprender na prática. Acredito que organização, consistência e processos bem definidos são a base de um código de qualidade.',
     'No front-end, desenvolvo interfaces com React e TypeScript, cuidando de componentes reaproveitáveis, responsividade e acessibilidade. Também uso Inteligência Artificial no dia a dia de desenvolvimento e me interesso muito por modelos generativos e pelo impacto deles no trabalho, sempre com fundamentos sólidos de programação por trás.',
     'Mais do que programar, quero usar a tecnologia para gerar valor real e facilitar a vida das pessoas.',
