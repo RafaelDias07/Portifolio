@@ -1,19 +1,21 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import { applyBootScreen } from './bootScreen.js'
 import { createCameraDirector } from './camera.js'
 import { createComputer } from './computer.js'
+import { createMonitorScreen } from './monitorScreen.js'
 import { createSquadron, createStars } from './space.js'
 
 const SCREEN_HALF_WIDTH = 0.8
 const SCREEN_HALF_HEIGHT = 0.65
+// Duração aproximada do voo de abertura, para a barra de "Carregando..." encher no tempo certo
+const INTRO_SECONDS = 4.5
 
 // Monta a cena inteira dentro de `container` e devolve como controlá-la.
 // Quem chama (o componente Scene3D) é responsável por chamar dispose() ao desmontar.
 export function createScene({
   container,
   overlay,
-  bootLines,
+  title,
   initialMode = 'focus',
   skipIntro,
   onFocusChange,
@@ -38,7 +40,7 @@ export function createScene({
 
   const computer = createComputer()
   scene.add(computer.group)
-  applyBootScreen(computer.screen, bootLines)
+  const monitorScreen = createMonitorScreen(computer.screen, { title })
 
   const squadron = createSquadron(scene)
 
@@ -58,6 +60,8 @@ export function createScene({
     director.setMode(mode)
   }
   if (initialMode === 'free') setMode('free')
+  // Sem voo de abertura, não há o que carregar: a tela já mostra a área de trabalho
+  if (skipIntro || initialMode === 'free') monitorScreen.showDesktop()
 
   // Projeta os quatro cantos da tela 3D para pixels e encaixa a janela XP em cima
   const corner = new THREE.Vector3()
@@ -99,6 +103,7 @@ export function createScene({
   let focused = false
   let frame = 0
   let lastTime = performance.now()
+  let introElapsed = 0
   function animate(now = performance.now()) {
     frame = requestAnimationFrame(animate)
     // Limita o salto quando a aba volta do segundo plano
@@ -110,6 +115,13 @@ export function createScene({
     squadron.update()
 
     const nowFocused = director.isFocused()
+    if (nowFocused) {
+      monitorScreen.showDesktop()
+    } else {
+      introElapsed += delta
+      // Para em 95% até a câmera chegar, como toda barra de progresso que se preze
+      monitorScreen.setProgress(Math.min(introElapsed / INTRO_SECONDS, 0.95))
+    }
     if (nowFocused) fitOverlay()
     if (nowFocused !== focused) {
       focused = nowFocused
