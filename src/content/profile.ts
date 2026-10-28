@@ -9,7 +9,17 @@ export const PROFILE = {
   role: 'Desenvolvedor front-end',
   education: 'Engenharia de Software · FIAP',
   photo,
-  badges: ['Front-end', 'IA'],
+  /** Linha abaixo do nome, como "Dev · Produto · Sistemas" no RetroOffice */
+  headline: 'Front-end · IA · Engenharia de Software',
+  badges: ['Front-end', 'IA', 'FIAP'],
+  // Caixa "Missão" da página inicial: frases curtas tiradas do "Sobre" do LinkedIn.
+  // A última aparece em destaque
+  mission: [
+    'Desenvolvo interfaces com React e TypeScript: componentes reaproveitáveis, responsivos e acessíveis.',
+    'Estudante de Engenharia de Software na FIAP, aprendendo na prática e com processos bem definidos.',
+  ],
+  missionHighlight: 'Front-end + IA no dia a dia.',
+  missionClosing: 'Tecnologia para gerar valor real.',
   // Resumo do "Sobre" do LinkedIn do Rafael
   about: [
     'Eternamente aprendiz: sou estudante de Engenharia de Software na FIAP e entusiasta de programação. Quero evoluir como desenvolvedor aprofundando lógica de programação, a construção de interfaces modernas e boas práticas.',
@@ -18,6 +28,29 @@ export const PROFILE = {
     'Mais do que programar, quero usar a tecnologia para gerar valor real e facilitar a vida das pessoas.',
   ],
 }
+
+// Caixa "Sistema Ativo" da página inicial
+export const SYSTEM_INFO = [
+  { label: 'Operador', value: PROFILE.fullName },
+  { label: 'Função', value: PROFILE.role },
+  { label: 'Formação', value: PROFILE.education },
+  { label: 'Foco', value: 'Interfaces com React e TypeScript e IA no desenvolvimento' },
+  { label: 'Status', value: '🟢 Sistema online' },
+]
+
+export type SkillLevel = {
+  label: string
+  /** De 0 a 100 */
+  value: number
+}
+
+// Caixa "Trajetória" da página inicial.
+// TODO(conteúdo): Rafael confirma as áreas e as porcentagens (valores provisórios)
+export const SKILL_LEVELS: SkillLevel[] = [
+  { label: 'Front-end', value: 80 },
+  { label: 'IA', value: 70 },
+  { label: 'Back-end', value: 50 },
+]
 
 export type ProfileLink = {
   label: string
@@ -78,7 +111,7 @@ export const SITE_STACK: StackItem[] = [
   { name: 'React 19 + TypeScript', usage: 'interface em componentes, com tipos em tudo' },
   { name: 'Three.js', usage: 'o computador e o espaço em 3D' },
   { name: 'Vite', usage: 'servidor de desenvolvimento e build' },
-  { name: 'CSS Modules', usage: 'estilo por componente e tema por variáveis CSS' },
+  { name: 'CSS Modules', usage: 'estilo por componente e cores por variáveis CSS' },
   { name: 'Claude Code', usage: 'desenvolvimento com IA, guiado pelo AGENTS.md, skills e hooks' },
   { name: 'Biome + Husky', usage: 'lint e padrão de commits antes de todo commit' },
   { name: 'Vercel', usage: 'publicação automática a cada push na main' },

@@ -1,9 +1,9 @@
-import { FeaturedProjects } from '@/components/FeaturedProjects'
 import { GroupBox } from '@/components/ui/GroupBox'
-import { TagList } from '@/components/ui/TagList'
-import { PROFILE } from '@/content/profile'
+import { LevelBar } from '@/components/ui/LevelBar'
+import { PROFILE, SKILL_LEVELS, SYSTEM_INFO } from '@/content/profile'
 import styles from './pages.module.css'
 
+// Página inicial no visual do RetroOffice: foto redonda, missão, sistema e trajetória
 export function HomePage() {
   return (
     <>
@@ -20,38 +20,43 @@ export function HomePage() {
         />
         <div className={styles.identity}>
           <h2 className={styles.name}>{PROFILE.name}</h2>
-          <p className={styles.role}>{PROFILE.role}</p>
-          <p className={styles.education}>{PROFILE.education}</p>
-          <TagList label="Áreas de interesse" items={PROFILE.badges} />
+          <p className={styles.headline}>{PROFILE.headline}</p>
+          <ul className={styles.badges} aria-label="Áreas">
+            {PROFILE.badges.map((badge) => (
+              <li key={badge} className={styles.badge}>
+                {badge}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      <GroupBox title="👋 Sobre mim">
-        {PROFILE.about.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
+      <GroupBox title="🎯 Missão">
+        {PROFILE.mission.map((line) => (
+          <p key={line} className={styles.line}>
+            {line}
+          </p>
         ))}
+        <p className={styles.line}>
+          <strong className={styles.highlight}>{PROFILE.missionHighlight}</strong>{' '}
+          {PROFILE.missionClosing}
+        </p>
       </GroupBox>
 
-      <GroupBox title="⭐ Projetos em destaque">
-        <FeaturedProjects />
-      </GroupBox>
-
-      <GroupBox title="📡 Sistema">
+      <GroupBox title="📡 Sistema Ativo">
         <ul className={styles.list}>
-          <li className={styles.row}>
-            <span className={styles.label}>Operador:</span> {PROFILE.fullName}
-          </li>
-          <li className={styles.row}>
-            <span className={styles.label}>Curso:</span> {PROFILE.education}
-          </li>
-          <li className={styles.row}>
-            <span className={styles.label}>Sistema:</span> Rafael_OS v1.0
-          </li>
-          <li className={styles.row}>
-            <span className={styles.label}>Dica:</span> use “Câmera livre” para girar o computador
-            em 3D.
-          </li>
+          {SYSTEM_INFO.map((item) => (
+            <li key={item.label} className={styles.row}>
+              <span className={styles.label}>{item.label}:</span> {item.value}
+            </li>
+          ))}
         </ul>
+      </GroupBox>
+
+      <GroupBox title="📊 Trajetória">
+        {SKILL_LEVELS.map((skill) => (
+          <LevelBar key={skill.label} label={skill.label} value={skill.value} />
+        ))}
       </GroupBox>
     </>
   )

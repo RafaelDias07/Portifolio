@@ -23,7 +23,7 @@
   margin: 0.3em;
   padding: 0.75em 0.9em;
   overflow-y: auto;
-  background: var(--color-surface);
+  background: var(--color-content);
   border: 1px solid var(--color-border);
   scrollbar-color: var(--color-border) var(--color-window);
   scrollbar-width: thin;
