@@ -1,0 +1,65 @@
+.form {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.fieldset {
+  display: grid;
+  gap: 0.2em;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: var(--space-sm);
+  padding: 0;
+}
+
+.option {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  min-height: 2em;
+  padding: 0 0.4em;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.option:hover {
+  background: var(--color-hover);
+}
+
+.option input {
+  width: 1.1em;
+  height: 1.1em;
+  accent-color: var(--color-accent);
+}
+
+.name {
+  flex: 1;
+}
+
+.position {
+  font-size: 0.85em;
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.saved {
+  color: var(--color-progress);
+  font-weight: bold;
+}
+
+@media (pointer: coarse) {
+  .option {
+    min-height: 2.5rem;
+  }
+}

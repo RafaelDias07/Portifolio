@@ -10,6 +10,8 @@
   background: var(--color-button);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
+  /* O mesmo visual vale para o ButtonLink, que é um link */
+  text-decoration: none;
 }
 
 .button:hover {
