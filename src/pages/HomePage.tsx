@@ -1,9 +1,10 @@
+import { CareerTimeline } from '@/components/CareerTimeline'
 import { GroupBox } from '@/components/ui/GroupBox'
-import { LevelBar } from '@/components/ui/LevelBar'
-import { PROFILE, SKILL_LEVELS, SYSTEM_INFO } from '@/content/profile'
+import { CAREER, PROFILE, SYSTEM_INFO } from '@/content/profile'
 import styles from './pages.module.css'
 
 // Página inicial no visual do RetroOffice: foto redonda, missão, sistema e trajetória
+// (as empresas por onde passei)
 export function HomePage() {
   return (
     <>
@@ -21,7 +22,7 @@ export function HomePage() {
         <div className={styles.identity}>
           <h2 className={styles.name}>{PROFILE.name}</h2>
           <p className={styles.headline}>{PROFILE.headline}</p>
-          <ul className={styles.badges} aria-label="Áreas">
+          <ul className={styles.badges} aria-label="Onde atuo e estudo">
             {PROFILE.badges.map((badge) => (
               <li key={badge} className={styles.badge}>
                 {badge}
@@ -54,9 +55,7 @@ export function HomePage() {
       </GroupBox>
 
       <GroupBox title="📊 Trajetória">
-        {SKILL_LEVELS.map((skill) => (
-          <LevelBar key={skill.label} label={skill.label} value={skill.value} />
-        ))}
+        <CareerTimeline steps={CAREER} />
       </GroupBox>
     </>
   )

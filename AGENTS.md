@@ -13,7 +13,7 @@ Este arquivo é a **fonte única de verdade** do projeto para qualquer agente de
 
 ## 1. O projeto
 
-Portfólio pessoal de **Rafael Dias**, desenvolvedor front-end (com foco também em IA) e estudante de Engenharia de Software na FIAP, feito em React.
+Portfólio pessoal de **Rafael Dias**, engenheiro de software focado em IA para resolver problemas reais (TechOps no G4, fundador da AI For Business) e estudante de Engenharia de Software na FIAP, feito em React.
 
 **A experiência:**
 
@@ -299,7 +299,7 @@ export function ProjectList() {
 - Teste em **375 px** e **1440 px** de largura.
 - Pontos de quebra do layout: até `40rem` a janela ocupa a tela toda; de `40rem` a `64rem` ela fica com uma margem sobre o céu estrelado; a partir de `64rem` a cena 3D carrega e a janela é encaixada no monitor, com texto fixo de 11px como no RetroOffice (a janela cresce com a tela, a letra não).
 - Em telas de toque (`pointer: coarse`), botões e abas têm pelo menos 2,5rem de altura.
-- A página inicial segue o RetroOffice: foto redonda em preto e branco, caixas "Missão", "Sistema Ativo" e "Trajetória" (barras `LevelBar`), com os textos em `src/content/profile.ts`. A barra de título tem minimizar (câmera livre) e maximizar/fechar só de enfeite (`TitleBarIcon`).
+- A página inicial segue o RetroOffice: foto redonda em preto e branco, caixas "Missão", "Sistema Ativo" e "Trajetória" (linha do tempo das empresas, `CareerTimeline`), com os textos em `src/content/profile.ts`. A barra de título tem minimizar (câmera livre) e maximizar/fechar só de enfeite (`TitleBarIcon`).
 
 ### 5.5 Acessibilidade
 
