@@ -1,5 +1,6 @@
 import { ContactForm } from '@/components/ContactForm'
 import { GroupBox } from '@/components/ui/GroupBox'
+import { CONTACT_STATUS } from '@/content/contact'
 import { PROFILE_LINKS } from '@/content/profile'
 import styles from './pages.module.css'
 
@@ -30,6 +31,18 @@ export function ContactPage() {
           ))}
         </ul>
       </GroupBox>
+
+      <div className={styles.note}>
+        <p className={styles.line}>
+          <span aria-hidden="true">🟢 </span>
+          <strong>{CONTACT_STATUS.title}</strong>
+        </p>
+        <p className={styles.line}>{CONTACT_STATUS.text}</p>
+        <p className={styles.line}>
+          <span aria-hidden="true">📬 </span>
+          {CONTACT_STATUS.reply}
+        </p>
+      </div>
     </>
   )
 }
