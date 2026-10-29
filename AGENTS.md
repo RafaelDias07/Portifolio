@@ -131,7 +131,7 @@ main.tsx ──► ThemeProvider ──► QueryClientProvider ──► RouterP
   - `EXTRA_REPOSITORIES`: repositórios de fora da conta (ex.: `Code-Cam-Solutions/code-cam-APP`), buscados pela API em paralelo; se um falhar, só ele some da lista;
   - `SHOWN_REPOSITORIES`: **só estes repositórios aparecem**, nesta ordem; os dados de cada um continuam vindo da API.
 - Os componentes recebem o tipo `Project` (`src/types/project.ts`), não o formato cru da API.
-- A aba segue o "Projetos em Órbita" do RetroOffice: um card largo por projeto, com ícone, descrição inteira, etiquetas (`tags` em `projects.ts`; sem elas, linguagem e tópicos do GitHub) e os botões Explorar (site) e Ver Código (GitHub). Não há página de detalhe: a rota `/projetos/:slug` saiu em 28/10.
+- A aba segue o "Projetos em Órbita" do RetroOffice: um card largo por projeto, com ícone, descrição inteira, etiquetas (`tags` em `projects.ts`; sem elas, linguagem e tópicos do GitHub) e os botões Explorar (site) e Ver Código (GitHub). Não há página de detalhe: a rota `/projetos/:slug` saiu em 28/10. A página tem duas abas internas (`ProjectTabs`): **Projetos Pessoais** e **Projetos Profissionais**; cada projeto escolhe a sua pelo campo `category` em `projects.ts` (sem ele, pessoal). A aba sem projetos mostra o aviso de lista vazia.
 
 ### 4.2.3 Dashboard (`/painel`)
 
