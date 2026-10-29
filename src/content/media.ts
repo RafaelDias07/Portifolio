@@ -1,6 +1,7 @@
 // Conteúdo da aba Multimídia: fotos da galeria, playlist do player e dados dos jogos.
 // TODO(conteúdo): Rafael escolhe as músicas da playlist.
 import familyPhoto from '@/assets/familia.webp'
+import childhoodPhoto from '@/assets/infancia.webp'
 import { PROFILE } from '@/content/profile'
 
 export type Photo = {
@@ -32,6 +33,15 @@ export const PHOTOS: Photo[] = [
       'Minha família não é só companhia — é minha base de operações. Nos momentos mais difíceis e nas conquistas mais importantes, eles estavam lá. Tudo que construo faz mais sentido com eles do meu lado.',
     width: 800,
     height: 888,
+  },
+  {
+    src: childhoodPhoto,
+    alt: `${PROFILE.name} criança, de camiseta azul, fazendo sinal de "hang loose"`,
+    title: '🕹️ Desde o início...',
+    caption:
+      'Já nessa época eu sabia que tecnologia seria minha área. Cresci desmontando coisas pra ver como funcionavam. Spoiler: nem sempre conseguia montar de volta — mas aprendi muito no processo.',
+    width: 800,
+    height: 782,
   },
 ]
 
