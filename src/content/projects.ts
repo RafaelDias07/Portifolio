@@ -16,9 +16,9 @@ export const PROJECT_TEXTS: ProjectText[] = [
     repo: 'WatchNext',
     name: 'WatchNext',
     icon: '🎬',
-    tags: ['React 19', 'API do TMDB', 'Projeto em grupo'],
+    tags: ['React 19', 'API do TMDB'],
     description:
-      'Descubra o que assistir pelo seu humor e pelo tempo que você tem. React 19 com a API do TMDB e lista pessoal salva no navegador. Projeto em grupo.',
+      'Descubra o que assistir pelo seu humor e pelo tempo que você tem. React 19 com a API do TMDB e lista pessoal salva no navegador.',
   },
   {
     repo: 'Bootstrap-Tailwind-e-React',
