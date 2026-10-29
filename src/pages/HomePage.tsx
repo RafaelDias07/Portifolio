@@ -11,14 +11,17 @@ export function HomePage() {
       <title>Rafael Dias | Portfólio</title>
       <div className={styles.profile}>
         {/* Primeira dobra: carrega na hora, mas com tamanho fixo para não pular o layout */}
-        <img
-          className={styles.photo}
-          src={PROFILE.photo}
-          alt={`Foto de ${PROFILE.name}`}
-          width={288}
-          height={288}
-          decoding="async"
-        />
+        {/* O aro azul fica na moldura: o filtro preto e branco da foto deixaria a borda cinza */}
+        <span className={styles.photoFrame}>
+          <img
+            className={styles.photo}
+            src={PROFILE.photo}
+            alt={`Foto de ${PROFILE.name}`}
+            width={288}
+            height={288}
+            decoding="async"
+          />
+        </span>
         <div className={styles.identity}>
           <h2 className={styles.name}>{PROFILE.name}</h2>
           <p className={styles.headline}>{PROFILE.headline}</p>
