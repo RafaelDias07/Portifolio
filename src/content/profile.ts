@@ -49,7 +49,7 @@ export const CAREER: CareerStep[] = [
     company: 'G4',
     role: 'TechOps',
     description:
-      'Numa empresa AI First, atuo entre os times de Agilidade e QA: construo automações e dashboards e resolvo os problemas do dia a dia com IA, de forma rápida e bem feita.',
+      'Numa empresa AI First, atuo dentro da área de TechOps desenvolvendo soluções com IA, como automações e dashboards, e faço planejamento estratégico para a área e para a empresa. Tudo de forma rápida e bem feita.',
     current: true,
   },
   {
