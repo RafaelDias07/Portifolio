@@ -9,6 +9,8 @@ export type ProjectText = {
   description: string
   /** Etiquetas embaixo da descrição */
   tags: string[]
+  /** Aba onde aparece; sem ele, "Projetos Pessoais" */
+  category?: 'personal' | 'professional'
 }
 
 export const PROJECT_TEXTS: ProjectText[] = [
@@ -19,6 +21,14 @@ export const PROJECT_TEXTS: ProjectText[] = [
     description:
       'Este site: um computador dos anos 90 flutuando no espaço em Three.js, com uma janela do Windows XP em React. Tem jogos de nave e de corrida, player de música, painel com login e foi construído com IA, guiado por um harness de agentes.',
     tags: ['React', 'TypeScript', 'Three.js', 'IA', 'Harness'],
+  },
+  {
+    repo: 'fastapi-auth-db-api',
+    name: 'API com FastAPI e login',
+    icon: '🐍',
+    description:
+      'API REST em Python com FastAPI: cadastro e login com sessão por cookie, rotas protegidas por middleware, CRUD com SQLite, validação com Pydantic, documentação automática no Swagger e testes com PyTest.',
+    tags: ['Python', 'FastAPI', 'SQLite', 'PyTest'],
   },
   {
     repo: 'WatchNext',
@@ -61,6 +71,7 @@ export const EXTRA_REPOSITORIES = ['Code-Cam-Solutions/code-cam-APP']
 // para mostrar outro, acrescente o nome do repositório aqui
 export const SHOWN_REPOSITORIES = [
   'Portifolio',
+  'fastapi-auth-db-api',
   'LandingPage-CodeCam',
   'code-cam-APP',
   'WatchNext',
