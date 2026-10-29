@@ -6,11 +6,11 @@
   border-radius: var(--radius-sm);
 }
 
+/* Sem quebra entre o ícone e o nome: um nome longo quebra ao lado do ícone */
 .name {
   display: flex;
-  flex-wrap: wrap;
   gap: 0.4em;
-  align-items: center;
+  align-items: baseline;
   margin: 0 0 0.35em;
   font-size: 1.1em;
 }
