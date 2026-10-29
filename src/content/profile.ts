@@ -11,8 +11,8 @@ export const PROFILE = {
   photo,
   /** Linha abaixo do nome, como "Dev · Produto · Sistemas" no RetroOffice */
   headline: 'Engenheiro de Software · IA · Planejamento Estratégico',
-  /** Selos azuis abaixo da linha: onde atuo e estudo */
-  badges: ['G4', 'AI For Business', 'FIAP'],
+  /** Selos azuis abaixo da linha */
+  badges: ['Freela', 'IA'],
   // Caixa "Missão" da página inicial. A última frase aparece com o destaque em azul
   mission: [
     'Construo sistemas e planejamentos rápidos com IA, do problema à solução.',

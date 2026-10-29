@@ -22,7 +22,7 @@ export function HomePage() {
         <div className={styles.identity}>
           <h2 className={styles.name}>{PROFILE.name}</h2>
           <p className={styles.headline}>{PROFILE.headline}</p>
-          <ul className={styles.badges} aria-label="Onde atuo e estudo">
+          <ul className={styles.badges} aria-label="Destaques">
             {PROFILE.badges.map((badge) => (
               <li key={badge} className={styles.badge}>
                 {badge}
