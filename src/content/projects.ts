@@ -13,6 +13,14 @@ export type ProjectText = {
 
 export const PROJECT_TEXTS: ProjectText[] = [
   {
+    repo: 'Portifolio',
+    name: 'Portfólio 3D — Rafael_OS',
+    icon: '🖥️',
+    description:
+      'Este site: um computador dos anos 90 flutuando no espaço em Three.js, com uma janela do Windows XP em React. Tem jogos de nave e de corrida, player de música, painel com login e foi construído com IA, guiado por um harness de agentes.',
+    tags: ['React', 'TypeScript', 'Three.js', 'IA', 'Harness'],
+  },
+  {
     repo: 'WatchNext',
     name: 'WatchNext',
     icon: '🎬',
@@ -52,6 +60,7 @@ export const EXTRA_REPOSITORIES = ['Code-Cam-Solutions/code-cam-APP']
 // Só estes repositórios aparecem no site, nesta ordem. Os dados vêm da API do GitHub;
 // para mostrar outro, acrescente o nome do repositório aqui
 export const SHOWN_REPOSITORIES = [
+  'Portifolio',
   'LandingPage-CodeCam',
   'code-cam-APP',
   'WatchNext',
