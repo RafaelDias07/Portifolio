@@ -1,0 +1,23 @@
+.list {
+  display: grid;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+.description {
+  display: -webkit-box;
+  margin: 0.1em 0 0;
+  overflow: hidden;
+  font-size: 0.9em;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

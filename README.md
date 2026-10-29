@@ -16,11 +16,12 @@ Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser 
 | Rotas             | [React Router](https://reactrouter.com): uma URL por aba, 404 dentro do monitor e página de erro                                                                           |
 | Dados             | [TanStack Query](https://tanstack.com/query) (cache de 10 min dos projetos do GitHub) + [Zod](https://zod.dev) para validar as respostas                                   |
 | Contato           | [React Hook Form](https://react-hook-form.com) + Zod; função da Vercel que salva no [Supabase](https://supabase.com) e avisa por e-mail com o [Resend](https://resend.com) |
+| Dashboard         | [Supabase Auth](https://supabase.com/docs/guides/auth) com o `supabase-js`, baixado só por quem abre `/painel`; regras de acesso (RLS) no banco                            |
 | 3D                | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial)                                                                                            |
 | CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                                               |
 | Deploy            | [Vercel](https://vercel.com), publicação automática a cada push na `main`                                                                                                  |
 
-Ainda vão entrar: Supabase e Vitest + Testing Library.
+Ainda vai entrar: Vitest + Testing Library.
 
 ## Como rodar
 
@@ -66,6 +67,12 @@ Todas estão listadas no [`.env.example`](.env.example). O `.env` fica fora do G
 2. No botão **Connect** do Supabase, escolha **Framework > React** e copie os dois valores do `.env` mostrado (`VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`).
 3. Crie uma conta no [Resend](https://resend.com) **com o mesmo e-mail de `src/content/contact.ts`** (no plano grátis ele só envia para o dono da conta), gere uma API key e coloque em `RESEND_API_KEY`.
 4. Coloque as mesmas variáveis na Vercel (Settings > Environment Variables) e faça um novo deploy.
+
+### Ligar o dashboard (`/painel`)
+
+1. No **SQL Editor** do Supabase, rode `supabase/migrations/002_dashboard.sql` inteiro. Ele cria a tabela de destaques e deixa as mensagens visíveis só para o e-mail do dono (troque o e-mail no arquivo se for outro).
+2. Em **Authentication > Users > Add user > Create new user**, crie a conta do dono com esse e-mail e uma senha, marcando **Auto Confirm User**.
+3. Em **Authentication > Sign In / Providers**, desligue **Allow new users to sign up**, para ninguém mais criar conta.
 
 ## Estrutura de pastas
 

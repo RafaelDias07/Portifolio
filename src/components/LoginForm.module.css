@@ -1,0 +1,16 @@
+.form {
+  display: grid;
+  gap: var(--space-md);
+}
+
+/* A seta verde do botão de entrar da tela de boas-vindas do XP */
+.submit span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.4em;
+  height: 1.4em;
+  font-weight: bold;
+  color: var(--color-taskbar-text);
+  background: var(--color-start);
+  border-radius: var(--radius-sm);
+}
