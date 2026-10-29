@@ -6,8 +6,8 @@ import styles from './ProjectTabs.module.css'
 type ProjectCategory = 'personal' | 'professional'
 
 const TABS: { category: ProjectCategory; icon: string; label: string }[] = [
-  { category: 'personal', icon: '🧑‍💻', label: 'Projetos Pessoais' },
   { category: 'professional', icon: '💼', label: 'Projetos Profissionais' },
+  { category: 'personal', icon: '🧑‍💻', label: 'Projetos Pessoais' },
 ]
 
 // Para qual aba cada tecla leva (undefined = tecla que não troca de aba)
@@ -29,7 +29,7 @@ function nextIndex(key: string, index: number) {
 // Abas internas da página de projetos, no estilo das abas do XP: os pessoais vêm do
 // GitHub; os profissionais são escritos à mão, porque o código é privado
 export function ProjectTabs() {
-  const [current, setCurrent] = useState<ProjectCategory>('personal')
+  const [current, setCurrent] = useState<ProjectCategory>('professional')
   const id = useId()
   const listRef = useRef<HTMLDivElement>(null)
 
