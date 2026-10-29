@@ -1,0 +1,39 @@
+/* Caixa larga, como os grupos das outras abas */
+.card {
+  padding: 0.6em 0.75em 0.75em;
+  background: var(--color-group-body);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+/* Sem quebra entre o ícone e o título: um título longo quebra ao lado do ícone */
+.title {
+  display: flex;
+  gap: 0.4em;
+  align-items: baseline;
+  margin: 0 0 0.35em;
+  font-size: 1.1em;
+}
+
+.description {
+  margin: 0 0 0.5em;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  margin: 0 0 0.6em;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: 0 0.4em;
+  font-size: 0.9em;
+  background: var(--color-group-title);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+}

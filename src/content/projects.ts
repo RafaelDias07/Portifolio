@@ -21,6 +21,14 @@ export const PROJECT_TEXTS: ProjectText[] = [
     tags: ['React', 'TypeScript', 'Three.js', 'IA', 'Harness'],
   },
   {
+    repo: 'fastapi-auth-db-api',
+    name: 'API com FastAPI e login',
+    icon: '🐍',
+    description:
+      'API REST em Python com FastAPI: cadastro e login com sessão por cookie, rotas protegidas por middleware, CRUD com SQLite, validação com Pydantic, documentação automática no Swagger e testes com PyTest.',
+    tags: ['Python', 'FastAPI', 'SQLite', 'PyTest'],
+  },
+  {
     repo: 'WatchNext',
     name: 'WatchNext',
     icon: '🎬',
@@ -61,6 +69,7 @@ export const EXTRA_REPOSITORIES = ['Code-Cam-Solutions/code-cam-APP']
 // para mostrar outro, acrescente o nome do repositório aqui
 export const SHOWN_REPOSITORIES = [
   'Portifolio',
+  'fastapi-auth-db-api',
   'LandingPage-CodeCam',
   'code-cam-APP',
   'WatchNext',

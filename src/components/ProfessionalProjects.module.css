@@ -1,0 +1,59 @@
+/* Mesmo bilhete amarelo da nota da página de contato */
+.notice {
+  margin-bottom: var(--space-lg);
+  padding: 0.5em 0.7em;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-note);
+  border: 1px solid var(--color-note-border);
+  border-radius: var(--radius-sm);
+}
+
+.line {
+  margin: 0;
+}
+
+.link {
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+/* Um projeto embaixo do outro, como na aba de projetos pessoais */
+.grid {
+  display: grid;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workplace + .workplace {
+  margin-top: var(--space-xl);
+}
+
+/* Nome (ou logo) da empresa seguido de uma linha até o fim, como um separador */
+.company {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  margin: 0 0 var(--space-md);
+  font-size: 1.15em;
+}
+
+.company::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* Pequena, na altura do texto do título */
+.logo {
+  width: auto;
+  height: 1.6em;
+}
+
+.role {
+  font-weight: normal;
+  color: var(--color-text-muted);
+}

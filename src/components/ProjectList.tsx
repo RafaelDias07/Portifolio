@@ -8,7 +8,7 @@ import styles from './ProjectList.module.css'
 
 const SKELETON_KEYS = ['a', 'b', 'c', 'd']
 
-// Lista de projetos com os três estados obrigatórios: carregando, erro e vazio
+// Projetos pessoais, vindos do GitHub, com os três estados obrigatórios: carregando, erro e vazio
 export function ProjectList() {
   const { data, isPending, isError, error, refetch, isRefetching } = useProjects()
 
@@ -37,7 +37,9 @@ export function ProjectList() {
     )
   }
 
-  if (data.length === 0) return <EmptyState message="Nenhum projeto público ainda." />
+  if (data.length === 0) {
+    return <EmptyState message="Nenhum projeto pessoal publicado ainda." />
+  }
 
   return (
     <ul className={styles.grid}>

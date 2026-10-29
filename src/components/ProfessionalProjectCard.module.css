@@ -1,0 +1,75 @@
+/* "Ver detalhes" com cara de botão do XP; o texto troca quando a caixa abre */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2em;
+  padding: 0.2em 0.65em;
+  color: var(--color-text);
+  cursor: pointer;
+  list-style: none;
+  background: var(--color-button);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.toggle::-webkit-details-marker {
+  display: none;
+}
+
+.toggle::before {
+  content: "▸";
+  margin-right: 0.4em;
+}
+
+.details[open] > .toggle::before {
+  content: "▾";
+}
+
+.toggle:hover {
+  background: var(--color-hover);
+}
+
+.less,
+.details[open] .more {
+  display: none;
+}
+
+.details[open] .less {
+  display: inline;
+}
+
+.body {
+  display: grid;
+  gap: 0.6em;
+  margin-top: 0.6em;
+  padding: 0.6em 0.75em;
+  line-height: 1.5;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.title {
+  margin: 0 0 0.2em;
+  font-size: 1em;
+  color: var(--color-accent);
+}
+
+.text {
+  margin: 0;
+}
+
+.list {
+  margin: 0.25em 0 0;
+  padding-left: 1.4em;
+}
+
+.list li + li {
+  margin-top: 0.2em;
+}
+
+@media (pointer: coarse) {
+  .toggle {
+    min-height: 2.5rem;
+  }
+}

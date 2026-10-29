@@ -1,3 +1,4 @@
+import { Card } from '@/components/ui/Card'
 import type { Project } from '@/types/project'
 import styles from './ProjectCard.module.css'
 
@@ -9,21 +10,12 @@ type ProjectCardProps = {
 // etiquetas e botões para o site (Explorar) e para o código no GitHub
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article className={styles.card}>
-      <h3 className={styles.name}>
-        <span aria-hidden="true">{project.icon}</span>
-        {project.name}
-      </h3>
-      <p className={styles.description}>{project.description ?? 'Sem descrição.'}</p>
-      {project.tags.length > 0 && (
-        <ul className={styles.tags} aria-label="Tecnologias">
-          {project.tags.map((tag) => (
-            <li key={tag} className={styles.tag}>
-              {tag}
-            </li>
-          ))}
-        </ul>
-      )}
+    <Card
+      icon={project.icon}
+      title={project.name}
+      description={project.description ?? 'Sem descrição.'}
+      tags={project.tags}
+    >
       <div className={styles.actions}>
         {project.siteUrl && (
           <a className={styles.explore} href={project.siteUrl} target="_blank" rel="noreferrer">
@@ -34,6 +26,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <span aria-hidden="true">⌥</span> Ver Código
         </a>
       </div>
-    </article>
+    </Card>
   )
 }
