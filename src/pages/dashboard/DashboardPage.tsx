@@ -1,7 +1,5 @@
 import { Clock } from '@/components/Clock'
-import { FeaturedProjectsForm } from '@/components/FeaturedProjectsForm'
 import { MessageList } from '@/components/MessageList'
-import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/Button'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { GroupBox } from '@/components/ui/GroupBox'
@@ -9,7 +7,7 @@ import { Window } from '@/components/ui/Window'
 import { useAuth } from '@/contexts/AuthContext'
 import styles from './dashboard.module.css'
 
-// Painel do dono: mensagens do contato e escolha dos destaques.
+// Painel do dono: mensagens do contato.
 // Ao sair, a sessão some e o ProtectedRoute leva de volta para o login
 export function DashboardPage() {
   const { session, signOut } = useAuth()
@@ -26,7 +24,6 @@ export function DashboardPage() {
           <Button onClick={signOut}>
             <span aria-hidden="true">🚪</span> Sair
           </Button>
-          <ThemeToggle />
         </>
       }
       statusBar={
@@ -43,9 +40,6 @@ export function DashboardPage() {
       <div className={styles.content} tabIndex={0}>
         <GroupBox title="📨 Mensagens do contato">
           <MessageList />
-        </GroupBox>
-        <GroupBox title="⭐ Projetos em destaque">
-          <FeaturedProjectsForm />
         </GroupBox>
       </div>
     </Window>

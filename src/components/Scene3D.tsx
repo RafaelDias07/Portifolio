@@ -13,6 +13,8 @@ type Scene3DProps = {
   onUnavailable: () => void
   /** Clique na tela do monitor durante a câmera livre */
   onScreenClick: () => void
+  /** Começa com a câmera já em frente ao monitor, sem o voo e a caixa de carregamento */
+  skipIntro?: boolean
 }
 
 // Ponte entre o React e a cena Three.js imperativa de src/three (AGENTS.md seção 10)
@@ -22,10 +24,12 @@ export function Scene3D({
   onFocusChange,
   onUnavailable,
   onScreenClick,
+  skipIntro = false,
 }: Scene3DProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const sceneRef = useRef<SceneHandle | null>(null)
   const lastModeRef = useRef(mode)
+  const skipIntroRef = useRef(skipIntro)
   const callbacksRef = useRef({ onFocusChange, onUnavailable, onScreenClick })
 
   useEffect(() => {
@@ -45,7 +49,7 @@ export function Scene3D({
         overlay: overlayRef.current,
         title: SYSTEM_NAME,
         initialMode: lastModeRef.current,
-        skipIntro: reducedMotion,
+        skipIntro: reducedMotion || skipIntroRef.current,
         onFocusChange: (focused) => callbacksRef.current.onFocusChange(focused),
         onScreenClick: () => callbacksRef.current.onScreenClick(),
       })

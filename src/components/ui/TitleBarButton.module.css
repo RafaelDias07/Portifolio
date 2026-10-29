@@ -17,6 +17,14 @@
   filter: brightness(1.15);
 }
 
+.button[data-decorative] {
+  cursor: default;
+}
+
+.button[data-decorative]:hover {
+  filter: none;
+}
+
 .button[data-variant="close"] {
   background: var(--color-control-close);
 }

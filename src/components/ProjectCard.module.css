@@ -1,68 +1,79 @@
-/* O card inteiro é clicável pelo link do título, que se estica sobre ele */
+/* Caixa larga, como os grupos das outras abas */
 .card {
-  position: relative;
-  height: 100%;
-  padding: 0.6em 0.75em;
-  background: var(--color-surface-alt);
+  padding: 0.6em 0.75em 0.75em;
+  background: var(--color-group-body);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-}
-
-.card:hover,
-.card:focus-within {
-  background: var(--color-hover);
-  border-color: var(--color-accent);
 }
 
 .name {
-  margin: 0 0 0.3em;
-  font-size: 1em;
-}
-
-.link {
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.link::after {
-  position: absolute;
-  inset: 0;
-  content: "";
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  align-items: center;
+  margin: 0 0 0.35em;
+  font-size: 1.1em;
 }
 
 .description {
-  display: -webkit-box;
   margin: 0 0 0.5em;
-  overflow: hidden;
-  font-size: 0.9em;
-  line-height: 1.4;
+  line-height: 1.5;
   color: var(--color-text-muted);
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 
-.meta {
+.tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  align-items: center;
-  margin: 0;
-  font-size: 0.8em;
-  color: var(--color-text-muted);
+  gap: 0.3em;
+  margin: 0 0 0.6em;
+  padding: 0;
+  list-style: none;
 }
 
 .tag {
-  padding: 0.05em 0.4em;
-  color: var(--color-text);
-  background: var(--color-window);
+  padding: 0 0.4em;
+  font-size: 0.9em;
+  background: var(--color-group-title);
   border: 1px solid var(--color-border);
+  border-radius: 2px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+}
+
+.explore,
+.code {
+  display: inline-flex;
+  gap: 0.35em;
+  align-items: center;
+  min-height: 2em;
+  padding: 0.2em 0.65em;
+  color: var(--color-on-dark);
+  text-decoration: none;
   border-radius: var(--radius-sm);
 }
 
-.featured {
-  padding: 0.05em 0.4em;
-  font-weight: bold;
-  color: var(--color-accent-text);
-  background: var(--color-accent);
-  border-radius: var(--radius-sm);
+.explore {
+  background: var(--color-explore);
+  border: 1px solid var(--color-window-border);
+}
+
+.code {
+  background: var(--color-code);
+  border: 1px solid var(--color-code);
+}
+
+.explore:hover,
+.code:hover {
+  filter: brightness(1.15);
+}
+
+@media (pointer: coarse) {
+  .explore,
+  .code {
+    min-height: 2.5rem;
+  }
 }

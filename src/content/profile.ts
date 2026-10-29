@@ -6,18 +6,60 @@ import { CONTACT_EMAIL } from '@/content/contact'
 export const PROFILE = {
   name: 'Rafael Dias',
   fullName: 'Rafael Dias Fontes',
-  role: 'Desenvolvedor front-end',
+  role: 'Engenheiro de Software',
   education: 'Engenharia de Software · FIAP',
   photo,
-  badges: ['Front-end', 'IA'],
-  // Resumo do "Sobre" do LinkedIn do Rafael
-  about: [
-    'Eternamente aprendiz: sou estudante de Engenharia de Software na FIAP e entusiasta de programação. Quero evoluir como desenvolvedor aprofundando lógica de programação, a construção de interfaces modernas e boas práticas.',
-    'Tenho perfil analítico e disciplinado, gosto de desafios técnicos e de aprender na prática. Acredito que organização, consistência e processos bem definidos são a base de um código de qualidade.',
-    'No front-end, desenvolvo interfaces com React e TypeScript, cuidando de componentes reaproveitáveis, responsividade e acessibilidade. Também uso Inteligência Artificial no dia a dia de desenvolvimento e me interesso muito por modelos generativos e pelo impacto deles no trabalho, sempre com fundamentos sólidos de programação por trás.',
-    'Mais do que programar, quero usar a tecnologia para gerar valor real e facilitar a vida das pessoas.',
+  /** Linha abaixo do nome, como "Dev · Produto · Sistemas" no RetroOffice */
+  headline: 'Engenheiro de Software · IA · Planejamento Estratégico',
+  /** Selos azuis abaixo da linha */
+  badges: ['Freela', 'IA'],
+  // Caixa "Missão" da página inicial. A última frase aparece com o destaque em azul
+  mission: [
+    'Construo sistemas e planejamentos rápidos com IA, do problema à solução.',
+    'Uso IA de verdade em problemas reais: resolver a dor de quem está do outro lado.',
   ],
+  missionHighlight: 'Rápido + bem feito + IA como ferramenta.',
+  missionClosing: 'A solução mais rápida e qualificada possível.',
 }
+
+// Caixa "Sistema Ativo" da página inicial
+export const SYSTEM_INFO = [
+  { label: 'Operador', value: PROFILE.fullName },
+  // TODO(conteúdo): Rafael ainda vai definir o nome da função
+  { label: 'Função', value: 'Resolver problemas reais com IA no dia a dia' },
+  { label: 'Empresa', value: 'G4 · TechOps' },
+  { label: 'Foco', value: 'Uso de IA no dia a dia para soluções de problemas reais' },
+  { label: 'Status', value: '🟢 Aceitando missões' },
+]
+
+export type CareerStep = {
+  /** Período, ex.: "2024 – 2025" */
+  period: string
+  company: string
+  role: string
+  description: string
+  /** Onde estou agora: ganha o selo "atual" */
+  current?: boolean
+}
+
+// Caixa "Trajetória" da página inicial, da mais recente para a mais antiga
+export const CAREER: CareerStep[] = [
+  {
+    period: 'abr 2026 – hoje',
+    company: 'G4',
+    role: 'TechOps',
+    description:
+      'Numa empresa AI First, atuo dentro da área de TechOps desenvolvendo soluções com IA, como automações e dashboards, sempre tendo em vista o planejamento estratégico da área e da empresa. Tudo de forma rápida e bem feita.',
+    current: true,
+  },
+  {
+    period: '2024 – 2025',
+    company: 'AI For Business',
+    role: 'Fundador · Desenvolvedor de automação',
+    description:
+      'Criei minha própria empresa e atuei como fundador e desenvolvedor de automações para negócios.',
+  },
+]
 
 export type ProfileLink = {
   label: string
@@ -35,51 +77,42 @@ export const PROFILE_LINKS: ProfileLink[] = [
   { label: 'github.com/RafaelDias07', href: 'https://github.com/RafaelDias07', icon: '🐙' },
 ]
 
-export type SkillGroup = {
-  title: string
-  items: string[]
+export type SkillLevel = {
+  label: string
+  /** De 0 a 100 */
+  value: number
 }
 
-export const SKILL_GROUPS: SkillGroup[] = [
-  {
-    title: '🎨 Front-end',
-    items: [
-      'React',
-      'TypeScript',
-      'JavaScript',
-      'HTML',
-      'CSS',
-      'Tailwind',
-      'Bootstrap',
-      'Three.js',
-    ],
-  },
-  {
-    title: '🤖 Inteligência artificial',
-    items: [
-      'IA generativa',
-      'Claude Code',
-      'Agentes de IA',
-      'Harness (instruções, skills e hooks)',
-      'APIs de IA',
-    ],
-  },
-  { title: '⚙️ Back-end', items: ['Python', 'Django', 'FastAPI', 'APIs REST'] },
-  { title: '🧰 Ferramentas', items: ['Git', 'GitHub', 'VS Code', 'Vite', 'Vercel'] },
+// Caixa "Tecnologias" da aba Habilidades, da mais forte para a mais fraca
+export const SKILL_LEVELS: SkillLevel[] = [
+  { label: 'IA aplicada', value: 90 },
+  { label: 'Automação', value: 85 },
+  { label: 'Arquitetura Harness', value: 85 },
+  { label: 'Agentes de IA', value: 80 },
+  { label: 'Git/GitHub', value: 80 },
+  { label: 'Python', value: 70 },
+  { label: 'Integrações (APIs)', value: 70 },
+  { label: 'JavaScript', value: 65 },
 ]
 
-export type StackItem = {
-  name: string
-  usage: string
+export type Solution = {
+  /** Parte em negrito */
+  title: string
+  detail: string
 }
 
-// Tecnologias usadas neste próprio site
-export const SITE_STACK: StackItem[] = [
-  { name: 'React 19 + TypeScript', usage: 'interface em componentes, com tipos em tudo' },
-  { name: 'Three.js', usage: 'o computador e o espaço em 3D' },
-  { name: 'Vite', usage: 'servidor de desenvolvimento e build' },
-  { name: 'CSS Modules', usage: 'estilo por componente e tema por variáveis CSS' },
-  { name: 'Claude Code', usage: 'desenvolvimento com IA, guiado pelo AGENTS.md, skills e hooks' },
-  { name: 'Biome + Husky', usage: 'lint e padrão de commits antes de todo commit' },
-  { name: 'Vercel', usage: 'publicação automática a cada push na main' },
+// Caixa "O que eu realmente resolvo" da aba Habilidades
+export const SOLUTIONS: Solution[] = [
+  { title: 'Resolvo problemas reais com IA', detail: 'do diagnóstico à solução funcionando' },
+  {
+    title: 'Automatizo processos',
+    detail: 'o que aprendi como fundador da AI For Business',
+  },
+  { title: 'Planejo rápido', detail: 'planejamentos estratégicos com IA em pouco tempo' },
+  {
+    title: 'Execução com rapidez',
+    detail: 'o que aprendo no G4, onde tudo precisa ser feito rápido e bem feito',
+  },
+  { title: 'Uso IA com critério', detail: 'rapidez sem abrir mão da qualidade' },
+  { title: 'Conecto sistemas', detail: 'integrações por APIs para os dados andarem sozinhos' },
 ]

@@ -7,8 +7,8 @@
 
 .title {
   margin: 0;
-  padding: 0.25em 0.6em;
-  font-size: 0.9em;
+  padding: 0.3em 0.6em;
+  font-size: 1em;
   background: var(--color-group-title);
   border-bottom: 1px solid var(--color-border);
 }
@@ -16,7 +16,7 @@
 .body {
   padding: 0.5em 0.7em;
   line-height: 1.6;
-  background: var(--color-surface);
+  background: var(--color-group-body);
 }
 
 .body > :first-child {

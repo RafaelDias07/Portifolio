@@ -1,0 +1,118 @@
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Período | marcador | conteúdo. A linha vertical liga os marcadores */
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 7.5em 1em 1fr;
+  gap: 0 var(--space-sm);
+  padding-bottom: var(--space-md);
+}
+
+.step:last-child {
+  padding-bottom: 0;
+}
+
+.step:not(:last-child)::before {
+  position: absolute;
+  top: 1.1em;
+  bottom: 0;
+  left: calc(7.5em + var(--space-sm) + 0.5em - 1px);
+  width: 2px;
+  content: "";
+  background: var(--color-accent);
+  opacity: 0.45;
+}
+
+.period {
+  padding-top: 0.1em;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: var(--color-text-muted);
+  text-align: right;
+}
+
+.marker {
+  position: relative;
+  z-index: 1;
+  width: 0.85em;
+  height: 0.85em;
+  margin: 0.3em auto 0;
+  background: var(--color-orb);
+  border: 1px solid var(--color-window-border);
+  border-radius: 50%;
+}
+
+.marker[data-current="true"] {
+  background: var(--color-start);
+  box-shadow: 0 0 0 3px rgb(55 176 60 / 0.25);
+}
+
+.body {
+  min-width: 0;
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2em 0.5em;
+  align-items: baseline;
+  margin: 0;
+}
+
+.company {
+  font-size: 1.05em;
+  color: var(--color-accent);
+}
+
+.role {
+  padding: 0 0.4em;
+  font-size: 0.9em;
+  background: var(--color-group-title);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+}
+
+.now {
+  padding: 0 0.4em;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: var(--color-taskbar-text);
+  background: var(--color-start);
+  border-radius: 2px;
+}
+
+.description {
+  margin: 0.2em 0 0;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+/* No celular o período sobe para cima do conteúdo */
+@media (max-width: 30rem) {
+  .step {
+    grid-template-columns: 1em 1fr;
+  }
+
+  .period {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .marker {
+    grid-row: 1 / span 2;
+    grid-column: 1;
+  }
+
+  .body {
+    grid-column: 2;
+  }
+
+  .step:not(:last-child)::before {
+    left: calc(0.5em - 1px);
+  }
+}

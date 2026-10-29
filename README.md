@@ -17,7 +17,7 @@ Portfólio interativo em React: um computador 3D numa cena espacial que, ao ser 
 | Dados             | [TanStack Query](https://tanstack.com/query) (cache de 10 min dos projetos do GitHub) + [Zod](https://zod.dev) para validar as respostas                                   |
 | Contato           | [React Hook Form](https://react-hook-form.com) + Zod; função da Vercel que salva no [Supabase](https://supabase.com) e avisa por e-mail com o [Resend](https://resend.com) |
 | Dashboard         | [Supabase Auth](https://supabase.com/docs/guides/auth) com o `supabase-js`, baixado só por quem abre `/painel`; regras de acesso (RLS) no banco                            |
-| 3D                | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial)                                                                                            |
+| 3D e jogos        | [Three.js](https://threejs.org), carregado sob demanda (fora do pacote inicial); os jogos Fox 64 e B-Zero 64 com sons procedurais (Web Audio)                              |
 | CI                | GitHub Actions: commitlint, lint, testes dos hooks, tipos e build em todo PR                                                                                               |
 | Deploy            | [Vercel](https://vercel.com), publicação automática a cada push na `main`                                                                                                  |
 
@@ -70,7 +70,7 @@ Todas estão listadas no [`.env.example`](.env.example). O `.env` fica fora do G
 
 ### Ligar o dashboard (`/painel`)
 
-1. No **SQL Editor** do Supabase, rode `supabase/migrations/002_dashboard.sql` inteiro. Ele cria a tabela de destaques e deixa as mensagens visíveis só para o e-mail do dono (troque o e-mail no arquivo se for outro).
+1. No **SQL Editor** do Supabase, rode `supabase/migrations/002_dashboard.sql` inteiro. Ele deixa as mensagens visíveis só para o e-mail do dono (troque o e-mail no arquivo se for outro).
 2. Em **Authentication > Users > Add user > Create new user**, crie a conta do dono com esse e-mail e uma senha, marcando **Auto Confirm User**.
 3. Em **Authentication > Sign In / Providers**, desligue **Allow new users to sign up**, para ninguém mais criar conta.
 
@@ -83,7 +83,7 @@ src/
 ├── pages/        # uma página por rota
 ├── services/     # acesso a dados (GitHub, Supabase, e-mail)
 ├── hooks/        # hooks personalizados
-├── contexts/     # tema e autenticação
+├── contexts/     # autenticação e player de música
 ├── types/        # tipos compartilhados
 ├── content/      # textos e links pessoais
 ├── styles/       # estilos globais e variáveis CSS

@@ -11,7 +11,7 @@ type XpDialogProps = {
 }
 
 // Caixa de mensagem no estilo do Windows XP (tema Luna): barra de título azul arredondada,
-// botão de fechar vermelho e corpo bege. Segue o tema claro/escuro do site, como a janela.
+// botão de fechar vermelho e corpo bege.
 // Fica no fluxo da página (não é modal), então não prende o foco do teclado.
 export function XpDialog({ title, showInfoIcon, children, actions }: XpDialogProps) {
   const titleId = useId()

@@ -7,8 +7,8 @@ import { ErrorPage } from '@/pages/ErrorPage'
 import { HomePage } from '@/pages/HomePage'
 import { MediaPage } from '@/pages/MediaPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
-import { ProjectDetailPage } from '@/pages/ProjectDetailPage'
 import { ProjectsPage } from '@/pages/ProjectsPage'
+import { ServicesPage } from '@/pages/ServicesPage'
 import { SkillsPage } from '@/pages/SkillsPage'
 
 // O formulário (React Hook Form) só é baixado quando alguém abre o contato.
@@ -23,7 +23,7 @@ const DashboardApp = lazy(() =>
 )
 
 // Cada aba da janela é uma rota. O vercel.json manda toda URL para o index.html,
-// então um link compartilhado (ex.: /projetos/WatchNext) abre certo ao atualizar
+// então um link compartilhado (ex.: /projetos) abre certo ao atualizar
 export const router = createBrowserRouter([
   {
     element: <DesktopLayout />,
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'habilidades', element: <SkillsPage /> },
       { path: 'projetos', element: <ProjectsPage /> },
-      { path: 'projetos/:slug', element: <ProjectDetailPage /> },
+      { path: 'servicos', element: <ServicesPage /> },
       {
         path: 'contato',
         element: (
@@ -58,8 +58,9 @@ export const router = createBrowserRouter([
         ),
         handle: { ownWindow: true },
       },
-      // A 404 abre dentro do monitor, numa janela de navegador antigo no lugar da janela XP
-      { path: '*', element: <NotFoundPage />, handle: { ownWindow: true } },
+      // A 404 abre dentro do monitor, numa janela de navegador antigo no lugar da janela XP.
+      // Quem cai direto nela vê o monitor na hora, sem o voo e a caixa de carregamento
+      { path: '*', element: <NotFoundPage />, handle: { ownWindow: true, skipIntro: true } },
     ],
   },
 ])

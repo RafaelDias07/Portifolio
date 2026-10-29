@@ -1,0 +1,130 @@
+/* Janela do XP que ocupa a área da aba, como no RetroOffice */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  min-height: 20em;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-window);
+  border: 2px solid var(--color-window-border);
+  border-radius: var(--radius-window);
+}
+
+.titleBar {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: 0.3em 0.4em 0.35em 0.6em;
+  color: var(--color-titlebar-text);
+  background: var(--color-titlebar);
+}
+
+.title {
+  flex: 1;
+  margin: 0;
+  font-size: 0.95em;
+  text-shadow: 1px 1px 2px rgb(0 0 0 / 0.5);
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding: 0.75em 3.5em;
+  background: var(--color-surface);
+}
+
+.figure {
+  display: grid;
+  gap: 0.6em;
+  justify-items: center;
+  margin: 0;
+}
+
+.frame {
+  overflow: hidden;
+  background: var(--color-window);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: 2px 2px 8px rgb(0 0 0 / 0.18);
+}
+
+.photo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 14em;
+}
+
+.caption {
+  display: grid;
+  gap: 0.25em;
+  font-size: 0.85em;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.name {
+  font-size: 1.1em;
+  color: var(--color-accent);
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  padding: 0.35em 0.6em;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--color-accent);
+  cursor: pointer;
+  background: var(--color-group-title);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transform: translateY(-50%);
+}
+
+.nav[data-side="prev"] {
+  left: 0.5em;
+}
+
+.nav[data-side="next"] {
+  right: 0.5em;
+}
+
+.nav:hover {
+  border-color: var(--color-accent);
+}
+
+.thumbs {
+  display: flex;
+  gap: 0.4em;
+  min-height: 3.5em;
+  margin: 0;
+  padding: 0.5em 0.75em;
+  overflow-x: auto;
+  list-style: none;
+  background: var(--color-group-title);
+  border-top: 1px solid var(--color-border);
+}
+
+.thumb {
+  padding: 1px;
+  cursor: pointer;
+  background: none;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.thumb[aria-current="true"],
+.thumb:hover {
+  border-color: var(--color-accent);
+}
+
+.thumb img {
+  display: block;
+  width: 3em;
+  height: 2.2em;
+  object-fit: cover;
+}

@@ -1,9 +1,9 @@
 import { type ReactNode, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router'
 import { Clock } from '@/components/Clock'
-import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/Button'
 import { TitleBarButton } from '@/components/ui/TitleBarButton'
+import { TitleBarIcon } from '@/components/ui/TitleBarIcon'
 import { Window } from '@/components/ui/Window'
 import { WindowNav } from '@/components/WindowNav'
 import styles from './XpWindow.module.css'
@@ -29,11 +29,15 @@ export function XpWindow({ children, onFreeCamera }: XpWindowProps) {
       title="Rafael_OS — Portfólio de Rafael Dias"
       icon="🖥️"
       titleActions={
-        onFreeCamera && (
-          <TitleBarButton label="Minimizar e explorar a cena 3D" onClick={onFreeCamera}>
-            _
-          </TitleBarButton>
-        )
+        <>
+          {onFreeCamera && (
+            <TitleBarButton label="Minimizar e explorar a cena 3D" onClick={onFreeCamera}>
+              _
+            </TitleBarButton>
+          )}
+          <TitleBarIcon>□</TitleBarIcon>
+          <TitleBarIcon variant="close">✕</TitleBarIcon>
+        </>
       }
       toolbar={
         <>
@@ -43,13 +47,15 @@ export function XpWindow({ children, onFreeCamera }: XpWindowProps) {
               Câmera livre
             </Button>
           )}
-          <ThemeToggle />
         </>
       }
       statusBar={
         <>
           <span className={styles.panel}>
             <Clock />
+          </span>
+          <span className={styles.panel} aria-hidden="true">
+            RAM: 512 MB
           </span>
           <span className={styles.panel}>
             Rafael_OS XP
