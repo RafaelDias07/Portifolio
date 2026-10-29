@@ -1,28 +1,22 @@
+import { Card } from '@/components/ui/Card'
 import type { ProfessionalProject } from '@/content/professionalProjects'
 import styles from './ProfessionalProjectCard.module.css'
-import cardStyles from './ProjectCard.module.css'
 
 type ProfessionalProjectCardProps = {
   project: ProfessionalProject
 }
 
-// Card de projeto profissional: mesmo visual do ProjectCard, mas sem links (o código é
+// Card de projeto profissional: mesmo Card do ProjectCard, mas sem links (o código é
 // privado). A explicação completa abre em "Ver detalhes"
 export function ProfessionalProjectCard({ project }: ProfessionalProjectCardProps) {
   return (
-    <article className={cardStyles.card}>
-      <h4 className={cardStyles.name}>
-        <span aria-hidden="true">{project.icon}</span>
-        {project.name}
-      </h4>
-      <p className={cardStyles.description}>{project.summary}</p>
-      <ul className={cardStyles.tags} aria-label="Tecnologias">
-        {project.tags.map((tag) => (
-          <li key={tag} className={cardStyles.tag}>
-            {tag}
-          </li>
-        ))}
-      </ul>
+    <Card
+      icon={project.icon}
+      title={project.name}
+      headingLevel={4}
+      description={project.summary}
+      tags={project.tags}
+    >
       <details className={styles.details}>
         <summary className={styles.toggle}>
           <span className={styles.more}>Ver detalhes</span>
@@ -32,7 +26,7 @@ export function ProfessionalProjectCard({ project }: ProfessionalProjectCardProp
           {project.details.map((detail) => {
             const List = detail.ordered ? 'ol' : 'ul'
             return (
-              <section key={detail.title} className={styles.section}>
+              <section key={detail.title}>
                 <h5 className={styles.title}>{detail.title}</h5>
                 {detail.text && <p className={styles.text}>{detail.text}</p>}
                 {detail.items && (
@@ -47,6 +41,6 @@ export function ProfessionalProjectCard({ project }: ProfessionalProjectCardProp
           })}
         </div>
       </details>
-    </article>
+    </Card>
   )
 }

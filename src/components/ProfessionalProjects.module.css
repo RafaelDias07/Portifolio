@@ -18,6 +18,15 @@
   color: var(--color-accent);
 }
 
+/* Um projeto embaixo do outro, como na aba de projetos pessoais */
+.grid {
+  display: grid;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .workplace + .workplace {
   margin-top: var(--space-xl);
 }

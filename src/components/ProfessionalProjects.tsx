@@ -2,7 +2,6 @@ import { Link } from 'react-router'
 import { ProfessionalProjectCard } from '@/components/ProfessionalProjectCard'
 import { PROFESSIONAL_NOTICE, WORKPLACES } from '@/content/professionalProjects'
 import styles from './ProfessionalProjects.module.css'
-import listStyles from './ProjectList.module.css'
 
 // Aba "Projetos Profissionais": aviso de confidencialidade e os projetos agrupados por empresa
 export function ProfessionalProjects() {
@@ -30,6 +29,7 @@ export function ProfessionalProjects() {
                 className={styles.logo}
                 src={workplace.logo.src}
                 alt={workplace.company}
+                loading="lazy"
                 width={workplace.logo.width}
                 height={workplace.logo.height}
               />
@@ -38,7 +38,7 @@ export function ProfessionalProjects() {
             )}
             {workplace.role && <span className={styles.role}>· {workplace.role}</span>}
           </h3>
-          <ul className={listStyles.grid}>
+          <ul className={styles.grid}>
             {workplace.projects.map((project) => (
               <li key={project.id}>
                 <ProfessionalProjectCard project={project} />
