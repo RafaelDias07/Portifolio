@@ -121,20 +121,25 @@ export const WORKPLACES: Workplace[] = [
         name: 'Bot de chamados no Slack',
         icon: '🎫',
         summary:
-          'Bot que monitora o canal de chamados do time Comercial no Slack, identifica cada novo pedido e abre o card no Jira automaticamente. Nenhum chamado se perde, e os times passam a ter dados para medir o SLA corretamente.',
+          'Nenhum chamado perdido no meio da conversa: o bot lê o canal de chamados do Comercial no Slack, reconhece cada novo pedido e abre o card no Jira sozinho. O time de Agilidade passou a enxergar o que está acontecendo, o SLA virou número real e a taxa de first call resolution subiu.',
         tags: ['Slack', 'Jira', 'Automação', 'SLA'],
         details: [
           {
             title: 'Problema',
-            text: 'Os chamados do Comercial chegavam soltos num canal do Slack. Sem registro, não dava para medir o SLA dos times que atendiam.',
+            text: 'Os chamados do Comercial chegavam soltos num canal do Slack. Pedido misturado com conversa se perdia, ninguém tinha visão do volume de demandas e não dava para medir o SLA dos times que atendiam.',
           },
           {
             title: 'Solução',
-            text: 'Um bot que acompanha o canal, reconhece quando uma mensagem é um chamado e abre o card no Jira sozinho.',
+            text: 'Um bot que acompanha o canal o tempo todo, reconhece quando uma mensagem é um chamado e abre o card no Jira sozinho, sem ninguém copiar e colar nada.',
           },
           {
-            title: 'Resultado',
-            text: 'Todo chamado vira dado, e os times passam a medir o SLA com números reais.',
+            title: 'Resultados',
+            items: [
+              'Nenhum chamado se perde: todo pedido vira card no Jira.',
+              'Visibilidade para o time de Agilidade, que passou a acompanhar o que está acontecendo nos chamados em vez de depender de quem lembrava de avisar.',
+              'SLA medido com números reais, e não por percepção.',
+              'Aumento da taxa de first call resolution: mais chamados resolvidos já no primeiro atendimento.',
+            ],
           },
         ],
       },
@@ -174,24 +179,34 @@ export const WORKPLACES: Workplace[] = [
         name: 'Cortes de podcast com IA',
         icon: '🎙️',
         summary:
-          'Sistema multiagente que analisa episódios de podcast, transcreve o vídeo e sugere os cortes com mais chance de viralizar, com notas por critérios visuais e de engajamento. Reduziu em 80% o tempo para gerar os cortes.',
+          'Um corte encontrado por esta automação viralizou com 14 milhões de visualizações. O sistema multiagente assiste ao episódio por você: em cerca de 20 minutos entrega os cortes com mais chance de viralizar, com minutagem, a fala de cada pessoa e notas de potencial. 80% menos tempo para gerar cortes.',
         tags: ['n8n', 'Multiagentes', 'LLM', 'Transcrição'],
         details: [
           {
             title: 'Problema',
-            text: 'Achar os melhores trechos de um podcast para virar corte exigia assistir horas de vídeo.',
+            text: 'Achar os melhores trechos de um podcast para virar corte exigia assistir horas de vídeo, e o melhor momento podia passar despercebido.',
           },
           {
             title: 'Solução',
-            text: 'Um sistema multiagente que transcreve o vídeo com IA, analisa o conteúdo com LLMs e sugere os cortes mais promissores. Cada corte recebe notas e uma avaliação de potencial de viralização, com base em critérios visuais e de engajamento.',
+            text: 'Um sistema multiagente em que cada agente cuida de uma etapa:',
+            ordered: true,
+            items: [
+              'Transcrição: a IA transcreve o vídeo e separa a fala de cada pessoa que está falando.',
+              'Análise: LLMs leem o conteúdo e encontram os trechos mais fortes.',
+              'Avaliação: cada corte recebe notas e uma avaliação de potencial de viralização, com base em critérios visuais e de engajamento.',
+            ],
           },
           {
-            title: 'Integração',
-            text: 'Os cortes gerados vão direto para as ferramentas da empresa cliente.',
+            title: 'Entrega',
+            text: 'Em média 20 minutos depois de o vídeo entrar na automação, está tudo pronto: os cortes sugeridos, a minutagem de cada um e a fala de cada pessoa. Os cortes vão direto para as ferramentas da empresa cliente.',
           },
           {
-            title: 'Resultado',
-            text: 'Redução de 80% no tempo para gerar os cortes.',
+            title: 'Resultados',
+            items: [
+              'Um corte encontrado pela automação viralizou com 14 milhões de visualizações.',
+              'Redução de 80% no tempo para gerar os cortes.',
+              'Do vídeo bruto aos cortes prontos em cerca de 20 minutos.',
+            ],
           },
           {
             title: 'Tecnologias',
