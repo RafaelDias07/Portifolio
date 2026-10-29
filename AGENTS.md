@@ -467,7 +467,7 @@ Na Vercel, todas ficam em Settings > Environment Variables. A função `api/cont
 ### Aba Multimídia (`/multimidia`)
 
 - Igual à aba "Modo Livre" do RetroOffice: `MediaMenu` mostra os ícones Fotos, Música, Fox 64 e B-Zero 64.
-- **Fotos** troca os ícones pela `PhotoGallery`, uma janela do XP com a foto, ◀ ▶, legenda e miniaturas. As fotos ficam em `PHOTOS` (`src/content/media.ts`); por enquanto a lista está vazia e a galeria mostra o aviso de "nenhuma foto".
+- **Fotos** troca os ícones pela `PhotoGallery`, uma janela do XP com a foto, ◀ ▶, legenda e miniaturas. As fotos ficam em `PHOTOS` (`src/content/media.ts`), em WebP em `src/assets/`; com a lista vazia a galeria mostra o aviso de "nenhuma foto".
 - **Música** abre o `MusicPlayerWindow`: janela flutuante que arrasta pela barra de título, minimiza e fecha. O estado "aberta" fica no `MusicPlayerContext`, criado no `DesktopLayout`, então a música continua ao trocar de aba.
 - O som vem da IFrame API do YouTube: `youtubeService` carrega o script só no primeiro play e `useYoutubePlayer` cria o player num `<div>` de altura zero (domínio `youtube-nocookie.com`). Tem play/pausa, anterior/próxima, aleatório, repetir e volume. Fechar a janela destrói o player. A playlist fica em `PLAYLIST` (`src/content/media.ts`).
 
@@ -524,17 +524,17 @@ O harness funciona em **camadas**: cada camada pega o que a anterior deixou pass
 
 ## 13. Cronograma e status
 
-| Dia | Data  | Branch                            | Entrega                                                                     | Status                      |
-| --- | ----- | --------------------------------- | --------------------------------------------------------------------------- | --------------------------- |
-| 1   | 25/10 | `chore/setup`                     | Projeto base, Biome, Husky + commitlint, pastas, harness de IA, CI, README  | ✅                          |
-| 2   | 27/10 | `feature/cena-3d`                 | Cena 3D (computador e espaço) em React, sob demanda; deploy na Vercel       | ✅                          |
-| 3   | 27/10 | `feature/janela-xp`               | Janela XP com componentes reaproveitáveis, conteúdo, tema salvo, responsivo | ✅                          |
-| 4   | 27/10 | `feature/rotas`, `feature/github` | Rotas, `/projetos/:slug`, 404, projetos da API do GitHub com os 3 estados   | ✅                          |
-| 5   | 27/10 | `feature/contato`                 | Formulário validado, salvo no Supabase e enviado por e-mail                 | ✅ (falta ligar as contas)  |
-| 6   | 28/10 | `feature/dashboard`               | Login, rota protegida, mensagens e destaques                                | ✅                          |
-| 7   | 28/10 | `feature/jogos`                   | Fox 64, B-Zero 64, galeria e player com conteúdo do Rafael                  | ✅ (faltam fotos e músicas) |
-| 8   | 01/11 | `test/…`, `perf/…`                | Testes automatizados e auditoria de performance                             | ⏳                          |
-| 9   | 02/11 | `docs/readme`                     | README final, revisão geral, vídeo                                          | ⏳                          |
-| —   | 03/11 | —                                 | Entrega                                                                     | ⏳                          |
+| Dia | Data  | Branch                            | Entrega                                                                     | Status                     |
+| --- | ----- | --------------------------------- | --------------------------------------------------------------------------- | -------------------------- |
+| 1   | 25/10 | `chore/setup`                     | Projeto base, Biome, Husky + commitlint, pastas, harness de IA, CI, README  | ✅                         |
+| 2   | 27/10 | `feature/cena-3d`                 | Cena 3D (computador e espaço) em React, sob demanda; deploy na Vercel       | ✅                         |
+| 3   | 27/10 | `feature/janela-xp`               | Janela XP com componentes reaproveitáveis, conteúdo, tema salvo, responsivo | ✅                         |
+| 4   | 27/10 | `feature/rotas`, `feature/github` | Rotas, `/projetos/:slug`, 404, projetos da API do GitHub com os 3 estados   | ✅                         |
+| 5   | 27/10 | `feature/contato`                 | Formulário validado, salvo no Supabase e enviado por e-mail                 | ✅ (falta ligar as contas) |
+| 6   | 28/10 | `feature/dashboard`               | Login, rota protegida, mensagens e destaques                                | ✅                         |
+| 7   | 28/10 | `feature/jogos`                   | Fox 64, B-Zero 64, galeria e player com conteúdo do Rafael                  | ✅ (faltam as músicas)     |
+| 8   | 01/11 | `test/…`, `perf/…`                | Testes automatizados e auditoria de performance                             | ⏳                         |
+| 9   | 02/11 | `docs/readme`                     | README final, revisão geral, vídeo                                          | ⏳                         |
+| —   | 03/11 | —                                 | Entrega                                                                     | ⏳                         |
 
 Ao concluir uma etapa, marque o status aqui e na seção 2 no mesmo PR.
