@@ -15,14 +15,6 @@
   font-size: 1.1em;
 }
 
-.featured {
-  padding: 0.05em 0.4em;
-  font-size: 0.75em;
-  color: var(--color-accent-text);
-  background: var(--color-accent);
-  border-radius: var(--radius-sm);
-}
-
 .description {
   margin: 0 0 0.5em;
   line-height: 1.5;

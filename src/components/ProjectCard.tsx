@@ -13,7 +13,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <h3 className={styles.name}>
         <span aria-hidden="true">{project.icon}</span>
         {project.name}
-        {project.featured && <span className={styles.featured}>★ Destaque</span>}
       </h3>
       <p className={styles.description}>{project.description ?? 'Sem descrição.'}</p>
       {project.tags.length > 0 && (

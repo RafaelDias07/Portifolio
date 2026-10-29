@@ -70,7 +70,7 @@ Todas estão listadas no [`.env.example`](.env.example). O `.env` fica fora do G
 
 ### Ligar o dashboard (`/painel`)
 
-1. No **SQL Editor** do Supabase, rode `supabase/migrations/002_dashboard.sql` inteiro. Ele cria a tabela de destaques e deixa as mensagens visíveis só para o e-mail do dono (troque o e-mail no arquivo se for outro).
+1. No **SQL Editor** do Supabase, rode `supabase/migrations/002_dashboard.sql` inteiro. Ele deixa as mensagens visíveis só para o e-mail do dono (troque o e-mail no arquivo se for outro).
 2. Em **Authentication > Users > Add user > Create new user**, crie a conta do dono com esse e-mail e uma senha, marcando **Auto Confirm User**.
 3. Em **Authentication > Sign In / Providers**, desligue **Allow new users to sign up**, para ninguém mais criar conta.
 

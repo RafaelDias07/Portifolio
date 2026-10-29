@@ -1,7 +1,7 @@
 // Projeto como o site mostra: junta os dados da API do GitHub com o nome e a
 // descrição escritos à mão em src/content/projects.ts
 export type Project = {
-  /** Nome do repositório: identifica o projeto na lista e nos destaques */
+  /** Nome do repositório: identifica o projeto na lista */
   slug: string
   name: string
   /** Emoji ao lado do nome */
@@ -15,6 +15,4 @@ export type Project = {
   topics: string[]
   codeUrl: string
   siteUrl: string | null
-  /** Escolhido como destaque no dashboard */
-  featured: boolean
 }

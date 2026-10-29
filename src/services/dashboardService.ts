@@ -18,10 +18,3 @@ export async function setMessageAnswered(id: string, answered: boolean): Promise
   const { error } = await getSupabase().from('messages').update({ answered }).eq('id', id)
   if (error) throw new Error('Não foi possível atualizar a mensagem.')
 }
-
-// Troca a lista inteira de destaques numa transação só (função set_featured_projects,
-// em supabase/migrations/002_dashboard.sql). A ordem do array vira a ordem no site.
-export async function saveFeaturedProjects(repoNames: string[]): Promise<void> {
-  const { error } = await getSupabase().rpc('set_featured_projects', { repo_names: repoNames })
-  if (error) throw new Error('Não foi possível salvar os destaques.')
-}
