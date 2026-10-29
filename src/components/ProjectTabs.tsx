@@ -1,7 +1,9 @@
 import { type KeyboardEvent, useId, useRef, useState } from 'react'
+import { ProfessionalProjects } from '@/components/ProfessionalProjects'
 import { ProjectList } from '@/components/ProjectList'
-import type { ProjectCategory } from '@/types/project'
 import styles from './ProjectTabs.module.css'
+
+type ProjectCategory = 'personal' | 'professional'
 
 const TABS: { category: ProjectCategory; icon: string; label: string }[] = [
   { category: 'personal', icon: '🧑‍💻', label: 'Projetos Pessoais' },
@@ -24,8 +26,8 @@ function nextIndex(key: string, index: number) {
   }
 }
 
-// Abas internas da página de projetos, no estilo das abas do XP: cada uma mostra
-// a lista de uma categoria
+// Abas internas da página de projetos, no estilo das abas do XP: os pessoais vêm do
+// GitHub; os profissionais são escritos à mão, porque o código é privado
 export function ProjectTabs() {
   const [current, setCurrent] = useState<ProjectCategory>('personal')
   const id = useId()
@@ -76,7 +78,7 @@ export function ProjectTabs() {
         aria-labelledby={`${id}-${current}`}
         className={styles.panel}
       >
-        <ProjectList category={current} />
+        {current === 'personal' ? <ProjectList /> : <ProfessionalProjects />}
       </div>
     </>
   )

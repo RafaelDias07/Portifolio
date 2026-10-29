@@ -9,9 +9,6 @@ export type ProjectText = {
   description: string
   /** Etiquetas embaixo da descrição */
   tags: string[]
-  /** Aba onde aparece; sem ele, "Projetos Pessoais".
-   * TODO(conteúdo): Rafael ainda vai mandar os projetos profissionais (aba vazia por enquanto) */
-  category?: 'personal' | 'professional'
 }
 
 export const PROJECT_TEXTS: ProjectText[] = [

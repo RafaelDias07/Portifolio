@@ -15,7 +15,6 @@ function toProject(repository: Repository): Project {
     description: texts?.description ?? repository.description,
     // Etiquetas escritas à mão; sem elas, a linguagem e os tópicos do GitHub
     tags: texts?.tags ?? [repository.language, ...repository.topics].filter((tag) => tag !== null),
-    category: texts?.category ?? 'personal',
     language: repository.language,
     updatedAt: repository.pushed_at,
     stars: repository.stargazers_count,
