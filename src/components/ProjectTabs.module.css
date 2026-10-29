@@ -1,0 +1,50 @@
+/* Abas no mesmo estilo das abas da janela (WindowNav) */
+.tabs {
+  display: flex;
+  gap: 1px;
+  padding: 0 0.3em;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--color-border);
+  scrollbar-width: none;
+}
+
+.tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 0.35em;
+  align-items: center;
+  padding: 0.3em 0.75em;
+  font: inherit;
+  font-size: 0.95em;
+  color: var(--color-text);
+  white-space: nowrap;
+  cursor: pointer;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.tab:hover {
+  color: var(--color-accent-text);
+  background: var(--color-accent);
+}
+
+.tab[aria-selected="true"] {
+  position: relative;
+  margin-bottom: -1px;
+  font-weight: bold;
+  color: var(--color-text);
+  background: var(--color-window);
+  border-color: var(--color-border);
+  border-bottom-color: var(--color-window);
+}
+
+.panel {
+  padding-top: var(--space-md);
+}
+
+@media (pointer: coarse) {
+  .tab {
+    min-height: 2.75rem;
+  }
+}
