@@ -89,8 +89,8 @@ export const WORKPLACES: Workplace[] = [
         name: 'Dashboard de desempenho da engenharia',
         icon: '📊',
         summary:
-          'Painel para o time de Agilidade com o desempenho dos times de engenharia: Cycle Time, Lead Time, Throughput, forecast e alertas. A IA estima quanto cada tarefa deveria levar e compara, ao vivo, com o tempo real do dev, para agir antes do atraso.',
-        tags: ['Dashboard', 'IA', 'Métricas ágeis', 'Forecast'],
+          'Atraso visto antes de acontecer: painel do time de Agilidade com o desempenho dos times de engenharia (Cycle Time, Lead Time, Throughput e alertas). A IA prevê as entregas, estima quanto cada tarefa deveria levar e compara, ao vivo, com o tempo real do dev. Construído com IA.',
+        tags: ['Dashboard', 'IA', 'Métricas ágeis', 'Forecast com IA'],
         details: [
           {
             title: 'Problema',
@@ -101,7 +101,7 @@ export const WORKPLACES: Workplace[] = [
             text: 'Um dashboard central com:',
             items: [
               'Métricas ágeis: Cycle Time, Lead Time, Throughput e outras, com comparativo entre os times.',
-              'Forecast: previsão de entregas.',
+              'Forecast com IA: a previsão de entregas também é feita pela IA.',
               'Notificações: um canal de alertas para colocar os times de volta na meta.',
               'Estimativa por IA: para cada tarefa, a IA diz quanto tempo ela deveria levar, e o painel compara ao vivo com o tempo que o dev está levando.',
             ],
@@ -112,7 +112,11 @@ export const WORKPLACES: Workplace[] = [
           },
           {
             title: 'Tecnologias',
-            text: 'Integrações com as ferramentas do time, visualizações de dados e LLM para as estimativas.',
+            text: 'Integrações com as ferramentas do time, visualizações de dados e LLM para o forecast e as estimativas.',
+          },
+          {
+            title: 'Construído com IA',
+            text: 'O próprio dashboard foi construído com IA: ela foi usada para estruturar, escrever e manter o código.',
           },
         ],
       },
