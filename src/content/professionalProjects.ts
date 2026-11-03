@@ -1,5 +1,6 @@
 // Projetos feitos nas empresas onde trabalhei. São escritos à mão, e não vêm da API do
 // GitHub, porque o código é privado: por ética, nem código nem imagens aparecem no site.
+import ai4bLogo from '@/assets/ai4b-logo.webp'
 import g4Logo from '@/assets/g4-logo.webp'
 
 export type ProjectDetail = {
@@ -176,6 +177,7 @@ export const WORKPLACES: Workplace[] = [
   },
   {
     company: 'AI For Business',
+    logo: { src: ai4bLogo, width: 297, height: 96 },
     role: 'Fundador',
     projects: [
       {
