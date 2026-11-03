@@ -27,7 +27,7 @@ export const SYSTEM_INFO = [
   { label: 'Operador', value: PROFILE.fullName },
   // TODO(conteúdo): Rafael ainda vai definir o nome da função
   { label: 'Função', value: 'Resolver problemas reais com IA no dia a dia' },
-  { label: 'Empresa', value: 'G4 · TechOps' },
+  { label: 'Empresa', value: 'G4' },
   { label: 'Foco', value: 'Uso de IA no dia a dia para soluções de problemas reais' },
   { label: 'Status', value: '🟢 Aceitando missões' },
 ]
