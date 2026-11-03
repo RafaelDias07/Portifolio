@@ -43,6 +43,7 @@ export const WORKPLACES: Workplace[] = [
   {
     company: 'G4',
     logo: { src: g4Logo, width: 240, height: 95 },
+    role: 'Estagiário',
     projects: [
       {
         id: 'esteira-qa',
