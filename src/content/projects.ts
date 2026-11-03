@@ -38,11 +38,11 @@ export const PROJECT_TEXTS: ProjectText[] = [
   },
   {
     repo: 'Bootstrap-Tailwind-e-React',
-    name: 'Bootstrap, Tailwind e React',
-    icon: '🎨',
-    tags: ['Bootstrap', 'Tailwind', 'React'],
+    name: 'LP Peter Parker',
+    icon: '🕷️',
+    tags: ['React 19', 'Vite', 'Animação', 'IA'],
     description:
-      'Três sites, uma ferramenta em cada: página de café com Bootstrap, o ateliê de livros "Fio & Prensa" com Tailwind e uma landing page animada do Homem-Aranha em React.',
+      'Landing page animada e guiada pela rolagem sobre o Peter Parker e o Homem-Aranha: uma aranha cresce e revela o Peter, e onde o mouse passa o rosto vira a máscara. Feita em React e Vite, só com JavaScript e CSS, sem biblioteca de animação, em parceria com IA (vibecoding).',
   },
   {
     repo: 'code-cam-APP',
