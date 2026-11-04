@@ -49,7 +49,7 @@ export const CAREER: CareerStep[] = [
     company: 'G4',
     role: 'Estagiário · TechOps',
     description:
-      'Numa empresa AI First, atuo dentro da área de TechOps desenvolvendo soluções com IA, como automações e dashboards, sempre tendo em vista o planejamento estratégico da área e da empresa. Tudo de forma rápida e bem feita.',
+      'Numa empresa AI First, atuo na área de TechOps criando soluções com IA, como automações e dashboards, que resolvem problemas reais dos times. Tudo pensado junto com o planejamento estratégico da área e da empresa, e entregue de forma rápida e bem feita.',
     current: true,
   },
   {
@@ -57,7 +57,7 @@ export const CAREER: CareerStep[] = [
     company: 'AI For Business',
     role: 'Fundador · Desenvolvedor de automação',
     description:
-      'Criei minha própria empresa e atuei como fundador e desenvolvedor de automações para negócios.',
+      'Fundei minha empresa aos 16 anos com uma ideia: resolver dores reais de clientes e aprender tecnologia desde cedo. Cada projeto real foi um desafio real, e com eles aprendi o trabalho de ponta a ponta: entender o problema do cliente, transformá-lo em solução e desenvolver essa solução, com automações com IA para negócios.',
   },
 ]
 
