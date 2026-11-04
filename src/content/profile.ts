@@ -47,7 +47,7 @@ export const CAREER: CareerStep[] = [
   {
     period: 'abr 2026 – hoje',
     company: 'G4',
-    role: 'TechOps',
+    role: 'Estagiário · TechOps',
     description:
       'Numa empresa AI First, atuo dentro da área de TechOps desenvolvendo soluções com IA, como automações e dashboards, sempre tendo em vista o planejamento estratégico da área e da empresa. Tudo de forma rápida e bem feita.',
     current: true,
