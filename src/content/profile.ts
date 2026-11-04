@@ -49,7 +49,7 @@ export const CAREER: CareerStep[] = [
     company: 'G4',
     role: 'Estagiário · TechOps',
     description:
-      'Numa empresa AI First, atuo na área de TechOps criando soluções com IA, como automações e dashboards, que resolvem problemas reais dos times. Tudo pensado junto com o planejamento estratégico da área e da empresa, e entregue de forma rápida e bem feita.',
+      'Entrei no G4 na área de TechOps. Por ser uma empresa AI First, a IA está em todo o meu dia: uso para entender problemas complexos e transformá-los em projetos que geram melhorias reais, como a esteira de QA com agentes de IA que reduziu em 98% o tempo de testes, além de automações e dashboards que ajudam os times a agir mais rápido.',
     current: true,
   },
   {
