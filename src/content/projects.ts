@@ -70,8 +70,8 @@ export const EXTRA_REPOSITORIES = ['Code-Cam-Solutions/code-cam-APP']
 export const SHOWN_REPOSITORIES = [
   'Portifolio',
   'fastapi-auth-db-api',
-  'LandingPage-CodeCam',
+  'lp-peter-parker',
   'code-cam-APP',
   'WatchNext',
-  'lp-peter-parker',
+  'LandingPage-CodeCam',
 ]
