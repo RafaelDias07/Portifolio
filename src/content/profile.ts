@@ -12,7 +12,7 @@ export const PROFILE = {
   /** Linha abaixo do nome, como "Dev · Produto · Sistemas" no RetroOffice */
   headline: 'Engenheiro de Software · IA · Planejamento Estratégico',
   /** Selos azuis abaixo da linha */
-  badges: ['Freela', 'IA'],
+  badges: ['Software Engineer', 'AI Engineer & Builder'],
   // Caixa "Missão" da página inicial. A última frase aparece com o destaque em azul
   mission: [
     'Construo sistemas e planejamentos rápidos com IA, do problema à solução.',
@@ -27,7 +27,7 @@ export const SYSTEM_INFO = [
   { label: 'Operador', value: PROFILE.fullName },
   // TODO(conteúdo): Rafael ainda vai definir o nome da função
   { label: 'Função', value: 'Resolver problemas reais com IA no dia a dia' },
-  { label: 'Empresa', value: 'G4 · TechOps' },
+  { label: 'Empresa', value: 'G4' },
   { label: 'Foco', value: 'Uso de IA no dia a dia para soluções de problemas reais' },
   { label: 'Status', value: '🟢 Aceitando missões' },
 ]
@@ -47,9 +47,9 @@ export const CAREER: CareerStep[] = [
   {
     period: 'abr 2026 – hoje',
     company: 'G4',
-    role: 'TechOps',
+    role: 'Estagiário · TechOps',
     description:
-      'Numa empresa AI First, atuo dentro da área de TechOps desenvolvendo soluções com IA, como automações e dashboards, sempre tendo em vista o planejamento estratégico da área e da empresa. Tudo de forma rápida e bem feita.',
+      'Escola de negócios AI First, o G4 usa IA em tudo o que faz. Em TechOps, é isso que eu levo para o dia a dia: pego problemas complexos dos times e transformo em soluções com IA que trazem melhorias reais para a empresa.',
     current: true,
   },
   {
@@ -57,7 +57,7 @@ export const CAREER: CareerStep[] = [
     company: 'AI For Business',
     role: 'Fundador · Desenvolvedor de automação',
     description:
-      'Criei minha própria empresa e atuei como fundador e desenvolvedor de automações para negócios.',
+      'Fundei minha empresa aos 16 anos com uma ideia: resolver dores reais de clientes e aprender tecnologia desde cedo. Cada projeto real foi um desafio real, e com eles aprendi o trabalho de ponta a ponta: entender o problema do cliente, transformá-lo em solução e desenvolver essa solução, com automações com IA para negócios.',
   },
 ]
 
